@@ -14789,6 +14789,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 1373490187173001344, guid: 6c6d678f0d12929448602bf3d074cbaf, type: 3}
+      propertyPath: m_PlaneDistance
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3520930664468921007, guid: 6c6d678f0d12929448602bf3d074cbaf, type: 3}
       propertyPath: m_Name
       value: ButtonE

@@ -25,7 +25,7 @@ public class NPCInteraction : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.GetComponent<Rigidbody2D>() != null)
+        if (other.CompareTag("Player"))
         {
             TextE.SetActive(true);
             playerInRange = true;
@@ -34,9 +34,10 @@ public class NPCInteraction : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.GetComponent<Rigidbody2D>() != null)
+        if (other.CompareTag("Player"))
         {
             TextE.SetActive(false);
+            playerInRange = false;
             dialogueManager.EndDialogue(); 
         }
     }
