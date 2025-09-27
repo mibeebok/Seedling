@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 744fd93d2cf2cc74e81a7532dc8efb65, type: 3}
+  m_Name: SeedCarrot
+  m_EditorClassIdentifier: Assembly-CSharp::Seed
+  cropType: 2
+  isSeed: 1
+  icon: {fileID: 1151760780, guid: 4a90f5883805ed74e80473f50bc71c84, type: 3}
+  maxStack: 32
+  position: {x: 0, y: 0, z: 0}
+  timeRemaining: 0
+  timerIsRunning: 0
+  currentGrowthStage: 0
+  growthStages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  harvestItem:
+    id: 6
+    name: carrot
+    img: {fileID: 1194125170, guid: 4a90f5883805ed74e80473f50bc71c84, type: 3}
+    maxStack: 15
+    type: 1
+    cropType: 2
+  harvestYield: 1
