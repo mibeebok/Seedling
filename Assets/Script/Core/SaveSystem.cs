@@ -26,8 +26,9 @@ public static class SaveSystem
                 }
             }
         }
+        Debug.Log("Save path: " + Application.persistentDataPath);
 
-        File.WriteAllText(SavePath, JsonUtility.ToJson(new Wrapper<SaveData>{ Items = saveData }, true));
+        File.WriteAllText(SavePath, JsonUtility.ToJson(new Wrapper<SaveData> { Items = saveData }, true));
     }
 
     public static void LoadAllTiles()
