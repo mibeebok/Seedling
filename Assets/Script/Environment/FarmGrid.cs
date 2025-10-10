@@ -40,7 +40,7 @@ public class FarmGrid : Sounds
         }
         
         GenerateGrid(() => {
-            SaveSystem.LoadAllTiles();
+            SaveSystem.LoadGame();
         });
     }
     private void GenerateGrid(System.Action onComplete = null)

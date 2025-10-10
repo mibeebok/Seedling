@@ -27,6 +27,7 @@ public class GoatBehavior : Sounds
 
     private void Start()
     {
+        SaveSystem.ApplyPendingPositions();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         
         if (goatAnimator == null)

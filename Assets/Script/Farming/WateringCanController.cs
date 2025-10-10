@@ -58,7 +58,7 @@ public class WateringCanController : Sounds
         yield return new WaitForSeconds(soilWateringDelay);
         soilWater.Water();
         soilTile.UpdateSoilSprite(); // Явное обновление спрайта
-        SaveSystem.SaveAllTiles();
+        SaveSystem.SaveGame();
     }
 
     IEnumerator ResetWateringBool()

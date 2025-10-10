@@ -42,51 +42,69 @@ public class Player : Sounds
         }
     }
 
-    private void FixedUpdate () { // запускается через равные промежутки времени для всех пользователей
-       if(isMovementBlocked) return;
+    private void Start()
+    {
+        SaveSystem.ApplyPendingPositions();
 
-       if (Time.timeScale == 0) return;
-       
+    }
+
+    private void FixedUpdate()
+    { // запускается через равные промежутки времени для всех пользователей
+        if (isMovementBlocked) return;
+
+        if (Time.timeScale == 0) return;
+
         Vector2 InputVector = new Vector2(0, 0);
-        
-        if(Input.GetKey(KeyCode.W)){
+
+        if (Input.GetKey(KeyCode.W))
+        {
             InputVector.y = 1f; //положительное значение при нажатии на W по оси y
             isWolkBack = true;
         }
-        else{
+        else
+        {
             isWolkBack = false;
         }
 
-        if(Input.GetKey(KeyCode.S)){
+        if (Input.GetKey(KeyCode.S))
+        {
             InputVector.y = -1f;
             isWolkStraight = true;
         }
-        else{
+        else
+        {
             isWolkStraight = false;
         }
 
-        if(Input.GetKey(KeyCode.A)){
+        if (Input.GetKey(KeyCode.A))
+        {
             InputVector.x = -1f;
             isWolkLeft = true;
         }
-        else{
+        else
+        {
             isWolkLeft = false;
         }
 
-        if(Input.GetKey(KeyCode.D)){
+        if (Input.GetKey(KeyCode.D))
+        {
             InputVector.x = 1f;
             isWolk = true;
         }
-        else{
+        else
+        {
             isWolk = false;
         }
-        
+
         InputVector = InputVector.normalized;
 
-        if (Input.GetKey(KeyCode.LeftShift)){
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
             rb.MovePosition(rb.position + InputVector * (movingSpeed * Time.fixedDeltaTime) * 2); //ускорение
             isRunning = true;
-        }else{
+        }
+        else
+        {
             rb.MovePosition(rb.position + InputVector * (movingSpeed * Time.fixedDeltaTime)); //начальная позиция + inputVector * зафиксированное ускорение * умноженное количество времени
             isRunning = false;
         }
@@ -104,11 +122,11 @@ public class Player : Sounds
 
 
         //проверка для анимации на ходьбу
-       /* if (Mathf.Abs(InputVector.x)> minMovingSpeed || Mathf.Abs(InputVector.y)>minMovingSpeed){
-            isWolk = true;
-        }else{
-            isWolk = false;
-        }*/
+        /* if (Mathf.Abs(InputVector.x)> minMovingSpeed || Mathf.Abs(InputVector.y)>minMovingSpeed){
+             isWolk = true;
+         }else{
+             isWolk = false;
+         }*/
 
     }
     public bool IsWolk() {

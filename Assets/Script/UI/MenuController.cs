@@ -12,17 +12,15 @@ public class MenuController : MonoBehaviour
 
     [Header("Ссылки")]
     public GameObject menuPanel;
-    public PauseButtonPosition pauseButtonController; // исправлено на lowercase
+    public PauseButtonPosition pauseButtonController;
 
     void Start()
     {
-        // Проверка меню
         if (menuPanel == null)
         {
             Debug.LogError("Не назначен объект меню (menuPanel)!");
         }
 
-        // Автопоиск контроллера паузы
         if (pauseButtonController == null)
         {
             pauseButtonController = FindObjectOfType<PauseButtonPosition>();
@@ -38,11 +36,10 @@ public class MenuController : MonoBehaviour
 
         if (buttonContinue != null)
         {
-            // Явное указание пространства имён
             UnityEngine.UI.Button btn = buttonContinue.GetComponent<UnityEngine.UI.Button>();
             if (btn != null)
             {
-                btn.onClick.AddListener(Continue);
+                btn.onClick.AddListener(ContinueButton);
             }
             else
             {
@@ -51,16 +48,14 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    public void Continue()
+    public void ContinueButton()
     {
-        // Закрываем меню
         if (menuPanel != null)
         {
             menuPanel.SetActive(false);
             Debug.Log("Меню закрыто");
         }
 
-        // Возобновляем игру
         if (pauseButtonController != null)
         {
             pauseButtonController.ResumeGame();
