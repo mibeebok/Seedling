@@ -30,6 +30,8 @@ public class HouseController : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("Сохранённый день: " + PlayerPrefs.GetInt("DaysPassed", 0));
+
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         sleepController = FindObjectOfType<SleepController>();
         

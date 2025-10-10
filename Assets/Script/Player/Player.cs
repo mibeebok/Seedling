@@ -45,7 +45,6 @@ public class Player : Sounds
     private void Start()
     {
         SaveSystem.ApplyPendingPositions();
-
     }
 
     private void FixedUpdate()

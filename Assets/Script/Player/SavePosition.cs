@@ -4,12 +4,21 @@ public class SavePosition : MonoBehaviour
 {
     public GameObject player;
 
-    public void Save(){
+    public void Save()
+    {
+        if (player == null)
+        {
+            Debug.LogError("[SavePosition] Игрок не назначен");
+            return;
+        }
+
+        SaveSystem.SaveGame();
+
         PlayerPrefs.SetFloat("playerX", player.transform.position.x);
         PlayerPrefs.SetFloat("playerY", player.transform.position.y);
-        //PlayerPrefs.SetFloat("playerVelocityX", player.GetComponent<Rigidbody2D>().velocity.x);
-        //PlayerPrefs.SetFloat("playerVelocitY", player.GetComponent<Rigidbody2D>().velocity.y);
-    }
+       
+        PlayerPrefs.Save();
 
-    
+        Debug.Log("[SavePosition] Игра успешно сохарнена");
+    }
 }
