@@ -6,7 +6,6 @@ public static class SaveSystem
 {
     private static string SavePath => Path.Combine(Application.persistentDataPath, "farm_save.json");
 
-    // Для случаев, когда объекты ещё не созданы при загрузке
     private static Vector2? pendingPlayerPos = null;
     private static Vector2? pendingGoatPos = null;
 
@@ -14,7 +13,7 @@ public static class SaveSystem
     {
         var saveFile = new SaveFile();
 
-        // 1️⃣ Сохраняем тайлы
+        // 1 Сохраняем тайлы земли
         saveFile.tiles = new List<SaveData>();
         for (int x = 0; x < FarmGrid.Instance.gridSizeX; x++)
         {
@@ -31,7 +30,7 @@ public static class SaveSystem
         }
         Debug.Log($"[SaveSystem] Сохранено тайлов: {saveFile.tiles.Count}");
 
-        // 2️⃣ Сохраняем игрока
+        // 2 Сохраняем игрока
         if (Player.Instance != null)
         {
             saveFile.player = new PlayerData
@@ -41,7 +40,7 @@ public static class SaveSystem
             Debug.Log($"[SaveSystem] Позиция игрока сохранена: {saveFile.player.position}");
         }
 
-        // 3️⃣ Сохраняем козу
+        // 3 Сохраняем козу
         var goat = Object.FindFirstObjectByType<GoatBehavior>();
         if (goat != null)
         {
@@ -52,10 +51,30 @@ public static class SaveSystem
             Debug.Log($"[SaveSystem] Позиция козы сохранена: {saveFile.goat.position}");
         }
 
-        // 4️⃣ Сохраняем в файл
+        // 4 Сохраняем инвентарь
+        if (InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
+        {
+            var inv = InventoryController.Instance.mainInventory;
+            saveFile.inventory = new InventoryData();
+            saveFile.inventory.items = new List<ItemSlotData>();
+
+            foreach (var slot in inv.items)
+            {
+                saveFile.inventory.items.Add(new ItemSlotData
+                {
+                    id = slot.id,
+                    count = slot.count
+                });
+            }
+
+            Debug.Log($"[SaveSystem] Сохранено предметов в инвентаре: {saveFile.inventory.items.Count}");
+        }
+
+        // 5 Записываем в файл
         File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
         Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
     }
+
 
     public static void LoadGame()
     {
@@ -68,7 +87,7 @@ public static class SaveSystem
         var saveFile = JsonUtility.FromJson<SaveFile>(File.ReadAllText(SavePath));
         Debug.Log("[SaveSystem] Сохранение загружено из файла.");
 
-        // 1️⃣ Загружаем тайлы
+        // 1 Загружаем тайлы
         int restoredTiles = 0;
         foreach (var data in saveFile.tiles)
         {
@@ -79,7 +98,7 @@ public static class SaveSystem
         }
         Debug.Log($"[SaveSystem] Восстановлено тайлов: {restoredTiles}");
 
-        // 2️⃣ Загружаем игрока
+        // 2 Загружаем игрока
         if (saveFile.player != null)
         {
             if (Player.Instance != null)
@@ -94,7 +113,7 @@ public static class SaveSystem
             }
         }
 
-        // 3️⃣ Загружаем козу
+        // 3 Загружаем козу
         if (saveFile.goat != null)
         {
             var goat = Object.FindFirstObjectByType<GoatBehavior>();
@@ -142,12 +161,13 @@ public static class SaveSystem
     // =====================
     // Классы данных
     // =====================
-    [System.Serializable]
+     [System.Serializable]
     public class SaveFile
     {
         public List<SaveData> tiles;
         public PlayerData player;
         public GoatData goat;
+        public InventoryData inventory;
     }
 
     [System.Serializable]
@@ -160,5 +180,18 @@ public static class SaveSystem
     public class GoatData
     {
         public Vector2 position;
+    }
+
+    [System.Serializable]
+    public class InventoryData
+    {
+        public List<ItemSlotData> items;
+    }
+
+    [System.Serializable]
+    public class ItemSlotData
+    {
+        public int id;
+        public int count;
     }
 }
