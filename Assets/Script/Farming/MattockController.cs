@@ -7,11 +7,13 @@ public class MattockController : Sounds
     [Header("References")]
     public InventoryController inventoryController;
     public Animator handsAnimator;
+    public Transform playerTransform;
 
     [Header("Mattock Setting")]
     public int mattockItemId = 2;
     public string mattockBool = "Mattock";
     public float soilMattockDelay = 0.4f;
+    public float interactionRadius = 3.5f;
 
     [Header("Sprites")]
     public Sprite plowedSprite; // Спрайт для вспаханной земли
@@ -32,6 +34,13 @@ public class MattockController : Sounds
             return;
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Vector2.Distance(playerTransform.position, mousePos) > interactionRadius)
+        {
+            Debug.Log("Блок не входит в радиус для вспашки (2.5f)");
+            return;
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
         if (hit.collider != null)

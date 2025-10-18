@@ -6,11 +6,13 @@ public class WateringCanController : Sounds
     [Header("References")]
     public InventoryController inventoryController;
     public Animator handsAnimator;
+    public Transform playerTransform; 
 
     [Header("Watering Settings")]
-    public int wateringCanItemId = 1; // ID лейки
-    public string wateringBool = "Water"; // Имя параметра bool
+    public int wateringCanItemId = 1;
+    public string wateringBool = "Water";
     public float soilWateringDelay = 0.4f;
+    public float interactionRadius = 3.5f; // Радиус, в пределах которого можно поливать
 
     private bool isWatering = false;
 
@@ -29,6 +31,13 @@ public class WateringCanController : Sounds
         if (inventoryController.GetSelectedSlot() != 0) return;
 
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        if (Vector2.Distance(playerTransform.position, mousePos)> interactionRadius)
+        {
+            Debug.Log("блок не входит в радиус полива");
+            return;
+        }
+
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
 
         if (hit.collider != null)

@@ -578,9 +578,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 87de530760599394ca5a98b00920011a, type: 3}
   inventoryController: {fileID: 1970771575}
   handsAnimator: {fileID: 1955157772}
+  playerTransform: {fileID: 973382993}
   mattockItemId: 2
   mattockBool: Mattock
   soilMattockDelay: 0.4
+  interactionRadius: 2.5
   plowedSprite: {fileID: 0}
 --- !u!1 &10735519
 GameObject:
@@ -8774,9 +8776,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c7824f06763dbee43973527245bb2382, type: 3}
   inventoryController: {fileID: 1970771575}
   handsAnimator: {fileID: 1955157772}
+  playerTransform: {fileID: 973382993}
   wateringCanItemId: 1
   wateringBool: Water
   soilWateringDelay: 0.4
+  interactionRadius: 2.5
 --- !u!1 &439383724
 GameObject:
   m_ObjectHideFlags: 0
