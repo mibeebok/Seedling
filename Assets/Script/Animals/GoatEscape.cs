@@ -3,9 +3,10 @@ using UnityEngine;
 public class GoatEscape : MonoBehaviour
 {
     [Header("Настройки побега")]
-    [SerializeField] private float escapeSpeed = 3f; // Скорость движения
-    [SerializeField] private float detectionRange = 5f; // Дистанция обнаружения игрока
-    [SerializeField] private float screenMargin = 0.1f; // Отступ от края для деактивации
+    [SerializeField] private float escapeSpeed = 3f;       // скорость побега
+    [SerializeField] private float detectionRange = 5f;    // радиус реакции на игрока
+    [SerializeField] private float screenMargin = 0.1f;    // запас от границ экрана
+    [SerializeField] private float directionJitter = 30f;  // разброс направления в градусах
 
     private Transform player;
     private Vector2 escapeDirection;
@@ -22,16 +23,17 @@ public class GoatEscape : MonoBehaviour
     {
         if (player == null) return;
 
-        // Проверка дистанции до игрока
-        if (Vector2.Distance(transform.position, player.position) < detectionRange)
+        float distance = Vector2.Distance(transform.position, player.position);
+
+        if (distance < detectionRange)
         {
             if (!isEscaping)
             {
                 CalculateEscapePath();
                 isEscaping = true;
             }
-            
-            MoveOffScreen();
+
+            MoveEscape();
         }
         else
         {
@@ -39,35 +41,35 @@ public class GoatEscape : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Рассчитывает направление убегания в сторону, противоположную игроку,
+    /// с небольшим случайным отклонением (чтобы движение выглядело естественно)
+    /// </summary>
     private void CalculateEscapePath()
     {
-        // Выбираем направление к ближайшему краю
-        Vector3 viewportPos = mainCam.WorldToViewportPoint(transform.position);
-        
-        if (viewportPos.x < 0.5f) // Если коза в левой части экрана
-            escapeDirection = Vector2.left;
-        else                      // Если в правой
-            escapeDirection = Vector2.right;
+        // Направление от игрока к козе
+        Vector2 awayFromPlayer = (transform.position - player.position).normalized;
+
+        // Добавляем "рандомный угол" к направлению, чтобы она не бежала идеально по прямой
+        float randomAngle = Random.Range(-directionJitter, directionJitter);
+        escapeDirection = Quaternion.Euler(0, 0, randomAngle) * awayFromPlayer;
     }
 
-    private void MoveOffScreen()
+    /// <summary>
+    /// Перемещает козу в рассчитанном направлении и деактивирует при выходе за границы
+    /// </summary>
+    private void MoveEscape()
     {
-        // Плавное движение
-        transform.Translate(escapeDirection * escapeSpeed * Time.deltaTime);
+        transform.Translate(escapeDirection * escapeSpeed * Time.deltaTime, Space.World);
 
-        // Проверка выхода за границы
         Vector3 viewportPos = mainCam.WorldToViewportPoint(transform.position);
-        if (viewportPos.x < -screenMargin || 
+        if (viewportPos.x < -screenMargin ||
             viewportPos.x > 1 + screenMargin ||
-            viewportPos.y < -screenMargin || 
+            viewportPos.y < -screenMargin ||
             viewportPos.y > 1 + screenMargin)
         {
-            // Варианты действий при достижении края:
-            // 1. Деактивировать объект
+            // Коза выбежала за экран — можно выключить или вернуть
             gameObject.SetActive(false);
-            
-            // ИЛИ 2. Остановиться (закомментируйте строку выше)
-            // escapeSpeed = 0;
         }
     }
 
