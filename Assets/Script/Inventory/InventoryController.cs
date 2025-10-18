@@ -81,25 +81,25 @@ public class InventoryController : MonoBehaviour
 
         CheckDatabase();
     }
-void CheckDatabase()
-{
-    Debug.Log("=== Проверка базы данных ===");
-    foreach (Item item in database.items)
+    void CheckDatabase()
     {
-        Debug.Log($"ID: {item.id}, Name: {item.name}, Type: {item.GetType()}");
+        Debug.Log("=== Проверка базы данных ===");
+        foreach (Item item in database.items)
+        {
+            Debug.Log($"ID: {item.id}, Name: {item.name}, Type: {item.GetType()}");
+        }
+        
+        // Проверка конкретно картошки
+        Item potato = database.GetItemById(7); // Замените на ваш ID
+        if (potato != null)
+        {
+            Debug.Log($"Картошка найдена: {potato.name} (ID: {potato.id})");
+        }
+        else
+        {
+            Debug.LogError("Картошка не найдена в базе!");
+        }
     }
-    
-    // Проверка конкретно картошки
-    Item potato = database.GetItemById(7); // Замените на ваш ID
-    if (potato != null)
-    {
-        Debug.Log($"Картошка найдена: {potato.name} (ID: {potato.id})");
-    }
-    else
-    {
-        Debug.LogError("Картошка не найдена в базе!");
-    }
-}
 
     void Update()
     {

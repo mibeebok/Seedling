@@ -4011,7 +4011,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.3599854, y: -0.6700134}
+  m_AnchoredPosition: {x: -3.3600159, y: -0.6700134}
   m_SizeDelta: {x: -382.9, y: -232.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &211389001
@@ -14226,7 +14226,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - {fileID: 8300000, guid: 1a30b79d959af0d47b71c734ded68aa6, type: 3}
+  - {fileID: 8300000, guid: 1159561bafcf86e4db0ef35f11103615, type: 3}
+  - {fileID: 8300000, guid: ac907d9e93a20b34884ef152acd84734, type: 3}
+  - {fileID: 8300000, guid: fcb000ba79c9b31488c874fc8ecfa575, type: 3}
+  - {fileID: 8300000, guid: 24093c99ad163094e9b72b6bc7ad6b3e, type: 3}
   gridSizeX: 50
   gridSizeY: 50
   cellSize: 2
@@ -36113,7 +36116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handsAnimator: {fileID: 1955157772}
-  hotbarSize: 6
+  hotbarSize: 7
   slotRenderers: []
   activeSlotColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   normalSlotColor: {r: 1, g: 1, b: 1, a: 1}

@@ -15,6 +15,9 @@ public class FarmGrid : Sounds
     private GameObject[,] grid;
     public bool isGridGenerated = false;
 
+    private AudioSource musicSource;
+    private int lastTrackIndex = -1;
+
     private void Awake()
     {
         if (Instance == null)
@@ -30,19 +33,54 @@ public class FarmGrid : Sounds
 
     private void Start()
     {
-        if (sounds != null && sounds.Length > 0 && sounds[0] != null)
+        // Создаем или получаем AudioSource
+        musicSource = GetComponent<AudioSource>();
+        if (musicSource == null)
+            musicSource = gameObject.AddComponent<AudioSource>();
+
+        // Настройка
+        musicSource.loop = false; // мы сами управляем циклом
+        musicSource.volume = 0.3f;
+
+        // Запуск фоновой музыки
+        if (sounds != null && sounds.Length > 0)
         {
-            PlaySound(sounds[0], volume: 0.3f);
+            StartCoroutine(PlayMusicLoop());
         }
         else
         {
-            Debug.LogWarning("Sound array is not initaliezed ot empty");
+            Debug.LogWarning("Массив звуков не инициализирован или пуст!");
         }
-        
-        GenerateGrid(() => {
-            SaveSystem.LoadGame();
-        });
+
+        // Генерация сетки
+        GenerateGrid(() => SaveSystem.LoadGame());
     }
+    private IEnumerator PlayMusicLoop()
+    {
+        while (true)
+        {
+            // Выбираем случайный трек, чтобы не повторялся подряд
+            int index;
+            do
+            {
+                index = Random.Range(0, sounds.Length);
+            } while (index == lastTrackIndex && sounds.Length > 1);
+
+            lastTrackIndex = index;
+            AudioClip clip = sounds[index];
+
+            // Проигрываем трек
+            musicSource.clip = clip;
+            musicSource.Play();
+
+            // Ждем окончания
+            yield return new WaitForSeconds(clip.length);
+        }
+    }
+
+
+
+    
     private void GenerateGrid(System.Action onComplete = null)
     {
         if (tilePrefab == null)
