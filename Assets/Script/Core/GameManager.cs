@@ -13,6 +13,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
     public InventoryController inventoryController;
-    public CropData cropData;
+    public Crop cropData;
     public Item items;
 }

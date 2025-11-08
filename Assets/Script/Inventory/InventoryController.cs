@@ -154,7 +154,16 @@ public class InventoryController : MonoBehaviour
         
         // Отдельная обработка кликов
         if (Input.GetMouseButtonDown(0))
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            // Пробуем использовать предмет (например, посадить семена)
+            HandleItemUse(mousePos);
+
+            // Проверяем клик по UI слотам
             HandleMouseClick();
+        }
+
     }
 
     void HandlePlayerMovement()
@@ -414,7 +423,7 @@ public class InventoryController : MonoBehaviour
                 RemoveItem(selectedItem, 1);
             }
         }
-        // Можно добавить другие проверки для инструментов и т.д.
+
     }
     
 

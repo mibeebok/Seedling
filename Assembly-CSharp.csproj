@@ -88,7 +88,6 @@
     <Compile Include="Assets\Script\Player\PlayerVisual.cs" />
     <Compile Include="Assets\Script\Core\AutoSaveManager.cs" />
     <Compile Include="Assets\Script\Player\HandsController.cs" />
-    <Compile Include="Assets\Script\Farming\Plants\CropData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\Script\UI\ScreenPositionLock.cs" />
     <Compile Include="Assets\Script\Farming\MattockController.cs" />
@@ -98,7 +97,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
-    <Compile Include="Assets\Script\Farming\Plants\CropsReadController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Script\Animals\GoatEscape.cs" />
@@ -137,6 +135,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\Script\UI\StartGameController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Script\Farming\Plants\CropBehaviour.cs" />
     <Compile Include="Assets\Script\Farming\WateringCanController.cs" />
     <Compile Include="Assets\Script\Inventory\InventoryController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
