@@ -86,6 +86,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Script\Player\PlayerVisual.cs" />
+    <Compile Include="Assets\Script\Core\AutoSaveManager.cs" />
     <Compile Include="Assets\Script\Player\HandsController.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />

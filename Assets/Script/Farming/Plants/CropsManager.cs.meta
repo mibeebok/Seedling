@@ -1,2 +1,15 @@
 fileFormatVersion: 2
 guid: e3a86d569daabcd4799e17cc1ddfb8c7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - potatoPrefab: {fileID: 11400000, guid: a16310b9e1bf376439e96bca3ba54791, type: 2}
+  - carrotPrefab: {fileID: 11400000, guid: 520f04ea13be22d47ad94c19533ad800, type: 2}
+  - beetrootPrefab: {fileID: 11400000, guid: 2388f26703de87742bf8f6dd743174fe, type: 2}
+  - rastberryPrefab: {fileID: 11400000, guid: 0b9f033d1b73b75489c45c09e3c82e2e, type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

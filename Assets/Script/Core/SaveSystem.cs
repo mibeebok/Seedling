@@ -9,6 +9,85 @@ public static class SaveSystem
     private static Vector2? pendingPlayerPos = null;
     private static Vector2? pendingGoatPos = null;
 
+    private static HashSet<Vector2Int> changedTiles = new HashSet<Vector2Int>();
+
+    public static void MarkTileChanged(Vector2Int pos)
+    {
+        changedTiles.Add(pos);
+    }
+
+        public static void SaveModifiedTiles()
+    {
+        if (changedTiles.Count == 0)
+        {
+            Debug.Log("[SaveSystem] Нет изменённых тайлов для сохранения.");
+            return;
+        }
+
+        SaveFile saveFile;
+
+        // Если файл уже существует — загружаем, чтобы не потерять старые данные
+        if (File.Exists(SavePath))
+            saveFile = JsonUtility.FromJson<SaveFile>(File.ReadAllText(SavePath));
+        else
+            saveFile = new SaveFile { tiles = new List<SaveData>() };
+
+        // Словарь для быстрого поиска существующих тайлов
+        var tileMap = new Dictionary<Vector2Int, SaveData>();
+        foreach (var t in saveFile.tiles)
+        {
+            var pos = FarmGrid.Instance.WorldToGridPosition(t.position);
+            tileMap[pos] = t;
+        }
+
+        // Обновляем только изменённые
+        foreach (var pos in changedTiles)
+        {
+            var tile = FarmGrid.Instance.GetTileAt(pos);
+            if (tile != null)
+            {
+                var soil = tile.GetComponent<SoilTile>();
+                if (soil != null)
+                    tileMap[pos] = soil.GetSaveData();
+            }
+        }
+
+        // Перезаписываем обновлённый список
+        saveFile.tiles = new List<SaveData>(tileMap.Values);
+
+        // Сохраняем остальное (игрок, коза, инвентарь — по желанию)
+        if (Player.Instance != null)
+            saveFile.player = new PlayerData { position = Player.Instance.transform.position };
+
+        var goat = Object.FindFirstObjectByType<GoatBehavior>();
+        if (goat != null)
+            saveFile.goat = new GoatData { position = goat.transform.position };
+
+        if (InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
+        {
+            var inv = InventoryController.Instance.mainInventory;
+            saveFile.inventory = new InventoryData
+            {
+                items = new List<ItemSlotData>()
+            };
+            foreach (var slot in inv.items)
+            {
+                saveFile.inventory.items.Add(new ItemSlotData
+                {
+                    id = slot.id,
+                    count = slot.count
+                });
+            }
+        }
+
+        // Пишем файл
+        File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
+        Debug.Log($"[SaveSystem] Сохранено {changedTiles.Count} изменённых тайлов.");
+
+        // Очищаем список после сохранения
+        changedTiles.Clear();
+    }
+
     public static void SaveGame()
     {
         var saveFile = new SaveFile();

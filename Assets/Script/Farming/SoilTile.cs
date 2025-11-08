@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+
 public class SoilTile : MonoBehaviour
 {
     [Header("Sprites")]
@@ -82,6 +83,10 @@ public class SoilTile : MonoBehaviour
             spriteRenderer.sprite = plowedSprite;
             isPlowed = true;
             Debug.Log("Земля вспахана!");
+
+            // Сообщаем системе сохранений, что этот тайл изменён
+            Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
+            SaveSystem.MarkTileChanged(gridPos);
         }
     }
     public void Water()
@@ -93,6 +98,9 @@ public class SoilTile : MonoBehaviour
             {
                 wateringCan.Water();
                 // Не устанавливаем спрайт здесь - это делает SoilTileWateringCan
+                // Отмечаем изменение
+                Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
+                SaveSystem.MarkTileChanged(gridPos);
             }
         }
     }

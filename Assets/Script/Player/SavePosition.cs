@@ -12,7 +12,7 @@ public class SavePosition : MonoBehaviour
             return;
         }
 
-        SaveSystem.SaveGame();
+        // SaveSystem.SaveGame();
 
         PlayerPrefs.SetFloat("playerX", player.transform.position.x);
         PlayerPrefs.SetFloat("playerY", player.transform.position.y);
