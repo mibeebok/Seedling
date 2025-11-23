@@ -59,7 +59,7 @@ public class DataBase : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            return;
         }
     }
 

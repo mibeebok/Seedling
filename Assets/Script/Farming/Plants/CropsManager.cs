@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class CropsManager : MonoBehaviour
 {
+    [Header("Crops Data")]
+    public List<Crop> allCropData;
+
+    private Dictionary<CropType, Crop> cropByType = new Dictionary<CropType, Crop>();
+
     public static CropsManager Instance { get; private set; }
 
     [Header("Crop Prefabs (prefabs with CropBehaviour)")]
@@ -11,12 +16,28 @@ public class CropsManager : MonoBehaviour
     [SerializeField] private CropBehaviour beetrootPrefab;
     [SerializeField] private CropBehaviour rastberryPrefab;
 
-    private Dictionary<Vector2Int, CropBehaviour> allCrops = new Dictionary<Vector2Int, CropBehaviour>();
+    private Dictionary<Vector2Int, CropBehaviour> allCrops =new Dictionary<Vector2Int, CropBehaviour>();
+    private Dictionary<Vector2Int, CropBehaviour> plantedCrops = 
+    new Dictionary<Vector2Int, CropBehaviour>();
+
 
     private void Awake()
     {
+        Instance = this;
+
+        foreach (var crop in allCropData)
+        {
+            if (!cropByType.ContainsKey(crop.cropType))
+                cropByType.Add(crop.cropType, crop);
+        }
+
         if (Instance == null) Instance = this;
-        else Destroy(gameObject);
+        else return;
+    }
+
+    public Crop GetCropData(CropType type)
+    {
+        return cropByType[type];
     }
 
     public bool CanPlantAt(Vector2Int gridPosition)
@@ -33,56 +54,72 @@ public class CropsManager : MonoBehaviour
     {
         Debug.Log($"Пробуем посадить {seedItem.name}, тип: {seedItem.type}, культура: {seedItem.cropType}");
 
-        Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
-        var tileObject = FarmGrid.Instance.GetTileAt(gridPos);
-        var soilTile = tileObject?.GetComponent<SoilTile>();
-
-        Debug.Log($"Плитка {(tileObject == null ? "не найдена" : "найдена")}, готова ли почва: {soilTile?.IsReadyForPlanting()}");
-
-        if (!CanPlantAt(gridPos)) {
-            Debug.Log("CanPlantAt вернул false");
-            return false;
-        }
-
-        CropBehaviour prefab = GetCropPrefab(seedItem.cropType);
-        Debug.Log($"Prefab для {seedItem.cropType}: {(prefab == null ? "НЕ найден" : "найден")}");
-
-            return true;
-    /*
+        // 1 — Проверяем, что это семена
         if (!seedItem.IsSeed())
         {
-            Debug.Log("Предмет не является семенами");
+            Debug.Log("Этот предмет НЕ семена");
             return false;
         }
 
+        // 2 — Получаем клетку
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
 
-        if (!CanPlantAt(gridPos))
+        // 3 — Проверяем в словаре, что клетка пустая
+        if (allCrops.ContainsKey(gridPos))
         {
-            Debug.Log($"Нельзя посадить здесь. Готова ли почва: {FarmGrid.Instance.GetTileAt(gridPos)?.GetComponent<SoilTile>()?.IsReadyForPlanting()}");
+            Debug.Log("На этой клетке уже растёт растение!");
             return false;
         }
 
+        // 4 — Проверяем тайл почвы
+        GameObject tileObject = FarmGrid.Instance.GetTileAt(gridPos);
+        if (tileObject == null)
+        {
+            Debug.Log("Тайл не найден!");
+            return false;
+        }
+
+        SoilTile soilTile = tileObject.GetComponent<SoilTile>();
+        if (soilTile == null)
+        {
+            Debug.Log("На тайле нет SoilTile!");
+            return false;
+        }
+
+        if (!soilTile.IsReadyForPlanting())
+        {
+            Debug.Log("Почва НЕ готова для посадки!");
+            return false;
+        }
+
+        // 5 — Получаем префаб культуры
         CropBehaviour prefab = GetCropPrefab(seedItem.cropType);
         if (prefab == null)
         {
-            Debug.Log($"Не найден префаб для {seedItem.cropType}");
+            Debug.LogError($"❌ Префаб культуры для {seedItem.cropType} НЕ найден!");
             return false;
         }
 
-        Vector3 worldPos = FarmGrid.Instance.GridToWorldPosition(gridPos);
-        CropBehaviour newCrop = Instantiate(prefab, worldPos, Quaternion.identity);
+        // 6 — Создаём объект растения
+        CropBehaviour newCrop = Instantiate(
+            prefab,
+            FarmGrid.Instance.GridToWorldPosition(gridPos),
+            Quaternion.identity
+        );
 
-        // Привяжем данные (если в prefab.cropData не задано, можно назначить ScriptableObject по типу)
-        // newCrop.cropData = DataBase.Instance.GetCropSO(seedItem.cropType); // опционально
+        // 6.5 — Должно быть! Устанавливаем ScriptableObject культуры
+        // ВАЖНО: присваиваем ScriptableObject культуры
+        newCrop.cropData = GetCropData(seedItem.cropType);
 
-        allCrops[gridPos] = newCrop;
+        // 7 — Добавляем в словарь
+        allCrops.Add(gridPos, newCrop);
+        soilTile.ResetAfterPlanting();
 
-        FarmGrid.Instance.GetTileAt(gridPos)?.GetComponent<SoilTile>()?.ResetAfterPlanting();
-
-        Debug.Log($"Посажено: {seedItem.name} на позиции {gridPos}");
-        return true;*/
+        // 8 — Сбрасываем состояние почвы, т.к. растение посажено
+        Debug.Log($"✔ Посажено: {seedItem.cropType} на {gridPos}");
+        return true;
     }
+
 
     private CropBehaviour GetCropPrefab(CropType cropType)
     {

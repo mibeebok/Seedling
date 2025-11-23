@@ -21,9 +21,9 @@ MonoBehaviour:
   timerIsRunning: 0
   currentGrowthStage: 3
   growthStages:
-  - {fileID: 11400000, guid: 7037197c6eec6504e836898b5069d34c, type: 2}
-  - {fileID: 11400000, guid: 8c0f1771f9fb01048a431a0acf6119bb, type: 2}
-  - {fileID: 11400000, guid: df0bf061cae91eb42815c0cfc81d6f44, type: 2}
+  - {fileID: 11400000, guid: 228f14d35ad2f864fa0a21c731aee626, type: 2}
+  - {fileID: 11400000, guid: 5266e0c8bfc9f094792c4a4b3bfecb03, type: 2}
+  - {fileID: 11400000, guid: 689ea439865bff94ea243955b398f4b1, type: 2}
   harvestItem:
     id: 10
     name: rastberry

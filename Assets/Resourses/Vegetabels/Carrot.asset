@@ -21,9 +21,9 @@ MonoBehaviour:
   timerIsRunning: 0
   currentGrowthStage: 0
   growthStages:
-  - {fileID: 11400000, guid: 3ca72ba85049243418471df016b93fb0, type: 2}
-  - {fileID: 11400000, guid: a6a8337bc99f6c84ca137ac11bf14c1f, type: 2}
-  - {fileID: 11400000, guid: 0106c83f2ecf10246a702169201a69e9, type: 2}
+  - {fileID: 11400000, guid: 57922f81cc623884a9abaeb979149234, type: 2}
+  - {fileID: 11400000, guid: d96fef37f268b3d41b5d1eda477e4338, type: 2}
+  - {fileID: 11400000, guid: 77b0e30e1f9c0534194247ca5cdfd0f4, type: 2}
   harvestItem:
     id: 6
     name: carrot

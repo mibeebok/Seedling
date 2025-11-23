@@ -21,9 +21,9 @@ MonoBehaviour:
   timerIsRunning: 0
   currentGrowthStage: 0
   growthStages:
-  - {fileID: 11400000, guid: 5bfbd185787d4d942b7b3460ca07c259, type: 2}
-  - {fileID: 11400000, guid: e82aac6f13a5c0c4382f36097ef9719c, type: 2}
-  - {fileID: 11400000, guid: 45f3b29cce31c534a9ee248cd57e09e0, type: 2}
+  - {fileID: 11400000, guid: e0bd96d5d41f4b344a3eb917b5060e0b, type: 2}
+  - {fileID: 11400000, guid: b89d8ebe55ebec74fb65b9a9e51d14b5, type: 2}
+  - {fileID: 11400000, guid: 77b0e30e1f9c0534194247ca5cdfd0f4, type: 2}
   harvestItem:
     id: 4
     name: beetroot
