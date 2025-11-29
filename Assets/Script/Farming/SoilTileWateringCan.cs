@@ -25,6 +25,7 @@ public class SoilTileWateringCan : MonoBehaviour
         SoilTile soilTile = GetComponent<SoilTile>();
         if (soilTile != null && soilTile.wateredSprite != null)
         {
+            soilTile.isWatered = true;
             soilTile.spriteRenderer.sprite = soilTile.wateredSprite;
         }
     }

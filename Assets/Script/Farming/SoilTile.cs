@@ -4,6 +4,9 @@ using System.Collections;
 
 public class SoilTile : MonoBehaviour
 {
+    public bool isPlanted = false;
+    public bool isWatered = false;
+    public int daysWithoutWater =0;//для гниения
     [Header("Sprites")]
     public Sprite normalSprite;
     public Sprite plowedSprite;
@@ -50,8 +53,32 @@ public class SoilTile : MonoBehaviour
     }
     public bool IsReadyForPlanting()
     {
-        var wateringCan = GetComponent<SoilTileWateringCan>();
-        return isPlowed && (wateringCan != null && wateringCan.isWatered);
+        return isPlowed && isWatered && !isPlanted;
+    }
+
+    public void MarkPlanted()
+    {
+        isPlanted = true;
+    }
+
+    public void MarkHarvested()
+    {
+        isPlanted = false;
+        daysWithoutWater =0;
+        spriteRenderer.sprite = plowedSprite;
+    }
+
+    //сбросить полив
+    public void ClearWater()
+    {
+        isWatered = false;
+        spriteRenderer.sprite = plowedSprite;
+    }
+
+    public void SetWatered(bool watered)
+    {
+        isWatered = watered;
+        spriteRenderer.sprite = watered ? wateredSprite : plowedSprite;
     }
 
     public void LoadFromSaveData(SaveData data)
@@ -123,6 +150,7 @@ public class SoilTile : MonoBehaviour
             isWatered = GetComponent<SoilTileWateringCan>()?.isWatered ?? false
         };
     }
+    
 
     // public void LoadFromSaveData(SaveData data)
     // {

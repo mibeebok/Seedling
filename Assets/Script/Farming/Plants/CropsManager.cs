@@ -107,20 +107,25 @@ public class CropsManager : MonoBehaviour
             Quaternion.identity
         );
 
-        // 6.5 — Должно быть! Устанавливаем ScriptableObject культуры
-        // ВАЖНО: присваиваем ScriptableObject культуры
+        // 6.5 — назначаем ScriptableObject
         newCrop.cropData = GetCropData(seedItem.cropType);
+
+        // 6.6 — помечаем тайл как посаженный (в SoilTile)
+        soilTile.MarkPlanted(); 
 
         // 7 — Добавляем в словарь
         allCrops.Add(gridPos, newCrop);
-        soilTile.ResetAfterPlanting();
+
+        // НЕТ: не сбрасываем состояние воды здесь! НЕ вызываем ResetAfterPlanting()
+        //soilTile.ResetAfterPlanting(); // ← УДАЛИТЬ
+
 
         // 8 — Сбрасываем состояние почвы, т.к. растение посажено
         Debug.Log($"✔ Посажено: {seedItem.cropType} на {gridPos}");
         return true;
     }
 
-
+    
     private CropBehaviour GetCropPrefab(CropType cropType)
     {
         switch (cropType)
@@ -135,9 +140,32 @@ public class CropsManager : MonoBehaviour
 
     public void OnNewDay()
     {
-        foreach (var crop in allCrops.Values)
+        var keys = new List<Vector2Int>(allCrops.Keys);
+
+        foreach (var pos in keys)
         {
-            if (crop != null) crop.Grow();
+            if (!allCrops.TryGetValue(pos, out CropBehaviour crop)) continue;
+
+            GameObject tileObj = FarmGrid.Instance.GetTileAt(pos);
+            SoilTile soil = tileObj?.GetComponent<SoilTile>();
+
+            if (soil == null)
+            {
+                Destroy(crop.gameObject);
+                allCrops.Remove(pos);
+                continue;
+            }
+
+            if (!soil.isWatered)
+            {
+                soil.daysWithoutWater++;
+
+                if (soil.daysWithoutWater >= 2)
+                {
+                    crop.SetRotten();
+                }
+            }
+
         }
 
         FindFirstObjectByType<SoilTileWateringCan>()?.ResetAllWateredTiles();
@@ -157,5 +185,20 @@ public class CropsManager : MonoBehaviour
             Destroy(crop.gameObject);
             allCrops.Remove(gridPosition);
         }
+    }
+
+    public CropBehaviour GetPlantAt(Vector2Int gridPos)
+    {
+        Vector3 world = FarmGrid.Instance.GridToWorldPosition(gridPos);
+        float radius = 0.3f;
+
+        LayerMask mask = LayerMask.GetMask("Plant");
+        Collider2D col = Physics2D.OverlapCircle(world, radius, mask);
+        if(col != null)
+        {
+            return col.GetComponentInParent<CropBehaviour>() ?? col.GetComponent<CropBehaviour>();
+
+        }
+        return null;
     }
 }

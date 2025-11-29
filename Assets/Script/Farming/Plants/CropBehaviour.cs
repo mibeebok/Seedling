@@ -48,4 +48,10 @@ public class CropBehaviour : MonoBehaviour
     {
         return cropData?.harvestItem;
     }
+    public void SetRotten()
+    {
+        if (cropData == null || cropData.growthStages == null || cropData.growthStages.Length == 0) return;
+        currentStage = cropData.growthStages.Length-1;
+        UpdateVisual();
+    }
 }

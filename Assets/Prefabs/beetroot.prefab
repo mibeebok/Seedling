@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 2957910586461154506}
   - component: {fileID: 8899609350954111822}
   - component: {fileID: 4538543964916816537}
-  - component: {fileID: 8013099958337721983}
   - component: {fileID: -8643017181122882447}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: beetroot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,21 +154,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.28125, y: -0.375}
   m_Size: {x: 0.5625, y: 0.75}
   m_Direction: 0
---- !u!114 &8013099958337721983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4657777268387446255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884ccc8232246464fb9bc14241dd1254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cropType: 3
-  isSeed: 0
-  amount: 1
 --- !u!114 &-8643017181122882447
 MonoBehaviour:
   m_ObjectHideFlags: 0

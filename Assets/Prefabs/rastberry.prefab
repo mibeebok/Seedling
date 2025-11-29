@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 6158149838983304379}
   - component: {fileID: 3570019848748106967}
   - component: {fileID: 6453311723221752852}
-  - component: {fileID: 6633479553805214440}
   - component: {fileID: 3637687056012283929}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rastberry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,21 +154,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6633479553805214440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2131255789420697914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 884ccc8232246464fb9bc14241dd1254, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cropType: 4
-  isSeed: 0
-  amount: 1
 --- !u!114 &3637687056012283929
 MonoBehaviour:
   m_ObjectHideFlags: 0
