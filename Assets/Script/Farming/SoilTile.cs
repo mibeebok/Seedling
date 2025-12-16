@@ -1,42 +1,59 @@
 using UnityEngine;
-using System.Collections;
-
 
 public class SoilTile : MonoBehaviour
 {
+    [Header("State")]
+    public bool isPlowed = false;
+    public bool isWatered = false; // Полита СЕГОДНЯ
+    public bool wasWateredYesterday = false; // Полита ВЧЕРА (добавить это поле)
     public bool isPlanted = false;
-    public bool isWatered = false;
-    public int daysWithoutWater =0;//для гниения
+    public int daysWithoutWater = 0;
+
     [Header("Sprites")]
     public Sprite normalSprite;
     public Sprite plowedSprite;
-    public Sprite wateredSprite;
+    public Sprite plowedDrySprite; // Сухая вспаханная земля
+    public Sprite wateredSprite; // Полита СЕГОДНЯ
+    public Sprite wateredYesterdaySprite; // Полита ВЧЕРА (нужен полив сегодня) - добавьте этот спрайт
 
-    public SpriteRenderer spriteRenderer;
-    public bool isPlowed = false;
-
+    [HideInInspector] public SpriteRenderer spriteRenderer;
     private SoilTileWateringCan wateringCan;
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetKeyDown(KeyCode.F5))
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        wateringCan = GetComponent<SoilTileWateringCan>();
+        if (spriteRenderer != null)
         {
-            Debug.Log($"Состояние: Вспахана={isPlowed}, Полита={GetComponent<SoilTileWateringCan>()?.isWatered}");
-            Debug.Log($"Текущий спрайт: {spriteRenderer.sprite?.name}");
+            spriteRenderer.sortingOrder = -1;
+            spriteRenderer.sortingLayerName = "Default";
         }
+        UpdateVisual();
     }
 
-    public void UpdateSoilSprite()
+    // -----------------------
+    // VISUAL UPDATE
+    // -----------------------
+    public void UpdateVisual()
     {
-        var wateringCan = GetComponent<SoilTileWateringCan>();
-        if (wateringCan == null) return;
-
-        if (wateringCan.isWatered && wateredSprite != null)
+        if (isWatered && wateredSprite != null)
         {
+            // Полита СЕГОДНЯ (голубой эффект)
             spriteRenderer.sprite = wateredSprite;
+        }
+        else if (wasWateredYesterday && wateredYesterdaySprite != null)
+        {
+            // Полита ВЧЕРА (нужен полив сегодня)
+            spriteRenderer.sprite = wateredYesterdaySprite;
+        }
+        else if (isPlowed && !isWatered && daysWithoutWater > 0 && plowedDrySprite != null)
+        {
+            // Сухая вспаханная земля
+            spriteRenderer.sprite = plowedDrySprite;
         }
         else if (isPlowed && plowedSprite != null)
         {
+            // Свежевспаханная земля
             spriteRenderer.sprite = plowedSprite;
         }
         else
@@ -45,128 +62,131 @@ public class SoilTile : MonoBehaviour
         }
     }
 
-    private void Awake()
+    // -----------------------
+    // ACTIONS
+    // -----------------------
+    public void Plow()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>() ?? gameObject.AddComponent<SpriteRenderer>();
-        wateringCan = GetComponent<SoilTileWateringCan>();
-        spriteRenderer.sprite = normalSprite;
+        isPlowed = true;
+        wasWateredYesterday = false; // Сбрасываем
+        UpdateVisual();
+        SaveSystem.MarkTileChanged(GetGridPos());
     }
+
+    public void Water()
+    {
+        isWatered = true;
+        wasWateredYesterday = false; // Если полили сегодня, то "вчерашний" полив сбрасывается
+        daysWithoutWater = 0;
+        UpdateVisual();
+        SaveSystem.MarkTileChanged(GetGridPos());
+    }
+
     public bool IsReadyForPlanting()
     {
+        // Можно сажать только если полита СЕГОДНЯ
         return isPlowed && isWatered && !isPlanted;
     }
 
     public void MarkPlanted()
     {
         isPlanted = true;
+        SaveSystem.MarkTileChanged(GetGridPos());
     }
 
     public void MarkHarvested()
     {
         isPlanted = false;
-        daysWithoutWater =0;
-        spriteRenderer.sprite = plowedSprite;
-    }
-
-    //сбросить полив
-    public void ClearWater()
-    {
+        daysWithoutWater = 0;
         isWatered = false;
-        spriteRenderer.sprite = plowedSprite;
+        wasWateredYesterday = false;
+        UpdateVisual();
+        SaveSystem.MarkTileChanged(GetGridPos());
     }
 
-    public void SetWatered(bool watered)
+    public void ClearDailyWater()
     {
-        isWatered = watered;
-        spriteRenderer.sprite = watered ? wateredSprite : plowedSprite;
-    }
-
-    public void LoadFromSaveData(SaveData data)
-    {
-        if (data == null || spriteRenderer == null) return;
-
-        isPlowed = data.isPlowed;
-        spriteRenderer.sprite = isPlowed ?
-            (data.isWatered ? wateredSprite : plowedSprite) :
-            normalSprite;
-    }
-
-    void Start()
-    {
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
+        // При переходе на новый день:
+        // 1. Если была полита сегодня -> становится полита вчера
+        // 2. Сбрасываем полив сегодня
+        if (isWatered)
         {
-            spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            wasWateredYesterday = true;
         }
-
-        // Инициализация начального спрайта
-        spriteRenderer.sprite = normalSprite;
+        isWatered = false;
+        
+        UpdateVisual();
+        SaveSystem.MarkTileChanged(GetGridPos());
     }
 
-    public void Plow()
+    public void DryOut()
     {
-        if (!isPlowed && plowedSprite != null)
+        if (isPlowed && !isWatered)
         {
-            spriteRenderer.sprite = plowedSprite;
-            isPlowed = true;
-            Debug.Log("Земля вспахана!");
-
-            // Сообщаем системе сохранений, что этот тайл изменён
-            Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
-            SaveSystem.MarkTileChanged(gridPos);
-        }
-    }
-    public void Water()
-    {
-        if (isPlowed)
-        {
-            var wateringCan = GetComponent<SoilTileWateringCan>();
-            if (wateringCan != null)
+            daysWithoutWater++;
+            
+            // Если земля не поливалась 2 дня
+            if (daysWithoutWater >= 2)
             {
-                wateringCan.Water();
-                // Не устанавливаем спрайт здесь - это делает SoilTileWateringCan
-                // Отмечаем изменение
-                Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
+                isPlowed = false;
+                wasWateredYesterday = false;
+                isPlanted = false;
+                daysWithoutWater = 0;
+                
+                // Удаляем растение если есть
+                var gridPos = GetGridPos();
+                if (CropsManager.Instance != null && CropsManager.Instance.allCrops.ContainsKey(gridPos))
+                {
+                    var crop = CropsManager.Instance.allCrops[gridPos];
+                    if (crop != null)
+                    {
+                        Destroy(crop.gameObject);
+                    }
+                    CropsManager.Instance.allCrops.Remove(gridPos);
+                }
+                
+                UpdateVisual();
                 SaveSystem.MarkTileChanged(gridPos);
+                Debug.Log($"Почва высохла и вернулась в обычное состояние на {gridPos}");
+            }
+            else if (daysWithoutWater == 1)
+            {
+                // Просто обновляем визуал для сухой земли
+                UpdateVisual();
             }
         }
     }
 
-    public void ResetAfterPlanting()
-    {
-        if (wateringCan != null)
-        {
-            wateringCan.SetWateredState(false);
-        }
-        spriteRenderer.sprite = plowedSprite;
-    }
-
+    // -----------------------
+    // SAVE / LOAD
+    // -----------------------
     public SaveData GetSaveData()
     {
         return new SaveData
         {
             position = transform.position,
-            isPlowed = this.isPlowed,
-            isWatered = GetComponent<SoilTileWateringCan>()?.isWatered ?? false
+            isPlowed = isPlowed,
+            isWatered = isWatered,
+            isPlanted = isPlanted,
+            daysWithoutWater = daysWithoutWater,
+            wasWateredYesterday = wasWateredYesterday // Добавить в SaveData
         };
     }
-    
 
-    // public void LoadFromSaveData(SaveData data)
-    // {
-    //     if (data == null) return;
-        
-    //     isPlowed = data.isPlowed;
-    //     if (isPlowed && plowedSprite != null)
-    //     {
-    //         spriteRenderer.sprite = plowedSprite;
-    //     }
+    public void LoadFromSaveData(SaveData data)
+    {
+        isPlowed = data.isPlowed;
+        isWatered = data.isWatered;
+        isPlanted = data.isPlanted;
+        daysWithoutWater = data.daysWithoutWater;
+        wasWateredYesterday = data.wasWateredYesterday;
 
-    //     var wateringCan = GetComponent<SoilTileWateringCan>();
-    //     if (wateringCan != null)
-    //     {
-    //         wateringCan.isWatered = data.isWatered;
-    //         wateringCan.UpdateVisual();
-    //     }
-    // }
+        UpdateVisual();
+    }
+
+    // -----------------------
+    private Vector2Int GetGridPos()
+    {
+        return FarmGrid.Instance.WorldToGridPosition(transform.position);
+    }
 }

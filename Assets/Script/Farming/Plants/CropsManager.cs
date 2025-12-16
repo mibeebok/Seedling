@@ -16,7 +16,7 @@ public class CropsManager : MonoBehaviour
     [SerializeField] private CropBehaviour beetrootPrefab;
     [SerializeField] private CropBehaviour rastberryPrefab;
 
-    private Dictionary<Vector2Int, CropBehaviour> allCrops =new Dictionary<Vector2Int, CropBehaviour>();
+    public Dictionary<Vector2Int, CropBehaviour> allCrops =new Dictionary<Vector2Int, CropBehaviour>();
     private Dictionary<Vector2Int, CropBehaviour> plantedCrops = 
     new Dictionary<Vector2Int, CropBehaviour>();
 
@@ -33,6 +33,23 @@ public class CropsManager : MonoBehaviour
 
         if (Instance == null) Instance = this;
         else return;
+    }
+    private void Start()
+    {
+        HouseController.OnNewDay += OnNewDay;
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q)) // Тестовая кнопка
+        {
+            Debug.Log("=== ТЕСТОВЫЙ ВЫЗОВ OnNewDay ===");
+            OnNewDay();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        HouseController.OnNewDay -= OnNewDay;
     }
 
     public Crop GetCropData(CropType type)
@@ -101,6 +118,9 @@ public class CropsManager : MonoBehaviour
         }
 
         // 6 — Создаём объект растения
+        Vector3 spawnPosition = FarmGrid.Instance.GridToWorldPosition(gridPos);
+        spawnPosition.z = -0.1f;
+        
         CropBehaviour newCrop = Instantiate(
             prefab,
             FarmGrid.Instance.GridToWorldPosition(gridPos),
@@ -115,12 +135,13 @@ public class CropsManager : MonoBehaviour
 
         // 7 — Добавляем в словарь
         allCrops.Add(gridPos, newCrop);
-
-        // НЕТ: не сбрасываем состояние воды здесь! НЕ вызываем ResetAfterPlanting()
-        //soilTile.ResetAfterPlanting(); // ← УДАЛИТЬ
-
-
-        // 8 — Сбрасываем состояние почвы, т.к. растение посажено
+    
+        // 8 — Немедленно обновляем визуал растения
+        newCrop.UpdateVisual();
+        
+        // 9 — Помечаем как посаженное
+        soilTile.MarkPlanted();
+        
         Debug.Log($"✔ Посажено: {seedItem.cropType} на {gridPos}");
         return true;
     }
@@ -140,37 +161,95 @@ public class CropsManager : MonoBehaviour
 
     public void OnNewDay()
     {
-        var keys = new List<Vector2Int>(allCrops.Keys);
+        Debug.Log("=== НАЧАЛСЯ НОВЫЙ ДЕНЬ ===");
+        Debug.Log($"Всего растений: {allCrops.Count}");
 
-        foreach (var pos in keys)
+        
+        // Шаг 1: Сначала обрабатываем ВСЕ растения - рост
+        var cropKeys = new List<Vector2Int>(allCrops.Keys);
+        foreach (var pos in cropKeys)
         {
-            if (!allCrops.TryGetValue(pos, out CropBehaviour crop)) continue;
+            Debug.Log($"Обработка растения на позиции {pos}");
+            
+            if (!allCrops.TryGetValue(pos, out CropBehaviour crop)) 
+            {
+                Debug.Log($"Растение не найдено в словаре для позиции {pos}");
+                continue;
+            }
 
             GameObject tileObj = FarmGrid.Instance.GetTileAt(pos);
-            SoilTile soil = tileObj?.GetComponent<SoilTile>();
-
+            if (tileObj == null)
+            {
+                Debug.Log($"Тайл не найден для позиции {pos}");
+                continue;
+            }
+            
+            SoilTile soil = tileObj.GetComponent<SoilTile>();
             if (soil == null)
             {
+                Debug.Log($"SoilTile не найден для позиции {pos}");
                 Destroy(crop.gameObject);
                 allCrops.Remove(pos);
                 continue;
             }
 
-            if (!soil.isWatered)
+            // Проверяем состояние почвы для растения
+            if (soil.isWatered)
             {
+                // Если почва полита СЕГОДНЯ - растение растет
+                Debug.Log($"Растение на {pos} полито, растет...");
+                crop.Grow();
+                soil.daysWithoutWater = 0; // Сбрасываем счетчик дней без воды
+            }
+            else if (soil.wasWateredYesterday)
+            {
+                // Если почва была полита ВЧЕРА (но не сегодня) - все еще может расти
+                Debug.Log($"Растение на {pos} было полито вчера, все еще может расти...");
+                crop.Grow();
+                soil.daysWithoutWater = 1; // Один день без воды
+            }
+            else
+            {
+                // Не поливалось ни сегодня, ни вчера
                 soil.daysWithoutWater++;
+                Debug.Log($"Растение на {pos} не поливалось. Дней без воды: {soil.daysWithoutWater}");
 
                 if (soil.daysWithoutWater >= 2)
                 {
                     crop.SetRotten();
+                    Debug.Log($"Растение на {pos} испортилось из-за недостатка воды");
+                }
+                else
+                {
+                    // Может все еще расти один день без воды
+                    crop.Grow();
                 }
             }
-
         }
 
-        FindFirstObjectByType<SoilTileWateringCan>()?.ResetAllWateredTiles();
-
+        // Шаг 2: Затем обрабатываем высыхание ВСЕЙ почвы
+        var allTiles = Object.FindObjectsOfType<SoilTile>();
+        Debug.Log($"Обработка высыхания {allTiles.Length} тайлов почвы");
+        
+        foreach (var tile in allTiles)
+        {
+            // Сохраняем состояние "полито вчера" перед сбросом
+            bool wasJustWatered = tile.isWatered;
+            
+            // Сбрасываем полив "сегодня" для следующего дня
+            tile.ClearDailyWater(); // Этот метод теперь сохраняет wasWateredYesterday
+            
+            // Если не было полито сегодня, обрабатываем высыхание
+            if (!wasJustWatered)
+            {
+                tile.DryOut();
+            }
+        }
+        
+        Debug.Log("=== НОВЫЙ ДЕНЬ ЗАВЕРШЕН ===");
     }
+
+
 
     public void CollectCrop(Vector2Int gridPosition)
     {

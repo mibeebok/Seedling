@@ -21,9 +21,9 @@ MonoBehaviour:
   timerIsRunning: 0
   currentGrowthStage: 0
   growthStages:
-  - {fileID: 11400000, guid: 516302e527c3c9a45acd609d7cbc4988, type: 2}
-  - {fileID: 11400000, guid: 37129426f1690c04c8a09c9046b48ed1, type: 2}
-  - {fileID: 11400000, guid: 77b0e30e1f9c0534194247ca5cdfd0f4, type: 2}
+  - {fileID: 11400000, guid: f21636b10d3c9f144b5b5f68af6865e2, type: 2}
+  - {fileID: 11400000, guid: 58831b092f3880e47b612a4dd1b22aed, type: 2}
+  - {fileID: 11400000, guid: 3c7c4cbb485134d4ab782a8972d3a3d9, type: 2}
   harvestItem:
     id: 8
     name: potato

@@ -14,7 +14,7 @@ TagManager:
   - UI
   - NPC
   - Item
-  - Plant
+  - Plants
   - 
   - Inventar
   - Menu
@@ -41,6 +41,21 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 158041207
+    locked: 0
+  - name: Ground
+    uniqueID: 3381310743
+    locked: 0
+  - name: Plants
+    uniqueID: 1930675463
+    locked: 0
+  - name: Player
+    uniqueID: 2318106021
+    locked: 0
+  - name: UI
+    uniqueID: 4130658415
     locked: 0
   m_RenderingLayers:
   - Default

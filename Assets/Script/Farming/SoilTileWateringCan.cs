@@ -1,58 +1,29 @@
-using System.Collections;
 using UnityEngine;
 
 public class SoilTileWateringCan : MonoBehaviour
 {
-    public bool isWatered = false;
-    public Color dryColor = Color.white;
-    public Color wateredColor = new Color(0.5f, 0.8f, 1f);
-    public SpriteRenderer sr;
+    private SoilTile soil;
 
-    void Awake()
+    private void Awake()
     {
-        sr = GetComponent<SpriteRenderer>();
-        UpdateVisual();
+        soil = GetComponent<SoilTile>();
     }
 
     public void Water()
     {
-        if (isWatered) return;
-        
-        isWatered = true;
-        UpdateVisual();
-        
-        // Убедимся, что SoilTile знает о поливе
-        SoilTile soilTile = GetComponent<SoilTile>();
-        if (soilTile != null && soilTile.wateredSprite != null)
+        if (soil != null)
         {
-            soilTile.isWatered = true;
-            soilTile.spriteRenderer.sprite = soilTile.wateredSprite;
+            soil.Water();
         }
     }
 
-    public IEnumerator WaterWithDelay(float delay)
+    public static void ResetAllWateredTiles()
     {
-        yield return new WaitForSeconds(delay);
-        Water();
-    }
-
-    public void UpdateVisual()
-    {
-        sr.color = isWatered ? wateredColor : dryColor;
-    }
-    public void SetWateredState(bool watered)
-    {
-        isWatered = watered;
-        UpdateVisual();
-    }
-    public void ResetAllWateredTiles()
-    {
-        SoilTileWateringCan[] wateredTiles = FindObjectsOfType<SoilTileWateringCan>();
-        foreach (SoilTileWateringCan tile in wateredTiles)
+        var all = Object.FindObjectsOfType<SoilTile>();
+        foreach (var tile in all)
         {
-            tile.SetWateredState(false);
+            tile.ClearDailyWater(); // Этот метод теперь в SoilTile
         }
-        Debug.Log($"Сброшено {wateredTiles.Length} политых блоков");
+        Debug.Log($"Сброшен полив для {all.Length} тайлов");
     }
-    
 }

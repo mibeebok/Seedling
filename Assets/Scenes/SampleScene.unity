@@ -4010,7 +4010,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -3.3599548, y: -0.6700134}
+  m_AnchoredPosition: {x: -3.3599854, y: -0.6700134}
   m_SizeDelta: {x: -382.9, y: -232.42}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &211389001
@@ -12092,7 +12092,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000077846b0917b58ac907c51373a57d2b8a6fd834f6
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -16714,14 +16714,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8bf44fe9ef16074aaebb0575f0231a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlanted: 0
+  isPlowed: 0
   isWatered: 0
+  wasWateredYesterday: 0
+  isPlanted: 0
   daysWithoutWater: 0
   normalSprite: {fileID: 3316474154486840314, guid: 83db254a238e8aa41b38a36c82e71d07, type: 3}
   plowedSprite: {fileID: 2068271482, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
-  wateredSprite: {fileID: -552690664, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
+  plowedDrySprite: {fileID: -552690664, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
+  wateredSprite: {fileID: -1379437884, guid: 30cabd6932b1e2c4abce5d3b3db9c809, type: 3}
+  wateredYesterdaySprite: {fileID: -552690664, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
   spriteRenderer: {fileID: 0}
-  isPlowed: 0
 --- !u!114 &897679209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16734,10 +16737,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ef6bf971146394f9a57300c0541636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isWatered: 0
-  dryColor: {r: 1, g: 1, b: 1, a: 1}
-  wateredColor: {r: 0.5, g: 0.8, b: 1, a: 1}
-  sr: {fileID: 0}
 --- !u!1 &900144762
 GameObject:
   m_ObjectHideFlags: 0
@@ -32343,7 +32342,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 0000000077846b0917b58ac907c51373a57d2b8a6fd834f6
   m_LightCookieSprite: {fileID: 21300000, guid: 119f93d0bcbf1e743bf5fcf237507d39, type: 3}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0

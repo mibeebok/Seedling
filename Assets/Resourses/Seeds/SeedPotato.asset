@@ -19,7 +19,7 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   timeRemaining: 0
   timerIsRunning: 0
-  currentGrowthStage: 0
+  currentGrowthStage: 3
   growthStages:
   - {fileID: 11400000, guid: f21636b10d3c9f144b5b5f68af6865e2, type: 2}
   - {fileID: 11400000, guid: 58831b092f3880e47b612a4dd1b22aed, type: 2}
