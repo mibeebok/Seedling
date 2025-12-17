@@ -24,16 +24,41 @@ public class CropBehaviour : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
             spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-        transform.localScale = new Vector3(10f, 10f, 10f);
+
+        transform.localScale = new Vector3(2f, 2f, 2f);
+        
+        Vector3 pos = transform.position;
+        pos.z = -0.1f;
+        transform.position = pos;
+
         UpdateSorting();
         UpdateVisual();
         
-        // Начинаем с первой стадии
         currentStage = 0;
     }
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.C)) // Check camera
+        {
+            Camera cam = Camera.main;
+            if (cam != null)
+            {
+                Vector3 screenPos = cam.WorldToScreenPoint(transform.position);
+                Debug.Log($"Экранная позиция: {screenPos}");
+                
+                // Если Z < 0 - растение за камерой
+                if (screenPos.z < 0)
+                {
+                    Debug.LogError("Растение ЗА КАМЕРОЙ! Z = " + screenPos.z);
+                    // Переместите растение ближе к камере
+                    Vector3 pos = transform.position;
+                    pos.z = -5f; // Ближе к камере
+                    transform.position = pos;
+                }
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.I)) // Info button
         {
             Debug.Log("=== ИНФОРМАЦИЯ О РАСТЕНИИ ===");
@@ -53,27 +78,28 @@ public class CropBehaviour : MonoBehaviour
                 Debug.Log($"Bounds: {spriteRenderer.bounds}");
             }
         }
-    }// В CropBehaviour.cs добавьте:
-private void OnDrawGizmosSelected()
-{
-    // Рисуем красный куб вокруг растения в редакторе
-    Gizmos.color = Color.red;
-    Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
-    
-    // Рисуем зеленую линию вверх
-    Gizmos.color = Color.green;
-    Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 0.3f);
-}
-
-private void OnDrawGizmos()
-{
-    // В Play Mode рисуем постоянно
-    if (Application.isPlaying)
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
-}
+
+//следующие 2 метода логирование
+    private void OnDrawGizmosSelected()
+    {
+        // Рисуем красный куб вокруг растения в редакторе
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
+        
+        // Рисуем зеленую линию вверх
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 0.3f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, 0.2f);
+        }
+    }
 
     private void UpdateSorting()
     {
@@ -159,4 +185,5 @@ private void OnDrawGizmos()
         currentStage = cropData.growthStages.Length - 1;
         UpdateVisual();
     }
+    
 }

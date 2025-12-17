@@ -78,8 +78,6 @@ public class FarmGrid : Sounds
         }
     }
 
-
-
     
     private void GenerateGrid(System.Action onComplete = null)
     {
@@ -100,14 +98,20 @@ public class FarmGrid : Sounds
     }
     public Vector3 GridToWorldPosition(Vector2Int gridPosition)
     {
-        //  Tilemap
-        if (TryGetComponent<Tilemap>(out var tilemap))
-        {
-            return tilemap.GetCellCenterWorld(new Vector3Int(gridPosition.x, gridPosition.y, 0));
-        }
+        // Вычислите центр сетки как в GenerateGridCoroutine
+        Vector3 gridCenter = new Vector3(
+            (gridSizeX - 1) * cellSize * 0.5f,
+            (gridSizeY - 1) * cellSize * 0.5f,
+            0
+        );
         
-        //  обычная сетка
-        return new Vector3(gridPosition.x, gridPosition.y, 0);
+        // Используйте ТОЧНУЮ ЖЕ формулу что и при генерации тайлов:
+        float worldX = gridPosition.x * cellSize - gridCenter.x;
+        float worldY = gridPosition.y * cellSize - gridCenter.y;
+        
+        Debug.Log($"GridToWorld: grid({gridPosition.x},{gridPosition.y}) → world({worldX},{worldY})");
+        
+        return new Vector3(worldX, worldY, 0);
     }
 
     private IEnumerator GenerateGridCoroutine(Vector3 center, System.Action onComplete)
@@ -137,10 +141,40 @@ public class FarmGrid : Sounds
 
     public Vector2Int WorldToGridPosition(Vector3 worldPosition)
     {
-        return new Vector2Int(
-            Mathf.FloorToInt(worldPosition.x / cellSize + gridSizeX * 0.5f),
-            Mathf.FloorToInt(worldPosition.y / cellSize + gridSizeY * 0.5f)
+        Vector3 gridCenter = new Vector3(
+            (gridSizeX - 1) * cellSize * 0.5f,
+            (gridSizeY - 1) * cellSize * 0.5f,
+            0
         );
+        
+        // Обратная формула:
+        int gridX = Mathf.FloorToInt((worldPosition.x + gridCenter.x) / cellSize);
+        int gridY = Mathf.FloorToInt((worldPosition.y + gridCenter.y) / cellSize);
+        
+        Debug.Log($"WorldToGrid: world({worldPosition.x},{worldPosition.y}) → grid({gridX},{gridY})");
+        
+        return new Vector2Int(gridX, gridY);
+    }
+    private void OnDrawGizmos()
+    {
+        if (!Application.isPlaying || grid == null) return;
+        
+        // Нарисовать сетку для отладки
+        Gizmos.color = Color.cyan;
+        
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int y = 0; y < gridSizeY; y++)
+            {
+                Vector3 worldPos = GridToWorldPosition(new Vector2Int(x, y));
+                Gizmos.DrawWireCube(worldPos, new Vector3(cellSize, cellSize, 0.1f));
+                
+                // Подпись координат
+                #if UNITY_EDITOR
+                UnityEditor.Handles.Label(worldPos + Vector3.up * 0.2f, $"({x},{y})");
+                #endif
+            }
+        }
     }
 
     public GameObject GetTileAt(Vector2Int gridPos)

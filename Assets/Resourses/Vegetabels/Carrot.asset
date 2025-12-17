@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::Vegetable
   cropType: 4
-  isSeed: 0
+  isSeed: 1
   icon: {fileID: 1194125170, guid: 4a90f5883805ed74e80473f50bc71c84, type: 3}
   maxStack: 16
   position: {x: 0, y: 0, z: 0}

@@ -69,25 +69,19 @@ public class CropsManager : MonoBehaviour
 
     public bool TryPlantSeed(Item seedItem, Vector2 worldPosition)
     {
-        Debug.Log($"Пробуем посадить {seedItem.name}, тип: {seedItem.type}, культура: {seedItem.cropType}");
-
-        // 1 — Проверяем, что это семена
-        if (!seedItem.IsSeed())
-        {
-            Debug.Log("Этот предмет НЕ семена");
-            return false;
-        }
-
+        Debug.Log($"=== ПОСАДКА СЕМЕНИ ===");
+        Debug.Log($"Кликнули на позиции мира: {worldPosition}");
+        
         // 2 — Получаем клетку
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
-
+        Debug.Log($"Позиция сетки: {gridPos}");
+        
         // 3 — Проверяем в словаре, что клетка пустая
         if (allCrops.ContainsKey(gridPos))
         {
-            Debug.Log("На этой клетке уже растёт растение!");
+            Debug.Log($"На клетке {gridPos} уже есть растение!");
             return false;
         }
-
         // 4 — Проверяем тайл почвы
         GameObject tileObject = FarmGrid.Instance.GetTileAt(gridPos);
         if (tileObject == null)
@@ -119,14 +113,16 @@ public class CropsManager : MonoBehaviour
 
         // 6 — Создаём объект растения
         Vector3 spawnPosition = FarmGrid.Instance.GridToWorldPosition(gridPos);
-        spawnPosition.z = -0.1f;
+        Debug.Log($"Обратно в мир: {spawnPosition}");
         
         CropBehaviour newCrop = Instantiate(
             prefab,
-            FarmGrid.Instance.GridToWorldPosition(gridPos),
+            spawnPosition,
             Quaternion.identity
         );
-
+        
+        Debug.Log($"Растение создано на позиции: {newCrop.transform.position}");
+        Debug.Log($"Разница: {worldPosition} → {gridPos} → {spawnPosition}");
         // 6.5 — назначаем ScriptableObject
         newCrop.cropData = GetCropData(seedItem.cropType);
 
@@ -280,4 +276,5 @@ public class CropsManager : MonoBehaviour
         }
         return null;
     }
+    
 }

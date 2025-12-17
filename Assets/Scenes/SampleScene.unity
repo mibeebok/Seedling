@@ -4757,8 +4757,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -164308881
+  m_SortingLayer: 5
   m_SortingOrder: 10
   m_Sprite: {fileID: -591665054, guid: 3d23cf9dd7dcca648b8b71ba94a53741, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -16723,7 +16723,7 @@ MonoBehaviour:
   plowedSprite: {fileID: 2068271482, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
   plowedDrySprite: {fileID: -552690664, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
   wateredSprite: {fileID: -1379437884, guid: 30cabd6932b1e2c4abce5d3b3db9c809, type: 3}
-  wateredYesterdaySprite: {fileID: -552690664, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
+  wateredYesterdaySprite: {fileID: 2068271482, guid: 7e3bdaa8ec4d133408a3982ec55eda7a, type: 3}
   spriteRenderer: {fileID: 0}
 --- !u!114 &897679209
 MonoBehaviour:
@@ -25828,14 +25828,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 520f04ea13be22d47ad94c19533ad800, type: 2}
   - {fileID: 11400000, guid: a16310b9e1bf376439e96bca3ba54791, type: 2}
   - {fileID: 11400000, guid: 0b9f033d1b73b75489c45c09e3c82e2e, type: 2}
-  - {fileID: 11400000, guid: 54334214adc178b4eab64562d2b2994e, type: 2}
-  - {fileID: 11400000, guid: b9374ee49e0dee34287c543dc5780216, type: 2}
-  - {fileID: 11400000, guid: 5d6349552cc840640a543f6fcb606f21, type: 2}
-  - {fileID: 11400000, guid: 774ab6566759a6c4eb2ff8149cfe3978, type: 2}
-  potatoPrefab: {fileID: -4344228637858820795, guid: 7c1348c8c4ceb7946b58902459c7ab16, type: 3}
-  carrotPrefab: {fileID: 8567798898134232894, guid: 183fb162de1f99a428976adee22e2503, type: 3}
-  beetrootPrefab: {fileID: -8643017181122882447, guid: 4a7e08f4f75d99b4092482098984573d, type: 3}
-  rastberryPrefab: {fileID: 3637687056012283929, guid: 1e0c0decd22b1c346bfc94b11881d888, type: 3}
+  potatoPrefab: {fileID: 9164272425650921196, guid: 4755269d7eeaf04498f489485042c7b7, type: 3}
+  carrotPrefab: {fileID: 6554428730129939510, guid: e24b9b73077d2ee49918d4e95139f6f3, type: 3}
+  beetrootPrefab: {fileID: 3913918447787952997, guid: a2a621e588b09934d972add93358404a, type: 3}
+  rastberryPrefab: {fileID: 4118802756570766953, guid: 8a4d6f42087320743b894f9982b4c746, type: 3}
 --- !u!114 &1393353001
 MonoBehaviour:
   m_ObjectHideFlags: 0
