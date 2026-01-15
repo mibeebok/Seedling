@@ -14,6 +14,8 @@ public class MenuController : MonoBehaviour
     public GameObject menuPanel;
     public PauseButtonPosition pauseButtonController;
 
+    public bool isOpened = false;
+
     void Start()
     {
         if (menuPanel == null)
@@ -23,7 +25,7 @@ public class MenuController : MonoBehaviour
 
         if (pauseButtonController == null)
         {
-            pauseButtonController = FindObjectOfType<PauseButtonPosition>();
+            //pauseButtonController = FindObjectOfType<PauseButtonPosition>();
             if (pauseButtonController == null)
             {
                 Debug.LogError("PauseButtonPosition не найден на сцене!");
@@ -48,6 +50,14 @@ public class MenuController : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            ShowHideMenu();
+        }
+    }
+
     public void ContinueButton()
     {
         if (menuPanel != null)
@@ -67,15 +77,10 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    public void Save() {
-
+    public void ShowHideMenu()
+    {
+        isOpened = !isOpened;
+        GetComponent<Canvas> ().enabled = isOpened;//Выключение или отключение canvas
     }
 
-    public void Exit() {
-
-    }
-
-    public void Setting(){
-
-    }
 }
