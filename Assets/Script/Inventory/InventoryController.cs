@@ -71,9 +71,6 @@ public class InventoryController : MonoBehaviour
         if (fullInventoryUI != null)
             fullInventoryUI.SetActive(false);
 
-        if (fullInventoryUI != null)
-            fullInventoryUI.SetActive(false);
-
         if (player != null)
             lastPlayerPosition = player.position;
 
@@ -328,21 +325,11 @@ public class InventoryController : MonoBehaviour
             fullInventoryUI.SetActive(isInventoryOpen);
             if (isInventoryOpen)
             {
-                CenterInventory();
                 mainInventory?.UpdateInventory();
             }
         }
     }
 
-    void CenterInventory()
-    {
-        if (fullInventoryUI != null)
-        {
-            Vector3 centerPos = Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 10f));
-            centerPos.z = 0;
-            fullInventoryUI.transform.position = centerPos;
-        }
-    }
 
     void CloseInventory()
     {

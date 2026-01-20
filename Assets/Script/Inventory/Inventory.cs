@@ -10,18 +10,22 @@ public class Inventory : MonoBehaviour
     public GameObject gameObjectShow;
     public GameObject InventoryMainObject;
     public int maxCount;
-
-    public Camera cam;
     public EventSystem es;
     public int currentID;
     public ItemInventory currentItem;
     public RectTransform movingObject;
     public Vector3 offset;
-    // Ссылка на хотбар
-    public InventoryController hotbar;
+
 
      private void Start() {
         InitializeInventory();
+    }
+    void Update()
+    {
+        if (currentID != -1)
+        {
+            MoveObject();
+        }
     }
 
     public void InitializeInventory()
@@ -102,9 +106,6 @@ public class Inventory : MonoBehaviour
             RectTransform rt = newItem.GetComponent<RectTransform>();
             rt.localPosition = Vector3.zero;
             rt.localScale = Vector3.one;
-            rt.anchorMin = new Vector2(0, 1);
-            rt.anchorMax = new Vector2(0, 1);
-            rt.pivot = new Vector2(0, 1);
             
             // Рассчитываем позицию ячейки в сетке инвентаря
             float xPos = (i % 8) * (rt.rect.width + 5); // 8 колонок, 5px отступ
@@ -159,6 +160,8 @@ public class Inventory : MonoBehaviour
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
 
+            movingObject.position = Input.mousePosition + offset;
+
             AddItem(currentID, data.items[0], 0);
         }else{
             AddInventoryItem(currentID, items[int.Parse(es.currentSelectedGameObject.name)]);
@@ -170,10 +173,11 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void MoveObject(){
-        Vector3 pos = Input.mousePosition +offset;
-        pos.z = InventoryMainObject.GetComponent<RectTransform>().position.z;
-        movingObject.position = cam.ScreenToWorldPoint(pos);
+    public void MoveObject()
+    {
+        if (currentID == -1) return;
+        
+        movingObject.position = Input.mousePosition + offset;
 
     }
     public ItemInventory CopyInventoryItem(ItemInventory old){

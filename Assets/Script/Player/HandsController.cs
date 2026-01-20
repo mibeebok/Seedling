@@ -12,13 +12,6 @@ public class HandsController : MonoBehaviour
     
     void Update()
     {
-        bool isUsingItem = IsUsingItem();
-        
-        // Управляем аниматором
-        if (handAnimator != null)
-        {
-            handAnimator.SetBool("IsUsing", isUsingItem);
-        }
         
         // Включаем/выключаем рендерер в зависимости от состояния анимации
         if (handAnimator != null && handAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))

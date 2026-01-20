@@ -150,9 +150,7 @@ public class FarmGrid : Sounds
         // Обратная формула:
         int gridX = Mathf.FloorToInt((worldPosition.x + gridCenter.x) / cellSize);
         int gridY = Mathf.FloorToInt((worldPosition.y + gridCenter.y) / cellSize);
-        
-        Debug.Log($"WorldToGrid: world({worldPosition.x},{worldPosition.y}) → grid({gridX},{gridY})");
-        
+                
         return new Vector2Int(gridX, gridY);
     }
     private void OnDrawGizmos()
