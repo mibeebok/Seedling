@@ -75,7 +75,19 @@ public class CropsManager : MonoBehaviour
         // 2 — Получаем клетку
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
         Debug.Log($"Позиция сетки: {gridPos}");
+       
+       
+       
+        // Проверьте позицию мыши в пикселях
+        Vector3 mouseScreenPos = Input.mousePosition;
+        Debug.Log($"Мышь на экране: {mouseScreenPos}");
         
+        // Проверьте что возвращает Camera.main.ScreenToWorldPoint
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(
+            new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
+        Debug.Log($"Мышь в мире (через камеру): {mouseWorldPos}");
+
+
         // 3 — Проверяем в словаре, что клетка пустая
         if (allCrops.ContainsKey(gridPos))
         {
