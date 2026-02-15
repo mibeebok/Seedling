@@ -88,17 +88,17 @@ public class PauseButtonPosition : MonoBehaviour
             }
 
             // меню по центру
-            if (menuActive){ 
+            // if (menuActive){ 
 
-                shadow.transform.position = uiCamera.transform.position + uiCamera.transform.forward * 4f;
+            //     shadow.transform.position = uiCamera.transform.position + uiCamera.transform.forward * 4f;
 
-                Vector3 centerViewportPos = new Vector3(0.5f, 0.5f, 4f);
-                //конвентируем в мировые координаты
-                Vector3 centerWorldPos = uiCamera.ViewportToWorldPoint(centerViewportPos);
+            //     Vector3 centerViewportPos = new Vector3(0.5f, 0.5f, 4f);
+            //     //конвентируем в мировые координаты
+            //     Vector3 centerWorldPos = uiCamera.ViewportToWorldPoint(centerViewportPos);
 
-                centerWorldPos.z =0;
-                menu.transform.position = centerWorldPos;
-            }
+            //     centerWorldPos.z =0;
+            //     menu.transform.position = centerWorldPos;
+            // }
 
             Time.timeScale = menuActive ? 0f : 1f;
 
