@@ -50,13 +50,6 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            ShowHideMenu();
-        }
-    }
 
     public void ContinueButton()
     {
@@ -75,12 +68,6 @@ public class MenuController : MonoBehaviour
             Debug.LogWarning("Контроллер паузы не найден, использую Time.timeScale");
             Time.timeScale = 1f;
         }
-    }
-
-    public void ShowHideMenu()
-    {
-        isOpened = !isOpened;
-        GetComponent<Canvas> ().enabled = isOpened;//Выключение или отключение canvas
     }
 
 }

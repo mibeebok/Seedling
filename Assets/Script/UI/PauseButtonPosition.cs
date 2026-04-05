@@ -6,11 +6,13 @@ public class PauseButtonPosition : MonoBehaviour
 {
     [Header("Настройки")]
     public Camera uiCamera;
-    public Vector2 screenPosition = new Vector2(0.95f, 0.9f); // Право-верх
+    public Vector2 screenPosition = new Vector2(0.95f, 0.9f);
     public float pixelOffsetX = -50f;
     public float pixelOffsetY = -50f;
     public GameObject menu;
     public GameObject shadow;
+
+    private bool isMenuOpen = false;
 
     void Start()
     {
@@ -40,9 +42,14 @@ public class PauseButtonPosition : MonoBehaviour
     {
         UpdatePosition();
         
-        if (Input.GetMouseButtonDown(0))
+        if (!isMenuOpen && Input.GetMouseButtonDown(0))
         {
             CheckClick();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleMenu();
         }
     }
 
@@ -75,6 +82,7 @@ public class PauseButtonPosition : MonoBehaviour
     void ToggleMenu(){
         if (menu != null) {
             //подключение состояния меню
+            isMenuOpen = !menu.activeSelf;
             bool menuActive = !menu.activeSelf; //если включен будет true иначе false
             
             //активное(видимое) состояние menu если menuActiven == true
@@ -110,60 +118,61 @@ public class PauseButtonPosition : MonoBehaviour
     }
 
     public void ResumeGame()
-{
-    //  Через ToggleMenu (если меню активно)
-    if (menu != null && menu.activeSelf)
     {
-        ToggleMenu();
-        return;
+        //  Через ToggleMenu (если меню активно)
+        if (menu != null && menu.activeSelf)
+        {
+            ToggleMenu();
+            return;
+        }
+
+        //  Принудительное продолжение
+        if (shadow != null) shadow.SetActive(false);
+        Time.timeScale = 1f;
+        isMenuOpen = false;
+        Debug.Log("Игра продолжена через ResumeGame()");
     }
 
-    //  Принудительное продолжение
-    if (shadow != null) shadow.SetActive(false);
-    Time.timeScale = 1f;
-    Debug.Log("Игра продолжена через ResumeGame()");
-}
-
-void CreateDarkBackground() 
-{
-    shadow = new GameObject("Shadow");
-    var spriteRenderer = shadow.AddComponent<SpriteRenderer>();
-    
-    // Создаем текстуру большего размера (не обязательно, но может помочь)
-    var texture = new Texture2D(32, 32, TextureFormat.RGBA32, false);
-    
-    // Закрашиваем всю текстуру
-    Color[] pixels = new Color[32 * 32];
-    for(int i = 0; i < pixels.Length; i++)
-        pixels[i] = new Color(0, 0, 0, 0.7f);
-    
-    texture.SetPixels(pixels);
-    texture.Apply();
-    texture.filterMode = FilterMode.Point;
-    
-    // Создаем спрайт
-    spriteRenderer.sprite = Sprite.Create(
-        texture,
-        new Rect(0, 0, texture.width, texture.height),
-        new Vector2(0.5f, 0.5f),
-        100
-    );
-    
-    // Убираем Sliced режим - он нам не нужен
-    spriteRenderer.drawMode = SpriteDrawMode.Simple;
-    
-    spriteRenderer.sortingLayerName = "UI";
-    spriteRenderer.sortingOrder = 5;
-
-    if(uiCamera == null)
+    void CreateDarkBackground() 
     {
-        uiCamera = Camera.main;
-        if (uiCamera == null)
-            Debug.LogError("Не найдена основная камера");
-    }
+        shadow = new GameObject("Shadow");
+        var spriteRenderer = shadow.AddComponent<SpriteRenderer>();
+        
+        // Создаем текстуру большего размера (не обязательно, но может помочь)
+        var texture = new Texture2D(32, 32, TextureFormat.RGBA32, false);
+        
+        // Закрашиваем всю текстуру
+        Color[] pixels = new Color[32 * 32];
+        for(int i = 0; i < pixels.Length; i++)
+            pixels[i] = new Color(0, 0, 0, 0.7f);
+        
+        texture.SetPixels(pixels);
+        texture.Apply();
+        texture.filterMode = FilterMode.Point;
+        
+        // Создаем спрайт
+        spriteRenderer.sprite = Sprite.Create(
+            texture,
+            new Rect(0, 0, texture.width, texture.height),
+            new Vector2(0.5f, 0.5f),
+            100
+        );
+        
+        // Убираем Sliced режим - он нам не нужен
+        spriteRenderer.drawMode = SpriteDrawMode.Simple;
+        
+        spriteRenderer.sortingLayerName = "UI";
+        spriteRenderer.sortingOrder = 5;
 
-    UpdateDarkBackgroundSize();
-    shadow.SetActive(false);
+        if(uiCamera == null)
+        {
+            uiCamera = Camera.main;
+            if (uiCamera == null)
+                Debug.LogError("Не найдена основная камера");
+        }
+
+        UpdateDarkBackgroundSize();
+        shadow.SetActive(false);
 
     }
 
@@ -189,5 +198,6 @@ void CreateDarkBackground()
         // Позиционируем перед камерой
         shadow.transform.position = uiCamera.transform.position + uiCamera.transform.forward * 10f;
     }
+    public bool IsMenuOpen(){return isMenuOpen;}
    
 }

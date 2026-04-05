@@ -100,6 +100,11 @@ public class InventoryController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
+
+        PauseButtonPosition pauseButton = FindObjectOfType<PauseButtonPosition>();
+        if (pauseButton != null && pauseButton.IsMenuOpen())return;
+        
         HandlePlayerMovement();
         HandleInput();
         HandleDragAndDrop();

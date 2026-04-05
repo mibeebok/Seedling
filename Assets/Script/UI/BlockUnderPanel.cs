@@ -1,58 +1,87 @@
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BlockUnderPanel : MonoBehaviour
 {
+    [Header("Настрйоки")]
     [SerializeField] private GameObject panel;
-    private CanvasGroup canvasGroup;
+    [SerializeField] private GameObject parentMenu;
+    private CanvasGroup panelCanvasGroup;
+    private CanvasGroup parentMenuCanvasGroup;
     private Button button;
-    
+    private bool isPanelOpen = false;
+
     void Start()
     {
-        canvasGroup = panel.GetComponent<CanvasGroup>();
-        
-        if (canvasGroup != null)
+        panelCanvasGroup = panel.GetComponent<CanvasGroup>();
+        if (panelCanvasGroup == null)
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false; 
+            panelCanvasGroup = panel.AddComponent<CanvasGroup>();
+
         }
-        else
+
+        if (parentMenu != null)
         {
-            panel.SetActive(false);
+            parentMenuCanvasGroup = parentMenu.GetComponent<CanvasGroup>();
+            if(parentMenuCanvasGroup == null)
+            {
+                parentMenuCanvasGroup = parentMenu.AddComponent<CanvasGroup>();
+            }
         }
-        
+
+        panelCanvasGroup.alpha =0;
+        panelCanvasGroup.interactable = false;
+        panelCanvasGroup.blocksRaycasts = false;
+
         button = GetComponent<Button>();
-        button.onClick.AddListener(OpenPanel);
-    }
-    
-    void OpenPanel()
-    {
-        Debug.Log("Кнопка нажата!");
-        
-        if (canvasGroup != null)
+        if(button != null)
         {
-            canvasGroup.alpha = 1;
-            canvasGroup.interactable = true;
-            canvasGroup.blocksRaycasts = true; 
+            button.onClick.AddListener(TogglePanel);
+        }
+    }
+
+    public void TogglePanel()
+    {
+        if (isPanelOpen)
+        {
+            ClosePanel();
         }
         else
         {
-            panel.SetActive(true);
+            OpenPanel();
         }
     }
-    
+    public void OpenPanel()
+    {
+        panelCanvasGroup.alpha =1;
+        panelCanvasGroup.interactable = true;
+        panelCanvasGroup.blocksRaycasts = true;
+
+        if (parentMenuCanvasGroup != null)
+        {
+            parentMenuCanvasGroup.interactable = false;
+            parentMenuCanvasGroup.blocksRaycasts = false;
+        }
+        isPanelOpen = true;
+    }
+
     public void ClosePanel()
     {
-        if (canvasGroup != null)
+        panelCanvasGroup.alpha =0;
+        panelCanvasGroup.interactable = false;
+        panelCanvasGroup.blocksRaycasts = false;
+
+        if(parentMenuCanvasGroup != null)
         {
-            canvasGroup.alpha = 0;
-            canvasGroup.interactable = false;
-            canvasGroup.blocksRaycasts = false; 
+            panelCanvasGroup.interactable = true;
+            panelCanvasGroup.blocksRaycasts = true;
         }
-        else
-        {
-            panel.SetActive(false);
-        }
+        isPanelOpen=false;
     }
+    public bool IsPanelOpen()
+    {
+        return isPanelOpen;
+    }
+ 
 }

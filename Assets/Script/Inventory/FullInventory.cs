@@ -24,6 +24,7 @@ public class FullInventoryController : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(toggleKey))
         {
             ToggleInventory();

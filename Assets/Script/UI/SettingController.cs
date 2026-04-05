@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 
 public class SettingController : MonoBehaviour
 {
-    private bool isFullScreen = true;
+    public bool isFullScreen = true;
     public AudioMixer am;
     Resolution[] rsl;
     List<string> resolutions;
@@ -22,6 +22,7 @@ public class SettingController : MonoBehaviour
         dropdown.ClearOptions();
         dropdown.AddOptions(resolutions);
     }
+
     public void FulllScreenToggle()
     {
         isFullScreen = !isFullScreen;

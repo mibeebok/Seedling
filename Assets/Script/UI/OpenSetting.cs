@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class OpenSetting : MonoBehaviour
 {
-    [SerializeField] private GameObject panel;
+    [SerializeField] private BlockUnderPanel blockUnderPanel;
 
     private Button b1;
 
@@ -12,8 +12,13 @@ public class OpenSetting : MonoBehaviour
         b1 = GetComponent<Button>();
         b1.onClick.AddListener(OpenSettingOnClick);
     }
+
     void OpenSettingOnClick()
     {
-        panel.SetActive(true);
+        blockUnderPanel.OpenPanel();
+    }
+    void CloseCurrentPanel()
+    {
+        blockUnderPanel.ClosePanel();
     }
 }

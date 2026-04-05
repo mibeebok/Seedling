@@ -46,22 +46,22 @@ public class WindowExitController : MonoBehaviour
     }
 
     private IEnumerator ExitGameCoroutine()
-{
-    Debug.Log("[1] Начало корутины выхода");
-    
-    
-    // Вариант 2: Таймер с логированием
-    float timer = 0;
-    while (timer < 1f)
     {
-        timer += Time.deltaTime;
-        Debug.Log($"Таймер: {timer}");
-        yield return null;
+        Debug.Log("[1] Начало корутины выхода");
+        
+        
+        // Вариант 2: Таймер с логированием
+        float timer = 0;
+        while (timer < 1f)
+        {
+            timer += Time.deltaTime;
+            Debug.Log($"Таймер: {timer}");
+            yield return null;
+        }
+        
+        Debug.Log("[3] Завершение игры");
+        QuitGame();
     }
-    
-    Debug.Log("[3] Завершение игры");
-    QuitGame();
-}
 
 
 private void QuitGame()
