@@ -21369,10 +21369,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 1251864497}
   m_HandleRect: {fileID: 86390543}
   m_Direction: 0
-  m_MinValue: -80
-  m_MaxValue: 0
+  m_MinValue: 0
+  m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: -24.1
+  m_Value: 0.195
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -25908,6 +25908,52 @@ MonoBehaviour:
   - {fileID: 5164440712423726933, guid: 8ffb7b49321a9914c90f7dc8a1b50c3f, type: 3}
   - {fileID: 4550110250312421416, guid: ff3d625bfb8db9f44914bd572767cc49, type: 3}
   - {fileID: 4550110250312421416, guid: ff3d625bfb8db9f44914bd572767cc49, type: 3}
+--- !u!1 &1285720674
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1285720675}
+  - component: {fileID: 1285720676}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1285720675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285720674}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 517.3293, y: 278.0719, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1285720676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285720674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f29d7d816f5268479e2c134c32b5bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 30224d8354d05404db1dedc18fac49f0, type: 2}
+  <MusicVolume>k__BackingField: 0.8
 --- !u!1 &1287052335
 GameObject:
   m_ObjectHideFlags: 0
@@ -30432,8 +30478,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFullScreen: 1
-  am: {fileID: 0}
   dropdown: {fileID: 49115939}
+  musicSlider: {fileID: 1029228538}
 --- !u!225 &1511401134
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -43784,3 +43830,4 @@ SceneRoots:
   - {fileID: 556419449}
   - {fileID: 547733528}
   - {fileID: 1171179077}
+  - {fileID: 1285720675}

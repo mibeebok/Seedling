@@ -33,16 +33,16 @@ public class FarmGrid : Sounds
 
     private void Start()
     {
-        // Создаем или получаем AudioSource
         musicSource = GetComponent<AudioSource>();
         if (musicSource == null)
             musicSource = gameObject.AddComponent<AudioSource>();
 
-        // Настройка
-        musicSource.loop = false; // мы сами управляем циклом
-        musicSource.volume = 0.3f;
+        musicSource.loop = false;
+        
+        // Загружаем сохранённую громкость
+        float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
+        musicSource.volume = savedVolume;
 
-        // Запуск фоновой музыки
         if (sounds != null && sounds.Length > 0)
         {
             StartCoroutine(PlayMusicLoop());
@@ -52,7 +52,6 @@ public class FarmGrid : Sounds
             Debug.LogWarning("Массив звуков не инициализирован или пуст!");
         }
 
-        // Генерация сетки
         GenerateGrid(() => SaveSystem.LoadGame());
     }
     private IEnumerator PlayMusicLoop()
@@ -77,8 +76,15 @@ public class FarmGrid : Sounds
             yield return new WaitForSeconds(clip.length);
         }
     }
-
-    
+    public void SetMusicVolume(float volume)
+    {
+        AudioSource src = GetComponent<AudioSource>();
+        if (src != null)
+        {
+            src.volume = volume;
+        }
+    }
+        
     private void GenerateGrid(System.Action onComplete = null)
     {
         if (tilePrefab == null)
