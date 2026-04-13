@@ -4,15 +4,21 @@ using UnityEngine.Tilemaps;
 
 public class FarmGrid : Sounds
 {
-   public static FarmGrid Instance { get; private set; }
+    public static FarmGrid Instance { get; private set; }
 
     [Header("Grid Settings")]
     public int gridSizeX = 50;
     public int gridSizeY = 50;
     public float cellSize = 2f;
     public GameObject tilePrefab;
+    
+    [Header("Border Settings")]
+    public GameObject borderPrefab; // Префаб границы (горы/камни)
+    public int borderThickness = 3; // Толщина границы в ячейках
+    public bool generateBorders = true;
 
     private GameObject[,] grid;
+    private GameObject borderContainer; // Контейнер для границ
     public bool isGridGenerated = false;
 
     private AudioSource musicSource;
@@ -39,7 +45,6 @@ public class FarmGrid : Sounds
 
         musicSource.loop = false;
         
-        // Загружаем сохранённую громкость
         float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
         musicSource.volume = savedVolume;
 
@@ -54,11 +59,11 @@ public class FarmGrid : Sounds
 
         GenerateGrid(() => SaveSystem.LoadGame());
     }
+
     private IEnumerator PlayMusicLoop()
     {
         while (true)
         {
-            // Выбираем случайный трек, чтобы не повторялся подряд
             int index;
             do
             {
@@ -68,14 +73,13 @@ public class FarmGrid : Sounds
             lastTrackIndex = index;
             AudioClip clip = sounds[index];
 
-            // Проигрываем трек
             musicSource.clip = clip;
             musicSource.Play();
 
-            // Ждем окончания
             yield return new WaitForSeconds(clip.length);
         }
     }
+
     public void SetMusicVolume(float volume)
     {
         AudioSource src = GetComponent<AudioSource>();
@@ -102,26 +106,32 @@ public class FarmGrid : Sounds
 
         StartCoroutine(GenerateGridCoroutine(gridCenter, onComplete));
     }
+
     public Vector3 GridToWorldPosition(Vector2Int gridPosition)
     {
-        // Вычислите центр сетки как в GenerateGridCoroutine
         Vector3 gridCenter = new Vector3(
             (gridSizeX - 1) * cellSize * 0.5f,
             (gridSizeY - 1) * cellSize * 0.5f,
             0
         );
         
-        // Используйте ТОЧНУЮ ЖЕ формулу что и при генерации тайлов:
         float worldX = gridPosition.x * cellSize - gridCenter.x;
         float worldY = gridPosition.y * cellSize - gridCenter.y;
-        
-        Debug.Log($"GridToWorld: grid({gridPosition.x},{gridPosition.y}) → world({worldX},{worldY})");
         
         return new Vector3(worldX, worldY, 0);
     }
 
     private IEnumerator GenerateGridCoroutine(Vector3 center, System.Action onComplete)
     {
+        // Создаем контейнер для границ
+        if (generateBorders && borderPrefab != null)
+        {
+            borderContainer = new GameObject("Borders");
+            borderContainer.transform.SetParent(transform);
+            GenerateBorders(center);
+        }
+
+        // Генерируем основную сетку
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -135,7 +145,6 @@ public class FarmGrid : Sounds
                 tile.name = $"Tile_{x}_{y}";
                 grid[x, y] = tile;
 
-                // пропускаем кадр каждые 100 тайлов
                 if ((x * gridSizeY + y) % 100 == 0)
                     yield return null;
             }
@@ -143,6 +152,56 @@ public class FarmGrid : Sounds
 
         isGridGenerated = true;
         onComplete?.Invoke();
+    }
+
+    private void GenerateBorders(Vector3 center)
+    {
+        // Вычисляем границы мира
+        float worldMinX = -center.x;
+        float worldMaxX = (gridSizeX - 1) * cellSize - center.x;
+        float worldMinY = -center.y;
+        float worldMaxY = (gridSizeY - 1) * cellSize - center.y;
+
+        // Расширяем границы на толщину бордера
+        int startX = -borderThickness;
+        int endX = gridSizeX + borderThickness;
+        int startY = -borderThickness;
+        int endY = gridSizeY + borderThickness;
+
+        for (int x = startX; x < endX; x++)
+        {
+            for (int y = startY; y < endY; y++)
+            {
+                // Проверяем, находится ли позиция ЗА пределами игровой сетки
+                bool isOutsideGrid = x < 0 || x >= gridSizeX || y < 0 || y >= gridSizeY;
+                
+                if (isOutsideGrid)
+                {
+                    GameObject borderTile = Instantiate(borderPrefab, borderContainer.transform);
+                    borderTile.transform.position = new Vector3(
+                        x * cellSize - center.x,
+                        y * cellSize - center.y,
+                        0
+                    );
+                    borderTile.name = $"Border_{x}_{y}";
+                    
+                    // Добавляем коллайдер если его нет
+                    if (borderTile.GetComponent<Collider2D>() == null)
+                    {
+                        BoxCollider2D collider = borderTile.AddComponent<BoxCollider2D>();
+                        collider.size = new Vector2(cellSize, cellSize);
+                    }
+                }
+            }
+        }
+    }
+
+    // Проверка, находится ли позиция за пределами игрового мира
+    public bool IsPositionOutsideWorld(Vector3 worldPosition)
+    {
+        Vector2Int gridPos = WorldToGridPosition(worldPosition);
+        return gridPos.x < 0 || gridPos.x >= gridSizeX || 
+               gridPos.y < 0 || gridPos.y >= gridSizeY;
     }
 
     public Vector2Int WorldToGridPosition(Vector3 worldPosition)
@@ -153,30 +212,64 @@ public class FarmGrid : Sounds
             0
         );
         
-        // Обратная формула:
         int gridX = Mathf.FloorToInt((worldPosition.x + gridCenter.x) / cellSize);
         int gridY = Mathf.FloorToInt((worldPosition.y + gridCenter.y) / cellSize);
                 
         return new Vector2Int(gridX, gridY);
     }
+
     private void OnDrawGizmos()
     {
-        if (!Application.isPlaying || grid == null) return;
+        if (!Application.isPlaying) return;
         
-        // Нарисовать сетку для отладки
-        Gizmos.color = Color.cyan;
+        // Рисуем границы игрового мира
+        Vector3 gridCenter = new Vector3(
+            (gridSizeX - 1) * cellSize * 0.5f,
+            (gridSizeY - 1) * cellSize * 0.5f,
+            0
+        );
         
-        for (int x = 0; x < gridSizeX; x++)
+        Vector3 worldMin = new Vector3(-gridCenter.x, -gridCenter.y, 0);
+        Vector3 worldMax = new Vector3(
+            (gridSizeX - 1) * cellSize - gridCenter.x,
+            (gridSizeY - 1) * cellSize - gridCenter.y,
+            0
+        );
+        
+        // Красная рамка - граница игрового мира
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(
+            (worldMin + worldMax) * 0.5f,
+            new Vector3(worldMax.x - worldMin.x, worldMax.y - worldMin.y, 0.1f)
+        );
+        
+        // Синяя рамка - внешняя граница с бордерами
+        if (generateBorders)
         {
-            for (int y = 0; y < gridSizeY; y++)
+            Gizmos.color = Color.blue;
+            Vector3 borderMin = worldMin - new Vector3(borderThickness * cellSize, borderThickness * cellSize, 0);
+            Vector3 borderMax = worldMax + new Vector3(borderThickness * cellSize, borderThickness * cellSize, 0);
+            Gizmos.DrawWireCube(
+                (borderMin + borderMax) * 0.5f,
+                new Vector3(borderMax.x - borderMin.x, borderMax.y - borderMin.y, 0.1f)
+            );
+        }
+        
+        // Рисуем сетку если нужно
+        if (grid != null)
+        {
+            Gizmos.color = Color.cyan;
+            for (int x = 0; x < gridSizeX; x++)
             {
-                Vector3 worldPos = GridToWorldPosition(new Vector2Int(x, y));
-                Gizmos.DrawWireCube(worldPos, new Vector3(cellSize, cellSize, 0.1f));
-                
-                // Подпись координат
-                #if UNITY_EDITOR
-                UnityEditor.Handles.Label(worldPos + Vector3.up * 0.2f, $"({x},{y})");
-                #endif
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    Vector3 worldPos = GridToWorldPosition(new Vector2Int(x, y));
+                    Gizmos.DrawWireCube(worldPos, new Vector3(cellSize, cellSize, 0.1f));
+                    
+                    #if UNITY_EDITOR
+                    UnityEditor.Handles.Label(worldPos + Vector3.up * 0.2f, $"({x},{y})");
+                    #endif
+                }
             }
         }
     }
@@ -190,12 +283,11 @@ public class FarmGrid : Sounds
         }
         return null;
     }
+
     public Vector2 GetGridBounds()
     {
-        //границы карты
         float halfWidth = (gridSizeX * cellSize) / 2f;
         float halfHeight = (gridSizeY * cellSize) / 2f;
-
         return new Vector2(halfWidth, halfHeight);
     }
 }

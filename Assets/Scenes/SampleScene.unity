@@ -15925,6 +15925,9 @@ MonoBehaviour:
   gridSizeY: 50
   cellSize: 2
   tilePrefab: {fileID: 897679202}
+  borderPrefab: {fileID: 1683558526186089710, guid: c4c3fb726ce54604ab7cfb5d02a76dd4, type: 3}
+  borderThickness: 3
+  generateBorders: 1
   isGridGenerated: 0
 --- !u!1 &746706123
 GameObject:
@@ -25952,8 +25955,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f29d7d816f5268479e2c134c32b5bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 30224d8354d05404db1dedc18fac49f0, type: 2}
-  <MusicVolume>k__BackingField: 0.8
 --- !u!1 &1287052335
 GameObject:
   m_ObjectHideFlags: 0
