@@ -158,7 +158,6 @@ public class CropBehaviour : MonoBehaviour
             {
                 spriteRenderer.sprite = tile.sprite;
                 
-                // ДОБАВЬТЕ ЭТО ДЛЯ ОТЛАДКИ:
                 Debug.Log($"=== ОТЛАДКА РАСТЕНИЯ ===");
                 Debug.Log($"Позиция: {transform.position}");
                 Debug.Log($"Масштаб: {transform.localScale}");

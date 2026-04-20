@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 744fd93d2cf2cc74e81a7532dc8efb65, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::Vegetable
-  cropType: 4
+  cropType: 2
   isSeed: 1
   icon: {fileID: 1194125170, guid: 4a90f5883805ed74e80473f50bc71c84, type: 3}
   maxStack: 16

@@ -54,7 +54,13 @@ public class CropsManager : MonoBehaviour
 
     public Crop GetCropData(CropType type)
     {
-        return cropByType[type];
+        if (cropByType.TryGetValue(type, out Crop crop))
+        {
+            return crop;
+        }
+        Debug.LogError($" в allcropData нет записи для {type}");
+        return null;
+        // return cropByType[type];
     }
 
     public bool CanPlantAt(Vector2Int gridPosition)
@@ -114,6 +120,8 @@ public class CropsManager : MonoBehaviour
             Debug.Log("Почва НЕ готова для посадки!");
             return false;
         }
+        Crop cropData = GetCropData(seedItem.cropType);
+        if (cropData == null) return false;
 
         // 5 — Получаем префаб культуры
         CropBehaviour prefab = GetCropPrefab(seedItem.cropType);
