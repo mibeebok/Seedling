@@ -42781,9 +42781,15 @@ MonoBehaviour:
   maxVolume: 0.3
   goatAnimator: {fileID: 0}
   scaredParameter: IsScared
+  movingParameter: IsMoving
   spawnAreaMin: {x: 0, y: 0}
   spawnAreaMax: {x: 0, y: 0}
   minDistanceFromPlayer: 10
+  eatRadius: 1.5
+  moveSpeed: 2
+  playerAbsenceTimeToTarget: 5
+  targetReachedDistance: 0.3
+  retargetCooldown: 2
 --- !u!82 &2096805858
 AudioSource:
   m_ObjectHideFlags: 0

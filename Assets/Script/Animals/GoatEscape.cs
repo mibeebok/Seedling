@@ -41,10 +41,7 @@ public class GoatEscape : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Рассчитывает направление убегания в сторону, противоположную игроку,
-    /// с небольшим случайным отклонением (чтобы движение выглядело естественно)
-    /// </summary>
+
     private void CalculateEscapePath()
     {
         // Направление от игрока к козе
@@ -55,9 +52,6 @@ public class GoatEscape : MonoBehaviour
         escapeDirection = Quaternion.Euler(0, 0, randomAngle) * awayFromPlayer;
     }
 
-    /// <summary>
-    /// Перемещает козу в рассчитанном направлении и деактивирует при выходе за границы
-    /// </summary>
     private void MoveEscape()
     {
         transform.Translate(escapeDirection * escapeSpeed * Time.deltaTime, Space.World);
@@ -77,5 +71,9 @@ public class GoatEscape : MonoBehaviour
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+    }
+    private void OnEnable()
+    {
+        isEscaping = false; // сбрасываем флаг при включении
     }
 }

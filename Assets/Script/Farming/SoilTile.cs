@@ -31,9 +31,6 @@ public class SoilTile : MonoBehaviour
         UpdateVisual();
     }
 
-    // -----------------------
-    // VISUAL UPDATE
-    // -----------------------
     public void UpdateVisual()
     {
         if (isWatered && wateredSprite != null)
@@ -62,9 +59,6 @@ public class SoilTile : MonoBehaviour
         }
     }
 
-    // -----------------------
-    // ACTIONS
-    // -----------------------
     public void Plow()
     {
         isPlowed = true;
@@ -91,6 +85,15 @@ public class SoilTile : MonoBehaviour
     public void MarkPlanted()
     {
         isPlanted = true;
+        SaveSystem.MarkTileChanged(GetGridPos());
+    }
+    public void ClearPlanted()
+    {
+        isPlanted = false;
+        isWatered = false;
+        wasWateredYesterday = false;
+        daysWithoutWater = 0; 
+        UpdateVisual();
         SaveSystem.MarkTileChanged(GetGridPos());
     }
 
@@ -157,9 +160,6 @@ public class SoilTile : MonoBehaviour
         }
     }
 
-    // -----------------------
-    // SAVE / LOAD
-    // -----------------------
     public SaveData GetSaveData()
     {
         return new SaveData
@@ -184,7 +184,6 @@ public class SoilTile : MonoBehaviour
         UpdateVisual();
     }
 
-    // -----------------------
     private Vector2Int GetGridPos()
     {
         return FarmGrid.Instance.WorldToGridPosition(transform.position);
