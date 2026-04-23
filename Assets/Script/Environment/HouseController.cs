@@ -13,8 +13,8 @@ public class HouseController : MonoBehaviour
     [SerializeField] private CanvasGroup darknessPanel;
     [SerializeField] private float fadeDuration = 1f;
     [SerializeField] private Transform playerVisual;
-    [SerializeField] private float sleepRestoreAmount = 100f; // Полное восстановление сна
-    [SerializeField] private float sleepDepletionRate = 1.5f; // Множитель расхода сна (1.5 = на 50% быстрее)
+    [SerializeField] private float sleepRestoreAmount = 100f;
+    [SerializeField] private float sleepDepletionRate = 1.5f;
 
     private Transform player;
     private bool isInteractable = true;
@@ -65,38 +65,31 @@ public class HouseController : MonoBehaviour
     {
         isInteractable = false;
 
-        // Открываем дверь
+        // Открываем дверь (используем реальное время)
         if (doorAnimator)
         {
             doorAnimator.SetBool(doorBoolParameter, true);
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSecondsRealtime(0.5f);
         }
 
         // Скрываем персонажа
         if (playerVisual)
             playerVisual.gameObject.SetActive(false);
-        else
-            Debug.LogError("PlayerVisual не найден");
 
-        // Затемнение экрана
+        // Затемнение (не зависит от timeScale)
         yield return StartCoroutine(FadeScreen(0f, 1f));
         
         // Восстанавливаем сон
         if (sleepController != null)
         {
             sleepController.RestoreSleep(sleepRestoreAmount);
-        }
-        
-        // Увеличиваем скорость расхода сна
-        if (sleepController != null)
-        {
             sleepController.SetDepletionRate(sleepDepletionRate);
         }
 
-        // Ждем ночь
-        yield return new WaitForSeconds(nightDuration);
+        // Ждём ночь (реальное время)
+        yield return new WaitForSecondsRealtime(nightDuration);
         
-        // Осветление экрана
+        // Осветление
         yield return StartCoroutine(FadeScreen(1f, 0f));
 
         // Показываем персонажа
@@ -107,11 +100,9 @@ public class HouseController : MonoBehaviour
         if (doorAnimator)
             doorAnimator.SetBool(doorBoolParameter, false);
 
-         // Увеличиваем счетчик дней
         DaysPassed++;
         Debug.Log($"Всего дней: {DaysPassed}");
         
-        // Уведомляем о новом дне
         OnNewDay?.Invoke();
 
         isInteractable = true;
@@ -119,17 +110,18 @@ public class HouseController : MonoBehaviour
 
     private IEnumerator FadeScreen(float start, float end)
     {
-        if (!darknessPanel) yield break;
-        
+
         float elapsed = 0f;
         while (elapsed < fadeDuration)
         {
-            darknessPanel.alpha = Mathf.Lerp(start, end, elapsed/fadeDuration);
-            elapsed += Time.deltaTime;
+            darknessPanel.alpha = Mathf.Lerp(start, end, elapsed / fadeDuration);
+            elapsed += Time.unscaledDeltaTime;
             yield return null;
         }
         darknessPanel.alpha = end;
         darknessPanel.blocksRaycasts = end > 0.5f;
+
+        darknessPanel.gameObject.SetActive(true);
     }
 
     private void OnDrawGizmosSelected()
