@@ -1,17 +1,17 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class InventoryController : MonoBehaviour
 {
-    [Header("Hands Animation")]
+    [Header("Animation")]
     public Animator handsAnimator;
-    [Header("Hotbar Settings")]
+
+    [Header("Hotbar")]
     public int hotbarSize = 7;
     public SpriteRenderer[] slotRenderers;
     public Color activeSlotColor = Color.yellow;
     public Color normalSlotColor = Color.white;
 
-    [Header("Inventory References")]
+    [Header("Inventory")]
     public GameObject fullInventoryUI;
     public Inventory mainInventory;
     public DataBase database;
@@ -21,39 +21,74 @@ public class InventoryController : MonoBehaviour
     public GameObject dragItemPrefab;
     public float dragOffset = 1f;
 
-    private int currentSlot = 0;
-    private bool isInventoryOpen = false;
+    private int currentSlot;
+    private bool isInventoryOpen;
     private Vector3 lastPlayerPosition;
     private GameObject currentDragItem;
     private int dragOriginSlot = -1;
+    
+    private PauseButtonPosition pauseButton;
+    private float inventoryOpenTime;
+
+    public const int TOOL_SLOTS = 2; // Первые два слота для инструментов
+
     public static InventoryController Instance { get; private set; }
 
-    private void Awake()
+    private void Awake() => Instance = this;
+
+    private void Start()
     {
-        Instance = this;
+        SelectSlot(0);
+        InitializeHotbar();
+        UpdateHotbarVisuals();
+
+        if (fullInventoryUI != null)
+            fullInventoryUI.SetActive(false);
+        
+        isInventoryOpen = false;
+
+        if (player != null)
+            lastPlayerPosition = player.position;
+
+        pauseButton = FindObjectOfType<PauseButtonPosition>();
     }
+
+    private void Update()
+    {
+        if (Time.timeScale == 0f) return;
+
+        if (pauseButton != null && pauseButton.IsMenuOpen()) return;
+
+        HandlePlayerMovement();
+        HandleInput();
+        HandleDragAndDrop();
+    }
+
+    // ======================== PUBLIC API ========================
+
+    public int GetSelectedSlot() => currentSlot;
+
+    public Item GetSelectedItem() => GetItemInSlot(currentSlot);
+
     public bool AddItem(Item item, int quantity = 1)
     {
-        if (item == null || item.id == 0 || quantity <= 0) 
+        if (item == null || item.id == 0 || quantity <= 0)
             return false;
 
-        // Пропускаем первые 2 слота (инструменты)
-        for (int i = 2; i < mainInventory.items.Count; i++)
+        for (int i = TOOL_SLOTS; i < mainInventory.items.Count; i++)
         {
-            // Если слот пуст
             if (mainInventory.items[i].id == 0)
             {
                 mainInventory.items[i].id = item.id;
                 mainInventory.items[i].count = quantity;
-                UpdateSlotVisuals();
+                UpdateAllVisuals();
                 return true;
             }
-            // Если предмет такой же и можно стакать
-            else if (mainInventory.items[i].id == item.id && 
-                    mainInventory.items[i].count < item.maxStack)
+
+            if (mainInventory.items[i].id == item.id && mainInventory.items[i].count < item.maxStack)
             {
                 mainInventory.items[i].count += quantity;
-                UpdateSlotVisuals();
+                UpdateAllVisuals();
                 return true;
             }
         }
@@ -62,85 +97,64 @@ public class InventoryController : MonoBehaviour
         return false;
     }
 
-    void Start()
+    public bool RemoveItem(Item item, int quantity = 1)
     {
-        SelectSlot(0); // Принудительно активируем первый слот
+        if (item == null || quantity <= 0) return false;
 
-        InitializeHotbar();
-        UpdateSlotVisuals();
-        if (fullInventoryUI != null)
-            fullInventoryUI.SetActive(false);
-
-        if (player != null)
-            lastPlayerPosition = player.position;
-
-
-
-        CheckDatabase();
-    }
-    void CheckDatabase()
-    {
-        Debug.Log("=== Проверка базы данных ===");
-        foreach (Item item in database.items)
+        for (int i = 0; i < mainInventory.items.Count; i++)
         {
-            Debug.Log($"ID: {item.id}, Name: {item.name}, Type: {item.GetType()}");
-        }
-        
-        // Проверка конкретно картошки
-        Item potato = database.GetItemById(7); // Замените на ваш ID
-        if (potato != null)
-        {
-            Debug.Log($"Картошка найдена: {potato.name} (ID: {potato.id})");
-        }
-        else
-        {
-            Debug.LogError("Картошка не найдена в базе!");
-        }
-    }
+            if (mainInventory.items[i].id != item.id) continue;
 
-    void Update()
-    {
-        if (Time.timeScale == 0f) return;
+            int removeAmount = Mathf.Min(quantity, mainInventory.items[i].count);
+            mainInventory.items[i].count -= removeAmount;
 
-        PauseButtonPosition pauseButton = FindObjectOfType<PauseButtonPosition>();
-        if (pauseButton != null && pauseButton.IsMenuOpen())return;
-        
-        HandlePlayerMovement();
-        HandleInput();
-        HandleDragAndDrop();
-    }
-
-    void InitializeHotbar()
-    {
-        if (slotRenderers == null || slotRenderers.Length == 0)
-        {
-            slotRenderers = new SpriteRenderer[hotbarSize + 1];
-            for (int i = 0; i <= hotbarSize; i++)
+            if (mainInventory.items[i].count <= 0)
             {
-                string slotName = i < hotbarSize ? $"Slot_{i + 1}" : "InventoryButton";
-                Transform slot = transform.Find(slotName);
-                if (slot != null)
+                mainInventory.items[i].id = 0;
+                mainInventory.items[i].count = 0;
+            }
+
+            UpdateAllVisuals();
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool IsToolSlot(int slotIndex) => slotIndex < TOOL_SLOTS;
+
+    // ======================== PRIVATE ========================
+
+    private void InitializeHotbar()
+    {
+        if (slotRenderers != null && slotRenderers.Length > 0) return;
+
+        slotRenderers = new SpriteRenderer[hotbarSize + 1];
+        for (int i = 0; i <= hotbarSize; i++)
+        {
+            string slotName = i < hotbarSize ? $"Slot_{i + 1}" : "InventoryButton";
+            Transform slot = transform.Find(slotName);
+            if (slot != null)
+            {
+                slotRenderers[i] = slot.GetComponent<SpriteRenderer>();
+                
+                if (i < hotbarSize && slot.GetComponent<BoxCollider2D>() == null)
                 {
-                    slotRenderers[i] = slot.GetComponent<SpriteRenderer>();
-                    if (slot.GetComponent<BoxCollider2D>() == null)
-                    {
-                        var collider = slot.gameObject.AddComponent<BoxCollider2D>();
-                        collider.size = new Vector2(1, 1);
-                    }
+                    var collider = slot.gameObject.AddComponent<BoxCollider2D>();
+                    collider.size = new Vector2(1, 1);
                 }
             }
         }
     }
 
-    void HandleInput()
+    private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Tab)) // Добавьте альтернативную клавишу
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             ToggleInventory();
             return;
         }
 
-        // Затем обработка слотов
         if (!isInventoryOpen)
         {
             float scroll = Input.GetAxis("Mouse ScrollWheel");
@@ -148,66 +162,55 @@ public class InventoryController : MonoBehaviour
                 SelectSlot((currentSlot + (scroll > 0 ? -1 : 1) + hotbarSize) % hotbarSize);
 
             for (int i = 0; i < hotbarSize; i++)
-            {
                 if (Input.GetKeyDown(KeyCode.Alpha1 + i))
                     SelectSlot(i);
-            }
         }
-        
-        // Отдельная обработка кликов
+
         if (Input.GetMouseButtonDown(0))
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            // Пробуем использовать предмет (например, посадить семена)
             HandleItemUse(mousePos);
-
-            // Проверяем клик по UI слотам
             HandleMouseClick();
         }
-
     }
 
-    void HandlePlayerMovement()
+    private void HandlePlayerMovement()
     {
-        if (isInventoryOpen && player != null &&
-            Vector3.Distance(player.position, lastPlayerPosition) > 0.01f)
+        if (!isInventoryOpen || player == null) return;
+
+        if (Time.time - inventoryOpenTime < 0.3f)
         {
-            CloseInventory();
+            lastPlayerPosition = player.position;
+            return;
         }
+
+        if (Vector3.Distance(player.position, lastPlayerPosition) > 0.1f)
+            CloseInventory();
+
         lastPlayerPosition = player.position;
     }
 
-    void HandleMouseClick()
-{
-    if (currentDragItem != null) return;
-
-    RaycastHit2D hit = GetRaycastHitAtMouse();
-    if (hit.collider != null)
+    private void HandleMouseClick()
     {
-        
+        if (currentDragItem != null) return;
+
+        RaycastHit2D hit = GetRaycastHitAtMouse();
+        if (hit.collider == null) return;
+
         for (int i = 0; i < slotRenderers.Length; i++)
         {
-            if (slotRenderers[i] != null && hit.collider.gameObject == slotRenderers[i].gameObject)
-            {
-                Debug.Log($"Slot {i} clicked"); // Отладочное сообщение
-                
-                if (i == hotbarSize)
-                {
-                    Debug.Log("Toggling inventory"); // Должно появиться при клике
-                    ToggleInventory();
-                }
-                else
-                {
-                    SelectSlot(i);
-                }
-                break;
-            }
+            if (slotRenderers[i] == null || hit.collider.gameObject != slotRenderers[i].gameObject)
+                continue;
+
+            if (i == hotbarSize)
+                ToggleInventory();
+            else if (i < hotbarSize)
+                SelectSlot(i);
+            break;
         }
     }
-}
 
-    void HandleDragAndDrop()
+    private void HandleDragAndDrop()
     {
         if (Input.GetMouseButtonDown(0) && !isInventoryOpen)
             TryStartDrag();
@@ -223,29 +226,29 @@ public class InventoryController : MonoBehaviour
             EndDrag();
     }
 
-    void TryStartDrag()
+    private void TryStartDrag()
     {
         RaycastHit2D hit = GetRaycastHitAtMouse();
-        if (hit.collider != null)
+        if (hit.collider == null) return;
+
+        for (int i = 0; i < hotbarSize; i++)
         {
-            for (int i = 0; i < hotbarSize; i++)
-            {
-                if (slotRenderers[i] != null && hit.collider.gameObject == slotRenderers[i].gameObject)
-                {
-                    Item item = GetItemInSlot(i);
-                    if (item != null && item.id != 0)
-                    {
-                        dragOriginSlot = i;
-                        currentDragItem = Instantiate(dragItemPrefab);
-                        currentDragItem.GetComponent<SpriteRenderer>().sprite = item.img;
-                        return;
-                    }
-                }
-            }
+            if (slotRenderers[i] == null || hit.collider.gameObject != slotRenderers[i].gameObject)
+                continue;
+
+            if (IsToolSlot(i)) return; // Инструменты нельзя перетаскивать
+
+            Item item = GetItemInSlot(i);
+            if (item == null || item.id == 0) return;
+
+            dragOriginSlot = i;
+            currentDragItem = Instantiate(dragItemPrefab);
+            currentDragItem.GetComponent<SpriteRenderer>().sprite = item.img;
+            return;
         }
     }
 
-    void EndDrag()
+    private void EndDrag()
     {
         RaycastHit2D hit = GetRaycastHitAtMouse();
         bool droppedOnSlot = false;
@@ -254,12 +257,14 @@ public class InventoryController : MonoBehaviour
         {
             for (int i = 0; i < hotbarSize; i++)
             {
-                if (slotRenderers[i] != null && hit.collider.gameObject == slotRenderers[i].gameObject)
-                {
-                    SwapSlots(dragOriginSlot, i);
-                    droppedOnSlot = true;
-                    break;
-                }
+                if (slotRenderers[i] == null || hit.collider.gameObject != slotRenderers[i].gameObject)
+                    continue;
+
+                if (IsToolSlot(i)) break; // Нельзя бросить в слот инструмента
+
+                SwapSlots(dragOriginSlot, i);
+                droppedOnSlot = true;
+                break;
             }
         }
 
@@ -271,7 +276,7 @@ public class InventoryController : MonoBehaviour
         dragOriginSlot = -1;
     }
 
-    void MoveItemToMainInventory(int hotbarSlotIndex)
+    private void MoveItemToMainInventory(int hotbarSlotIndex)
     {
         if (mainInventory == null || hotbarSlotIndex < 0 || hotbarSlotIndex >= hotbarSize)
             return;
@@ -279,49 +284,74 @@ public class InventoryController : MonoBehaviour
         Item item = GetItemInSlot(hotbarSlotIndex);
         if (item == null || item.id == 0) return;
 
-        if (mainInventory.AddItemToFirstFreeSlot(item, 1))
-        {
-            mainInventory.items[hotbarSlotIndex].count--;
-            if (mainInventory.items[hotbarSlotIndex].count <= 0)
-                mainInventory.items[hotbarSlotIndex].id = 0;
+        if (!mainInventory.AddItemToFirstFreeSlot(item, 1)) return;
 
-            UpdateSlotVisuals();
-            mainInventory.UpdateInventory();
-        }
+        mainInventory.items[hotbarSlotIndex].count--;
+        if (mainInventory.items[hotbarSlotIndex].count <= 0)
+            mainInventory.items[hotbarSlotIndex].id = 0;
+
+        UpdateAllVisuals();
     }
 
-    void SwapSlots(int fromSlot, int toSlot)
+    private void SwapSlots(int fromSlot, int toSlot)
     {
         if (mainInventory == null) return;
 
         (mainInventory.items[fromSlot], mainInventory.items[toSlot]) =
             (mainInventory.items[toSlot], mainInventory.items[fromSlot]);
 
-        UpdateSlotVisuals();
-        mainInventory.UpdateInventory();
+        UpdateAllVisuals();
     }
 
-    void SelectSlot(int index)
+    private void SelectSlot(int index)
     {
+        if (index < 0 || index >= hotbarSize) return;
         currentSlot = index;
-        UpdateSlotVisuals();
+        UpdateHotbarVisuals();
     }
 
-    void UpdateSlotVisuals()
+    private void UpdateHotbarVisuals()
     {
         if (slotRenderers == null) return;
+
         for (int i = 0; i < slotRenderers.Length; i++)
         {
             if (slotRenderers[i] == null) continue;
 
-            slotRenderers[i].color = (i == currentSlot) ? activeSlotColor : normalSlotColor;
-            Item item = GetItemInSlot(i);
-            slotRenderers[i].sprite = item?.img;
-            slotRenderers[i].enabled = item != null;
+            if (i < hotbarSize)
+            {
+                // Подсветка активного слота
+                slotRenderers[i].color = (i == currentSlot) ? activeSlotColor : normalSlotColor;
+
+                // Для слотов инструментов НЕ трогаем спрайт — там ваши дочерние объекты
+                if (!IsToolSlot(i))
+                {
+                    Item item = GetItemInSlot(i);
+                    slotRenderers[i].sprite = item?.img;
+                    slotRenderers[i].enabled = item != null;
+                }
+                // Для слотов инструментов фон (рамка слота) всегда виден
+                else
+                {
+                    slotRenderers[i].enabled = true;
+                    // Спрайт не меняем — он задан дочерним объектом
+                }
+            }
+            else
+            {
+                slotRenderers[i].color = normalSlotColor;
+            }
         }
     }
 
-    void ToggleInventory()
+    private void UpdateAllVisuals()
+    {
+        UpdateHotbarVisuals();
+        if (isInventoryOpen)
+            mainInventory?.UpdateInventory();
+    }
+
+    private void ToggleInventory()
     {
         isInventoryOpen = !isInventoryOpen;
 
@@ -330,96 +360,44 @@ public class InventoryController : MonoBehaviour
             fullInventoryUI.SetActive(isInventoryOpen);
             if (isInventoryOpen)
             {
+                inventoryOpenTime = Time.time;
+                lastPlayerPosition = player.position;
                 mainInventory?.UpdateInventory();
             }
         }
     }
 
-
-    void CloseInventory()
+    private void CloseInventory()
     {
         if (!isInventoryOpen) return;
 
         isInventoryOpen = false;
         fullInventoryUI?.SetActive(false);
         Time.timeScale = 1f;
-        UpdateSlotVisuals();
+        UpdateHotbarVisuals();
     }
 
-    RaycastHit2D GetRaycastHitAtMouse()
+    private RaycastHit2D GetRaycastHitAtMouse()
     {
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        
-        // Добавляем маску слоёв и максимальное расстояние
-        int layerMask = LayerMask.GetMask("Hotbar"); // Создайте отдельный слой для хотбара
-        float distance = 10f;
-        
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, distance, layerMask);  
-        return hit;
+        int layerMask = LayerMask.GetMask("Hotbar");
+        return Physics2D.Raycast(mousePos, Vector2.zero, 10f, layerMask);
     }
 
-    Item GetItemInSlot(int slotIndex)
+    private Item GetItemInSlot(int slotIndex)
     {
-        if (mainInventory != null && slotIndex < mainInventory.items.Count)
-            return database.GetItemById(mainInventory.items[slotIndex].id);
+        if (mainInventory == null || slotIndex >= mainInventory.items.Count)
+            return null;
 
-        return null;
+        return database.GetItemById(mainInventory.items[slotIndex].id);
     }
-    public void TryUseSelectedItem(Vector2 worldPosition)
+
+    private void HandleItemUse(Vector2 worldPosition)
     {
         Item selectedItem = GetSelectedItem();
         if (selectedItem == null) return;
 
-        // Проверяем, является ли предмет семенем
-        if (selectedItem.IsSeed())
-        {
-            CropsManager.Instance.TryPlantSeed(selectedItem, worldPosition);
-        }
-        // Другие проверки для инструментов и т.д.
+        if (selectedItem.IsSeed() && CropsManager.Instance.TryPlantSeed(selectedItem, worldPosition))
+            RemoveItem(selectedItem, 1);
     }
-    public bool RemoveItem(Item item, int quantity = 1)
-    {
-        if (item == null || quantity <= 0) return false;
-        
-        for (int i = 0; i < mainInventory.items.Count; i++)
-        {
-            if (mainInventory.items[i].id == item.id)
-            {
-                int removeAmount = Mathf.Min(quantity, mainInventory.items[i].count);
-                mainInventory.items[i].count -= removeAmount;
-                
-                if (mainInventory.items[i].count <= 0)
-                {
-                    mainInventory.items[i].id = 0;
-                    mainInventory.items[i].count = 0;
-                }
-                
-                UpdateSlotVisuals();
-                mainInventory.UpdateInventory();
-                return true;
-            }
-        }
-        
-        return false;
-    }
-    public void HandleItemUse(Vector2 worldPosition)
-    {
-        Item selectedItem = GetSelectedItem();
-        if (selectedItem == null) return;
-
-        // Проверяем инструменты и семена
-        if (selectedItem.IsSeed())
-        {
-            if (CropsManager.Instance.TryPlantSeed(selectedItem, worldPosition))
-            {
-                RemoveItem(selectedItem, 1);
-            }
-        }
-
-    }
-    
-
-    public Item GetSelectedItem() => GetItemInSlot(currentSlot);
-    public int GetSelectedSlot() => currentSlot;
-    public bool IsInventoryOpen() => isInventoryOpen;
 }

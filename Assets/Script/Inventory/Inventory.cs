@@ -10,215 +10,224 @@ public class Inventory : MonoBehaviour
     public GameObject gameObjectShow;
     public GameObject InventoryMainObject;
     public int maxCount;
+
     public EventSystem es;
-    public int currentID;
+    public int currentID = -1;
     public ItemInventory currentItem;
     public RectTransform movingObject;
     public Vector3 offset;
 
+    private const int TOOL_SLOTS = 2;
 
-     private void Start() {
-        InitializeInventory();
-    }
-    void Update()
+    private void Start() => InitializeInventory();
+
+    private void Update()
     {
-        if (currentID != -1)
-        {
-            MoveObject();
-        }
+        if (currentID != -1 && movingObject != null)
+            movingObject.position = Input.mousePosition + offset;
     }
 
     public void InitializeInventory()
     {
-        if(items.Count == 0)
+        if (items.Count == 0)
         {
             ClearInventory();
             AddGraphics();
             
-            // Инициализация пустых ячеек
-            for(int i = 0; i < maxCount; i++)
+            for (int i = 0; i < maxCount; i++)
             {
-                AddItem(i, data.items[0], 0);
+                if (i < TOOL_SLOTS)
+                    AddItemSilent(i, data.items[i + 1]); // Лейка и мотыга
+                else
+                    AddItem(i, data.items[0], 0);
             }
         }
         UpdateInventory();
     }
-    
-    public void SearchForSameItem(Item item, int count){
-        for(int i=0; i<maxCount;i++){
-            if(items[i].id == item.id){
-                if(items[0].count<32){
-                    items[i].count += count;
-                    if(items[i].count>32){
-                        count = items[i].count-32;
-                        items[i].count = 18;
-                    }else{
-                        count = 0;
-                        i=maxCount;
-                    }
-                }
-            }
-        }
-        if(count>0){
-            for(int i=0; i<maxCount; i++){
-                if(items[i].id==0){
-                    AddItem(i, item, count);
-                    i=maxCount;
-                }
-            }
-        }
-    }
 
-    public void AddItem(int id, Item item, int count){
+    public void AddItem(int id, Item item, int count)
+    {
+        if (id < TOOL_SLOTS) return;
+        
         items[id].id = item.id;
         items[id].count = count;
         items[id].itemGameObject.GetComponent<Image>().sprite = item.img;
 
-        if(count>1 && item.id != 0){
-            items[id].itemGameObject.GetComponentInChildren<Text>().text = count.ToString();
-
-        }else{
-            items[id].itemGameObject.GetComponentInChildren<Text>().text = "";
-        }
+        var text = items[id].itemGameObject.GetComponentInChildren<Text>();
+        text.text = (count > 1 && item.id != 0) ? count.ToString() : "";
     }
 
-    public void AddInventoryItem(int id, ItemInventory invItem){
+    private void AddItemSilent(int id, Item item)
+    {
+        items[id].id = item.id;
+        items[id].count = 1;
+    }
+
+    public void AddInventoryItem(int id, ItemInventory invItem)
+    {
+        if (id < TOOL_SLOTS) return;
+        
         items[id].id = invItem.id;
         items[id].count = invItem.count;
         items[id].itemGameObject.GetComponent<Image>().sprite = data.items[invItem.id].img;
 
-        if(invItem.count>1 && invItem.id != 0){
-            items[id].itemGameObject.GetComponentInChildren<Text>().text = invItem.count.ToString();
-
-        }else{
-            items[id].itemGameObject.GetComponentInChildren<Text>().text = "";
-        }
+        var text = items[id].itemGameObject.GetComponentInChildren<Text>();
+        text.text = (invItem.count > 1 && invItem.id != 0) ? invItem.count.ToString() : "";
     }
+
     public void AddGraphics()
     {
-        for(int i = 0; i < maxCount; i++)
+        for (int i = 0; i < maxCount; i++)
         {
-            // Создаем новую ячейку инвентаря из префаба
-            GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform) as GameObject;
+            GameObject newItem = Instantiate(gameObjectShow, InventoryMainObject.transform);
             newItem.name = i.ToString();
 
-            // Настраиваем RectTransform для правильного отображения
             RectTransform rt = newItem.GetComponent<RectTransform>();
             rt.localPosition = Vector3.zero;
             rt.localScale = Vector3.one;
-            
-            // Рассчитываем позицию ячейки в сетке инвентаря
-            float xPos = (i % 8) * (rt.rect.width + 5); // 8 колонок, 5px отступ
+
+            float xPos = (i % 8) * (rt.rect.width + 5);
             float yPos = -(i / 8) * (rt.rect.height + 5);
             rt.anchoredPosition = new Vector2(xPos, yPos);
 
-            // Инициализируем данные ячейки
             ItemInventory ii = new ItemInventory
             {
-                id = 0, // 0 - пустая ячейка
+                id = 0,
                 itemGameObject = newItem,
                 count = 0
             };
 
-            // Настраиваем кнопку
             Button tempButton = newItem.GetComponent<Button>();
-            tempButton.onClick.AddListener(delegate { SelectObject(); });
+            tempButton.onClick.AddListener(SelectObject);
 
-            // Устанавливаем пустой спрайт и очищаем текст
             Image itemImage = newItem.GetComponent<Image>();
-            if (itemImage != null)
-            {
-                itemImage.sprite = data.items[0].img; // Пустой спрайт
-            }
-
             Text countText = newItem.GetComponentInChildren<Text>();
-            if (countText != null)
+
+            if (i < TOOL_SLOTS)
             {
-                countText.text = "";
+                // Инструменты: показываем красиво, но блокируем
+                itemImage.sprite = data.items[i + 1]?.img;
+                itemImage.enabled = true;
+                itemImage.color = Color.white;
+                // Настройка правильного размера спрайта
+                itemImage.preserveAspect = true; // Сохраняем пропорции
+                itemImage.SetNativeSize();        // Устанавливаем родной размер спрайта
+                // Если спрайт слишком большой, можно ограничить:
+                RectTransform imgRt = itemImage.GetComponent<RectTransform>();
+                if (imgRt != null)
+                {
+                    imgRt.sizeDelta = new Vector2(rt.rect.width * 0.8f, rt.rect.height * 0.8f);
+                }
+                
+                if (countText != null) countText.text = "";
+                tempButton.interactable = false;
+            }
+            else
+            {
+                itemImage.sprite = data.items[0].img;
+                itemImage.enabled = true;
+                itemImage.color = Color.white;
+                itemImage.preserveAspect = false; // Обычные предметы пусть масштабируются
+                if (countText != null) countText.text = "";
+                tempButton.interactable = true;
             }
 
             items.Add(ii);
         }
     }
 
-    public void UpdateInventory() {
-        for(int i=0;i<maxCount;i++){
-            if(items[i].id !=0 && items[i].count > 1){
-                items[i].itemGameObject.GetComponentInChildren<Text>().text = items[i].count.ToString();
-            }else{
-                
-                items[i].itemGameObject.GetComponentInChildren<Text>().text ="";
+    public void UpdateInventory()
+    {
+        for (int i = 0; i < maxCount; i++)
+        {
+            var text = items[i].itemGameObject.GetComponentInChildren<Text>();
+            text.text = (items[i].id != 0 && items[i].count > 1) ? items[i].count.ToString() : "";
+
+            Image img = items[i].itemGameObject.GetComponent<Image>();
+            
+            // Для инструментов всегда показываем их родные спрайты
+            if (i < TOOL_SLOTS)
+            {
+                img.sprite = data.items[i + 1]?.img;
+                img.preserveAspect = true;
             }
-            items[i].itemGameObject.GetComponentInChildren<Image>().sprite = data.items[items[i].id].img;
+            else
+            {
+                img.sprite = data.items[items[i].id].img;
+                img.preserveAspect = false;
+            }
+            
+            img.enabled = true;
         }
     }
 
-    public void SelectObject(){
-        if(currentID == -1){
-            currentID = int.Parse(es.currentSelectedGameObject.name);
-            currentItem = CopyInventoryItem(items[currentID]);
+    public void SelectObject()
+    {
+        GameObject selected = es.currentSelectedGameObject;
+        if (selected == null) return;
+        
+        int slotIndex = int.Parse(selected.name);
+        
+        if (slotIndex < TOOL_SLOTS) return; // Инструменты не трогаем
+        
+        if (currentID == -1)
+        {
+            if (items[slotIndex].id == 0) return;
+            
+            currentID = slotIndex;
+            currentItem = CloneItem(items[currentID]);
             movingObject.gameObject.SetActive(true);
             movingObject.GetComponent<Image>().sprite = data.items[currentItem.id].img;
-
-            movingObject.position = Input.mousePosition + offset;
-
             AddItem(currentID, data.items[0], 0);
-        }else{
-            AddInventoryItem(currentID, items[int.Parse(es.currentSelectedGameObject.name)]);
-
-            AddInventoryItem(int.Parse(es.currentSelectedGameObject.name), currentItem);
+        }
+        else
+        {
+            if (slotIndex < TOOL_SLOTS)
+            {
+                AddItem(currentID, data.items[currentItem.id], currentItem.count);
+                currentID = -1;
+                movingObject.gameObject.SetActive(false);
+                return;
+            }
+            
+            AddInventoryItem(currentID, items[slotIndex]);
+            AddInventoryItem(slotIndex, currentItem);
             currentID = -1;
-
             movingObject.gameObject.SetActive(false);
         }
     }
 
-    public void MoveObject()
-    {
-        if (currentID == -1) return;
-        
-        movingObject.position = Input.mousePosition + offset;
-
-    }
-    public ItemInventory CopyInventoryItem(ItemInventory old){
-        ItemInventory New = new ItemInventory();
-
-        New.id = old.id;
-        New.itemGameObject = old.itemGameObject;
-        New.count = old.count;
-
-        return New;
-    }
     public void ClearInventory()
     {
         foreach (Transform child in InventoryMainObject.transform)
-        {
             Destroy(child.gameObject);
-        }
         items.Clear();
     }
-    public int FindFreeSlot()
-    {
-        for (int i = 0; i < items.Count; i++)
-        {
-            if (items[i].id == 0) // 0 - пустая ячейка
-                return i;
-        }
-        return -1; // Нет свободных ячеек
-    }
+
     public bool AddItemToFirstFreeSlot(Item item, int count)
     {
-        int freeSlot = FindFreeSlot();
-        if (freeSlot == -1) return false;
-        
-        AddItem(freeSlot, item, count);
-        return true;
+        for (int i = TOOL_SLOTS; i < items.Count; i++)
+        {
+            if (items[i].id == 0)
+            {
+                AddItem(i, item, count);
+                return true;
+            }
+        }
+        return false;
     }
+
+    private static ItemInventory CloneItem(ItemInventory src) => new ItemInventory
+    {
+        id = src.id,
+        itemGameObject = src.itemGameObject,
+        count = src.count
+    };
 }
 
 [System.Serializable]
-
-public class ItemInventory{
+public class ItemInventory
+{
     public int id;
     public GameObject itemGameObject;
     public int count;
