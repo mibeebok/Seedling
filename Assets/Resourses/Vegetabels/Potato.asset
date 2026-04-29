@@ -31,4 +31,5 @@ MonoBehaviour:
     maxStack: 16
     type: 1
     cropType: 1
-  harvestYield: 1
+  baseHarvestYield: 1
+  maxHarvestYield: 3

@@ -271,14 +271,38 @@ public class CropsManager : MonoBehaviour
     {
         if (allCrops.TryGetValue(gridPosition, out CropBehaviour crop))
         {
-            Item harvestItem = crop.Harvest();
+            // Проверяем, выросло ли растение — через cropData
+            if (crop.cropData == null || crop.cropData.growthStages == null)
+            {
+                Debug.LogError("Нет данных о стадиях роста!");
+                return;
+            }
+
+             if (crop.CurrentStage < crop.cropData.growthStages.Length - 1)
+             {
+                 Debug.Log("Растение ещё не выросло!");
+                 return;
+             }
+
+            Item harvestItem = crop.Harvest(out int yield);
             if (harvestItem != null && InventoryController.Instance != null)
             {
-                InventoryController.Instance.AddItem(harvestItem, 1);
+                InventoryController.Instance.AddItem(harvestItem, yield);
+                Debug.Log($"Собран урожай: {harvestItem.name} x{yield}");
             }
 
             Destroy(crop.gameObject);
             allCrops.Remove(gridPosition);
+
+            GameObject tileObj = FarmGrid.Instance.GetTileAt(gridPosition);
+            if (tileObj != null)
+            {
+                SoilTile soil = tileObj.GetComponent<SoilTile>();
+                if (soil != null)
+                {
+                    soil.MarkHarvested();
+                }
+            }
         }
     }
 

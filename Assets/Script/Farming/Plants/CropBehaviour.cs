@@ -7,6 +7,7 @@ public class CropBehaviour : MonoBehaviour
     public Crop cropData; // ScriptableObject с данными о растении
 
     private int currentStage = 0;
+    public int CurrentStage => currentStage;
     private SpriteRenderer spriteRenderer;
     private bool isRotten = false;
 
@@ -106,6 +107,49 @@ public class CropBehaviour : MonoBehaviour
         spriteRenderer.sortingLayerName = "Plants";
         spriteRenderer.sortingOrder = 5;
     }
+    private void OnMouseDown()
+    {
+        Debug.Log($"Клик по растению! Стадия: {currentStage + 1}/{cropData.growthStages.Length}");
+        
+        if (currentStage >= cropData.growthStages.Length - 1)
+        {
+            CollectHarvest();
+        }
+        else
+        {
+            Debug.Log("Растение ещё не выросло!");
+        }
+    }
+
+    private void CollectHarvest()
+    {
+        Item harvestedItem = Harvest(out int yield);
+        if (harvestedItem != null && InventoryController.Instance != null)
+        {
+            InventoryController.Instance.AddItem(harvestedItem, yield);
+            Debug.Log($"Собран урожай: {harvestedItem.name} x{yield}");
+        }
+
+        // Удаляем из словаря
+        Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
+        if (CropsManager.Instance.allCrops.ContainsKey(gridPos))
+        {
+            CropsManager.Instance.allCrops.Remove(gridPos);
+        }
+
+        // Очищаем тайл
+        GameObject tileObj = FarmGrid.Instance.GetTileAt(gridPos);
+        if (tileObj != null)
+        {
+            SoilTile soil = tileObj.GetComponent<SoilTile>();
+            if (soil != null)
+            {
+                soil.MarkHarvested();
+            }
+        }
+
+        Destroy(gameObject);
+    }
 
     public void Grow()
     {
@@ -172,10 +216,27 @@ public class CropBehaviour : MonoBehaviour
 
         Debug.LogWarning("CropBehaviour: growthStages[currentStage] не является Tile с sprite.");
     }
-    public Item Harvest()
+    public Item Harvest(out int yield)
     {
-        return cropData?.harvestItem;
+        if (cropData == null || cropData.harvestItem == null)
+        {
+            Debug.LogError("Нет данных об урожае!");
+            yield = 0;
+            return null;
+        }
+
+        // Рассчитываем количество урожая в зависимости от стадии роста
+        int totalStages = cropData.growthStages.Length;
+        float growthProgress = (float)currentStage / (totalStages - 1);
+        
+        // На 1-й стадии — минимальный урожай, на последней — максимальный
+        yield = Mathf.RoundToInt(Mathf.Lerp(cropData.baseHarvestYield, cropData.maxHarvestYield, growthProgress));
+        
+        Debug.Log($"Собрано {yield} шт. {cropData.harvestItem.name} (стадия {currentStage + 1}/{totalStages})");
+        
+        return cropData.harvestItem;
     }
+    
     public void SetRotten()
     {
         if (cropData == null || cropData.growthStages.Length == 0) return;

@@ -42796,9 +42796,9 @@ MonoBehaviour:
   minDistanceFromPlayer: 10
   eatRadius: 1.5
   moveSpeed: 2
-  playerAbsenceTimeToTarget: 5
+  playerAbsenceTimeToTarget: 300
   targetReachedDistance: 0.3
-  retargetCooldown: 2
+  retargetCooldown: 10
 --- !u!82 &2096805858
 AudioSource:
   m_ObjectHideFlags: 0

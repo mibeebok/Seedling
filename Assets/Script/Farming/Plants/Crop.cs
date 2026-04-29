@@ -19,8 +19,9 @@ public abstract class Crop : ScriptableObject
     public TileBase[] growthStages = new TileBase[3]; // stage0, stage1, stage2
     
     [Header("Harvest Settings")]
-    public Item harvestItem;
-    public int harvestYield = 1; // Количество получаемого урожая
+    public Item harvestItem;           // Предмет, который получит игрок
+    public int baseHarvestYield = 1;   // Базовое количество урожая
+    public int maxHarvestYield = 5;    // Максимальное количество урожая (на последней стадии)
 
     public Transform transform { get; set; }
 
@@ -58,10 +59,6 @@ public abstract class Crop : ScriptableObject
         return harvestItem;
     }
 
-    public virtual int GetHarvestYield()
-    {
-        return harvestYield;
-    }
 }
 
 // Класс для семян
