@@ -20,20 +20,13 @@ public class Item
 public class DataBase : MonoBehaviour
 {
     public static DataBase Instance { get; private set; }
-
     public List<Item> items = new List<Item>();
-
-    // Добавьте эти списки
     public List<Seed> seeds = new List<Seed>();
     public List<Vegetable> vegetables = new List<Vegetable>();
-
-    // Метод для получения семени по типу
     public Seed GetSeed(CropType cropType)
     {
         return seeds.Find(seed => seed.cropType == cropType);
     }
-
-    // Метод для получения овоща по типу
     public Vegetable GetVegetable(CropType cropType)
     {
         return vegetables.Find(veg => veg.cropType == cropType);
@@ -44,8 +37,6 @@ public class DataBase : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-
-            // Гарантируем наличие пустого предмета
             if (items.Count == 0 || items[0].id != 0)
             {
                 items.Insert(0, new Item

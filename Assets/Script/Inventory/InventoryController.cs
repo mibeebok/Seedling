@@ -320,21 +320,17 @@ public class InventoryController : MonoBehaviour
 
             if (i < hotbarSize)
             {
-                // Подсветка активного слота
                 slotRenderers[i].color = (i == currentSlot) ? activeSlotColor : normalSlotColor;
 
-                // Для слотов инструментов НЕ трогаем спрайт — там ваши дочерние объекты
                 if (!IsToolSlot(i))
                 {
                     Item item = GetItemInSlot(i);
                     slotRenderers[i].sprite = item?.img;
                     slotRenderers[i].enabled = item != null;
                 }
-                // Для слотов инструментов фон (рамка слота) всегда виден
                 else
                 {
                     slotRenderers[i].enabled = true;
-                    // Спрайт не меняем — он задан дочерним объектом
                 }
             }
             else

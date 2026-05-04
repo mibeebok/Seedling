@@ -105,14 +105,11 @@ public class Inventory : MonoBehaviour
 
             if (i < TOOL_SLOTS)
             {
-                // Инструменты: показываем красиво, но блокируем
                 itemImage.sprite = data.items[i + 1]?.img;
                 itemImage.enabled = true;
                 itemImage.color = Color.white;
-                // Настройка правильного размера спрайта
-                itemImage.preserveAspect = true; // Сохраняем пропорции
-                itemImage.SetNativeSize();        // Устанавливаем родной размер спрайта
-                // Если спрайт слишком большой, можно ограничить:
+                itemImage.preserveAspect = true;
+                itemImage.SetNativeSize(); 
                 RectTransform imgRt = itemImage.GetComponent<RectTransform>();
                 if (imgRt != null)
                 {
@@ -145,7 +142,6 @@ public class Inventory : MonoBehaviour
 
             Image img = items[i].itemGameObject.GetComponent<Image>();
             
-            // Для инструментов всегда показываем их родные спрайты
             if (i < TOOL_SLOTS)
             {
                 img.sprite = data.items[i + 1]?.img;

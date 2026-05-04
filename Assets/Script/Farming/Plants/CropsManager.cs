@@ -75,65 +75,42 @@ public class CropsManager : MonoBehaviour
 
     public bool TryPlantSeed(Item seedItem, Vector2 worldPosition)
     {
-        Debug.Log($"=== ПОСАДКА СЕМЕНИ ===");
-        Debug.Log($"Кликнули на позиции мира: {worldPosition}");
-        
-        // 2 — Получаем клетку
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
-        Debug.Log($"Позиция сетки: {gridPos}");
-       
-       
-       
-        // Проверьте позицию мыши в пикселях
         Vector3 mouseScreenPos = Input.mousePosition;
-        Debug.Log($"Мышь на экране: {mouseScreenPos}");
         
-        // Проверьте что возвращает Camera.main.ScreenToWorldPoint
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(
-            new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
-        Debug.Log($"Мышь в мире (через камеру): {mouseWorldPos}");
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
 
-
-        // 3 — Проверяем в словаре, что клетка пустая
         if (allCrops.ContainsKey(gridPos))
         {
-            Debug.Log($"На клетке {gridPos} уже есть растение!");
             return false;
         }
-        // 4 — Проверяем тайл почвы
+
         GameObject tileObject = FarmGrid.Instance.GetTileAt(gridPos);
         if (tileObject == null)
         {
-            Debug.Log("Тайл не найден!");
             return false;
         }
 
         SoilTile soilTile = tileObject.GetComponent<SoilTile>();
         if (soilTile == null)
         {
-            Debug.Log("На тайле нет SoilTile!");
             return false;
         }
 
         if (!soilTile.IsReadyForPlanting())
         {
-            Debug.Log("Почва НЕ готова для посадки!");
             return false;
         }
         Crop cropData = GetCropData(seedItem.cropType);
         if (cropData == null) return false;
 
-        // 5 — Получаем префаб культуры
         CropBehaviour prefab = GetCropPrefab(seedItem.cropType);
         if (prefab == null)
         {
-            Debug.LogError($"❌ Префаб культуры для {seedItem.cropType} НЕ найден!");
             return false;
         }
 
-        // 6 — Создаём объект растения
         Vector3 spawnPosition = FarmGrid.Instance.GridToWorldPosition(gridPos);
-        Debug.Log($"Обратно в мир: {spawnPosition}");
         
         CropBehaviour newCrop = Instantiate(
             prefab,
@@ -141,24 +118,16 @@ public class CropsManager : MonoBehaviour
             Quaternion.identity
         );
         
-        Debug.Log($"Растение создано на позиции: {newCrop.transform.position}");
-        Debug.Log($"Разница: {worldPosition} → {gridPos} → {spawnPosition}");
-        // 6.5 — назначаем ScriptableObject
         newCrop.cropData = GetCropData(seedItem.cropType);
 
-        // 6.6 — помечаем тайл как посаженный (в SoilTile)
         soilTile.MarkPlanted(); 
 
-        // 7 — Добавляем в словарь
         allCrops.Add(gridPos, newCrop);
     
-        // 8 — Немедленно обновляем визуал растения
         newCrop.UpdateVisual();
         
-        // 9 — Помечаем как посаженное
         soilTile.MarkPlanted();
         
-        Debug.Log($"✔ Посажено: {seedItem.cropType} на {gridPos}");
         return true;
     }
 
@@ -177,112 +146,88 @@ public class CropsManager : MonoBehaviour
 
     public void OnNewDay()
     {
-        Debug.Log("=== НАЧАЛСЯ НОВЫЙ ДЕНЬ ===");
-        Debug.Log($"Всего растений: {allCrops.Count}");
-
-        
-        // Шаг 1: Сначала обрабатываем ВСЕ растения - рост
         var cropKeys = new List<Vector2Int>(allCrops.Keys);
         foreach (var pos in cropKeys)
-        {
-            Debug.Log($"Обработка растения на позиции {pos}");
-            
+        {            
             if (!allCrops.TryGetValue(pos, out CropBehaviour crop)) 
             {
-                Debug.Log($"Растение не найдено в словаре для позиции {pos}");
                 continue;
             }
-
+            
             GameObject tileObj = FarmGrid.Instance.GetTileAt(pos);
             if (tileObj == null)
             {
-                Debug.Log($"Тайл не найден для позиции {pos}");
                 continue;
             }
             
             SoilTile soil = tileObj.GetComponent<SoilTile>();
             if (soil == null)
             {
-                Debug.Log($"SoilTile не найден для позиции {pos}");
-                Destroy(crop.gameObject);
-                allCrops.Remove(pos);
                 continue;
             }
-
-            // Проверяем состояние почвы для растения
+            
+            if (crop.isRotten)
+            {
+                Debug.Log($"Гнилое растение на {pos} удалено");
+                Destroy(crop.gameObject);
+                allCrops.Remove(pos);
+                soil.MarkHarvested();
+                continue;
+            }
+            
             if (soil.isWatered)
             {
-                // Если почва полита СЕГОДНЯ - растение растет
-                Debug.Log($"Растение на {pos} полито, растет...");
                 crop.Grow();
-                soil.daysWithoutWater = 0; // Сбрасываем счетчик дней без воды
             }
             else if (soil.wasWateredYesterday)
             {
-                // Если почва была полита ВЧЕРА (но не сегодня) - все еще может расти
-                Debug.Log($"Растение на {pos} было полито вчера, все еще может расти...");
-                crop.Grow();
-                soil.daysWithoutWater = 1; // Один день без воды
+                Debug.Log($"Растение на {pos} не полито 1 день");
             }
             else
             {
-                // Не поливалось ни сегодня, ни вчера
-                soil.daysWithoutWater++;
-                Debug.Log($"Растение на {pos} не поливалось. Дней без воды: {soil.daysWithoutWater}");
-
-                if (soil.daysWithoutWater >= 2)
-                {
-                    crop.SetRotten();
-                    Debug.Log($"Растение на {pos} испортилось из-за недостатка воды");
-                }
-                else
-                {
-                    // Может все еще расти один день без воды
-                    crop.Grow();
-                }
+                Debug.Log($"Растение на {pos} не полито 2 дня - СГНИЛО!");
+                crop.SetRotten();
             }
         }
-
-        // Шаг 2: Затем обрабатываем высыхание ВСЕЙ почвы
-        var allTiles = Object.FindObjectsOfType<SoilTile>();
-        Debug.Log($"Обработка высыхания {allTiles.Length} тайлов почвы");
         
+        var allTiles = Object.FindObjectsOfType<SoilTile>();
         foreach (var tile in allTiles)
         {
-            // Сохраняем состояние "полито вчера" перед сбросом
             bool wasJustWatered = tile.isWatered;
-            
-            // Сбрасываем полив "сегодня" для следующего дня
-            tile.ClearDailyWater(); // Этот метод теперь сохраняет wasWateredYesterday
-            
-            // Если не было полито сегодня, обрабатываем высыхание
+            tile.ClearDailyWater();
             if (!wasJustWatered)
             {
                 tile.DryOut();
             }
         }
-        
-        Debug.Log("=== НОВЫЙ ДЕНЬ ЗАВЕРШЕН ===");
     }
-
-
 
     public void CollectCrop(Vector2Int gridPosition)
     {
         if (allCrops.TryGetValue(gridPosition, out CropBehaviour crop))
         {
-            // Проверяем, выросло ли растение — через cropData
+            if (CropInfoUI.Instance != null)
+            {
+                CropInfoUI.Instance.HideInfo();
+            }
+
             if (crop.cropData == null || crop.cropData.growthStages == null)
             {
                 Debug.LogError("Нет данных о стадиях роста!");
                 return;
             }
 
-             if (crop.CurrentStage < crop.cropData.growthStages.Length - 1)
-             {
-                 Debug.Log("Растение ещё не выросло!");
-                 return;
-             }
+            if (crop.CurrentStage < 2)
+            {
+                Debug.Log("Растение ещё не выросло!");
+                return;
+            }
+            
+            if (crop.CurrentStage > 3)
+            {
+                Debug.Log("Растение уже сгнило, нельзя собрать!");
+                return;
+            }
 
             Item harvestItem = crop.Harvest(out int yield);
             if (harvestItem != null && InventoryController.Instance != null)

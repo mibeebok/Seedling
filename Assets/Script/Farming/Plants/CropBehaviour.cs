@@ -9,7 +9,7 @@ public class CropBehaviour : MonoBehaviour
     private int currentStage = 0;
     public int CurrentStage => currentStage;
     private SpriteRenderer spriteRenderer;
-    private bool isRotten = false;
+    public bool isRotten = false;
 
     private void Awake()
     {
@@ -111,7 +111,7 @@ public class CropBehaviour : MonoBehaviour
     {
         Debug.Log($"Клик по растению! Стадия: {currentStage + 1}/{cropData.growthStages.Length}");
         
-        if (currentStage >= cropData.growthStages.Length - 1)
+        if (currentStage >= 2 && currentStage <= 3)
         {
             CollectHarvest();
         }
@@ -120,24 +120,52 @@ public class CropBehaviour : MonoBehaviour
             Debug.Log("Растение ещё не выросло!");
         }
     }
+    private void OnMouseEnter()
+    {
+        if (CropInfoUI.Instance != null && cropData != null)
+        {
+            string statusText;
+            
+            if (currentStage >= 4)
+            {
+                statusText = "Ты опоздал. Растение испорчено!";
+            }
+            else if (currentStage >= 2 && currentStage <= 3)
+            {
+                statusText = "Можно собирать!";
+            }
+            else
+            {
+                statusText = "Еще растет...";
+            }
+            
+            CropInfoUI.Instance.ShowInfo(transform.position, statusText);
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (CropInfoUI.Instance != null)
+            CropInfoUI.Instance.HideInfo();
+    }
 
     private void CollectHarvest()
     {
+        if (CropInfoUI.Instance != null)
+        {
+            CropInfoUI.Instance.HideInfo();
+        }
         Item harvestedItem = Harvest(out int yield);
         if (harvestedItem != null && InventoryController.Instance != null)
         {
             InventoryController.Instance.AddItem(harvestedItem, yield);
-            Debug.Log($"Собран урожай: {harvestedItem.name} x{yield}");
         }
 
-        // Удаляем из словаря
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(transform.position);
         if (CropsManager.Instance.allCrops.ContainsKey(gridPos))
         {
             CropsManager.Instance.allCrops.Remove(gridPos);
         }
 
-        // Очищаем тайл
         GameObject tileObj = FarmGrid.Instance.GetTileAt(gridPos);
         if (tileObj != null)
         {
@@ -153,15 +181,6 @@ public class CropBehaviour : MonoBehaviour
 
     public void Grow()
     {
-        Debug.Log($"Метод Grow вызван для {gameObject.name}");
-        Debug.Log($"CropData: {cropData?.name}");
-        Debug.Log($"CurrentStage: {currentStage}");
-        if (isRotten) 
-        {
-            Debug.Log("Растение испорчено, не может расти");
-            return;
-        }
-        
         if (cropData == null)
         {
             Debug.LogError("CropData не назначен!");
@@ -173,18 +192,17 @@ public class CropBehaviour : MonoBehaviour
             Debug.LogError($"GrowthStages не настроены для {cropData.name}!");
             return;
         }
-
-        Debug.Log($"Текущая стадия: {currentStage}, Всего стадий: {cropData.growthStages.Length}");
         
+        // Убираем проверку isRotten, чтобы гнилое растение не росло
+        if (isRotten) 
+        {
+            return;
+        }
+
         if (currentStage < cropData.growthStages.Length - 1)
         {
             currentStage++;
             UpdateVisual();
-            Debug.Log($"✓ Растение выросло до стадии {currentStage + 1}/{cropData.growthStages.Length}");
-        }
-        else
-        {
-            Debug.Log("Растение достигло максимальной стадии роста и готово к сбору");
         }
     }
 
@@ -201,38 +219,22 @@ public class CropBehaviour : MonoBehaviour
             if (spriteRenderer != null) 
             {
                 spriteRenderer.sprite = tile.sprite;
-                
-                Debug.Log($"=== ОТЛАДКА РАСТЕНИЯ ===");
-                Debug.Log($"Позиция: {transform.position}");
-                Debug.Log($"Масштаб: {transform.localScale}");
-                Debug.Log($"Слой сортировки: {spriteRenderer.sortingLayerName}");
-                Debug.Log($"Порядок сортировки: {spriteRenderer.sortingOrder}");
-                Debug.Log($"Спрайт установлен: {tile.sprite?.name}");
-                Debug.Log($"Размер спрайта: {tile.sprite?.bounds.size}");
-                Debug.Log($"Видимость Renderer: {spriteRenderer.enabled}");
             }
             return;
         }
-
-        Debug.LogWarning("CropBehaviour: growthStages[currentStage] не является Tile с sprite.");
     }
     public Item Harvest(out int yield)
     {
         if (cropData == null || cropData.harvestItem == null)
         {
-            Debug.LogError("Нет данных об урожае!");
             yield = 0;
             return null;
         }
 
-        // Рассчитываем количество урожая в зависимости от стадии роста
         int totalStages = cropData.growthStages.Length;
         float growthProgress = (float)currentStage / (totalStages - 1);
         
-        // На 1-й стадии — минимальный урожай, на последней — максимальный
         yield = Mathf.RoundToInt(Mathf.Lerp(cropData.baseHarvestYield, cropData.maxHarvestYield, growthProgress));
-        
-        Debug.Log($"Собрано {yield} шт. {cropData.harvestItem.name} (стадия {currentStage + 1}/{totalStages})");
         
         return cropData.harvestItem;
     }
@@ -245,5 +247,12 @@ public class CropBehaviour : MonoBehaviour
         currentStage = cropData.growthStages.Length - 1;
         UpdateVisual();
     }
-    
+
+    private void OnDestroy()
+    {
+        if (CropInfoUI.Instance != null)
+        {
+            CropInfoUI.Instance.HideInfo();
+        }
+    }
 }

@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// Базовый класс для всех сельхоз культур
 public abstract class Crop : ScriptableObject
 {
     public CropType cropType;
-    public bool isSeed; // True для семян, false для овощей
+    public bool isSeed;
     
     [Header("Base Settings")]
     public Sprite icon;
     public int maxStack = 32;
+    public string cropName;
     
     [Header("Growth Settings")] 
     public Vector3Int position;
     public float timeRemaining;
     public bool timerIsRunning = false;
     public int currentGrowthStage = 0;
-    public TileBase[] growthStages = new TileBase[3]; // stage0, stage1, stage2
+    public TileBase[] growthStages = new TileBase[3]; 
     
     [Header("Harvest Settings")]
-    public Item harvestItem;           // Предмет, который получит игрок
-    public int baseHarvestYield = 1;   // Базовое количество урожая
-    public int maxHarvestYield = 5;    // Максимальное количество урожая (на последней стадии)
+    public Item harvestItem;
+    public int baseHarvestYield = 1;
+    public int maxHarvestYield = 5;
 
     public Transform transform { get; set; }
 
@@ -51,7 +51,7 @@ public abstract class Crop : ScriptableObject
 
     protected virtual void OnGrowthStageChanged()
     {
-        // Можно переопределить в дочерних классах
+        //переопределить в дочерних классах
     }
 
     public virtual Item GetHarvestItem()
@@ -61,7 +61,6 @@ public abstract class Crop : ScriptableObject
 
 }
 
-// Класс для семян
 [CreateAssetMenu(fileName = "NewSeed", menuName = "Crops/Seed")]
 public class Seed : Crop
 {
@@ -72,7 +71,7 @@ public class Seed : Crop
     private void Awake()
     {
         isSeed = true;
-        maxStack = 32; // Семена можно складывать больше
+        maxStack = 32; 
     }
 }
 

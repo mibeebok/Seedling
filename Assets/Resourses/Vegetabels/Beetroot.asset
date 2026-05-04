@@ -24,6 +24,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ec74920ad098df548b076a8d106aaa77, type: 2}
   - {fileID: 11400000, guid: a274b184a15921545842f093161d4b5b, type: 2}
   - {fileID: 11400000, guid: b0fb79380a805d3438986b4ec90ce4c1, type: 2}
+  - {fileID: 11400000, guid: e0bd96d5d41f4b344a3eb917b5060e0b, type: 2}
+  - {fileID: 11400000, guid: b89d8ebe55ebec74fb65b9a9e51d14b5, type: 2}
+  - {fileID: 11400000, guid: 77b0e30e1f9c0534194247ca5cdfd0f4, type: 2}
   harvestItem:
     id: 4
     name: beetroot
@@ -31,4 +34,5 @@ MonoBehaviour:
     maxStack: 16
     type: 1
     cropType: 3
-  harvestYield: 1
+  baseHarvestYield: 1
+  maxHarvestYield: 5
