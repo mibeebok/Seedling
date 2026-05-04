@@ -16,7 +16,7 @@ public static class SaveSystem
         changedTiles.Add(pos);
     }
 
-        public static void SaveModifiedTiles()
+    public static void SaveModifiedTiles()
     {
         if (changedTiles.Count == 0)
         {
@@ -70,21 +70,27 @@ public static class SaveSystem
             {
                 items = new List<ItemSlotData>()
             };
-            foreach (var slot in inv.items)
+            for (int i = 2; i < inv.items.Count; i++)
             {
-                saveFile.inventory.items.Add(new ItemSlotData
+                var slot = inv.items[i];
+                if (slot.id != 0 && slot.count > 0)  // ← Сохраняем только не пустые слоты
                 {
-                    id = slot.id,
-                    count = slot.count
-                });
+                    Item item = DataBase.Instance.GetItemById(slot.id);
+                    if (item != null && !string.IsNullOrEmpty(item.name))  // ← Проверяем что имя не пустое
+                    {
+                        saveFile.inventory.items.Add(new ItemSlotData
+                        {
+                            itemName = item.name,
+                            count = slot.count,
+                            isSeed = item.type == ItemType.Seed
+                        });
+                    }
+                }
             }
         }
 
-        // Пишем файл
         File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
-        Debug.Log($"[SaveSystem] Сохранено {changedTiles.Count} изменённых тайлов.");
 
-        // Очищаем список после сохранения
         changedTiles.Clear();
     }
 
@@ -92,7 +98,7 @@ public static class SaveSystem
     {
         var saveFile = new SaveFile();
 
-        // 1 Сохраняем тайлы земли
+        // Сохраняем тайлы земли
         saveFile.tiles = new List<SaveData>();
         for (int x = 0; x < FarmGrid.Instance.gridSizeX; x++)
         {
@@ -107,19 +113,38 @@ public static class SaveSystem
                 }
             }
         }
-        Debug.Log($"[SaveSystem] Сохранено тайлов: {saveFile.tiles.Count}");
 
-        // 2 Сохраняем игрока
+        // Сохраняем растения
+        saveFile.crops = new List<CropSaveData>();
+        if (CropsManager.Instance != null)
+        {
+            foreach (var kvp in CropsManager.Instance.allCrops)
+            {
+                var crop = kvp.Value;
+                if (crop != null && crop.cropData != null)
+                {
+                    saveFile.crops.Add(new CropSaveData
+                    {
+                        gridX = kvp.Key.x,
+                        gridY = kvp.Key.y,
+                        cropType = crop.cropData.cropType.ToString(),
+                        currentStage = crop.CurrentStage,
+                        isRotten = crop.isRotten
+                    });
+                }
+            }
+        }
+
+        // Сохраняем игрока
         if (Player.Instance != null)
         {
             saveFile.player = new PlayerData
             {
                 position = Player.Instance.transform.position
             };
-            Debug.Log($"[SaveSystem] Позиция игрока сохранена: {saveFile.player.position}");
         }
 
-        // 3 Сохраняем козу
+        // Сохраняем козу
         var goat = Object.FindFirstObjectByType<GoatBehavior>();
         if (goat != null)
         {
@@ -127,26 +152,32 @@ public static class SaveSystem
             {
                 position = goat.transform.position
             };
-            Debug.Log($"[SaveSystem] Позиция козы сохранена: {saveFile.goat.position}");
         }
 
-        // 4 Сохраняем инвентарь
+        // Сохраняем инвентарь
         if (InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
         {
             var inv = InventoryController.Instance.mainInventory;
             saveFile.inventory = new InventoryData();
             saveFile.inventory.items = new List<ItemSlotData>();
 
-            foreach (var slot in inv.items)
+            for (int i = 2; i < inv.items.Count; i++)
             {
-                saveFile.inventory.items.Add(new ItemSlotData
+                var slot = inv.items[i];
+                if (slot.id != 0 && slot.count > 0)
                 {
-                    id = slot.id,
-                    count = slot.count
-                });
+                    Item item = DataBase.Instance.GetItemById(slot.id);
+                    if (item != null)
+                    {
+                        saveFile.inventory.items.Add(new ItemSlotData
+                        {
+                            itemName = item.name,  // ← просто name
+                            count = slot.count,
+                            isSeed = item.type == ItemType.Seed
+                        });
+                    }
+                }
             }
-
-            Debug.Log($"[SaveSystem] Сохранено предметов в инвентаре: {saveFile.inventory.items.Count}");
         }
 
         // 5 Записываем в файл
@@ -159,14 +190,12 @@ public static class SaveSystem
     {
         if (!File.Exists(SavePath))
         {
-            Debug.LogWarning("[SaveSystem] Файл сохранения не найден!");
             return;
         }
 
         var saveFile = JsonUtility.FromJson<SaveFile>(File.ReadAllText(SavePath));
-        Debug.Log("[SaveSystem] Сохранение загружено из файла.");
 
-        // 1 Загружаем тайлы
+        // Загружаем тайлы
         int restoredTiles = 0;
         foreach (var data in saveFile.tiles)
         {
@@ -175,40 +204,119 @@ public static class SaveSystem
             tile?.GetComponent<SoilTile>()?.LoadFromSaveData(data);
             restoredTiles++;
         }
-        Debug.Log($"[SaveSystem] Восстановлено тайлов: {restoredTiles}");
 
-        // 2 Загружаем игрока
+        // Загружаем растения
+        if (saveFile.crops != null && CropsManager.Instance != null)
+        {
+            foreach (var data in saveFile.crops)
+            {
+                Vector2Int pos = new Vector2Int(data.gridX, data.gridY);
+                
+                CropType cropType;
+                if (!System.Enum.TryParse(data.cropType, out cropType))
+                {
+                    Debug.LogError($"Неизвестный тип растения: {data.cropType}");
+                    continue;
+                }
+                
+                Crop cropData = CropsManager.Instance.GetCropData(cropType);
+                if (cropData == null) continue;
+                
+                CropBehaviour prefab = CropsManager.Instance.GetCropPrefab(cropType);
+                if (prefab == null) continue;
+                
+                Vector3 worldPos = FarmGrid.Instance.GridToWorldPosition(pos);
+                CropBehaviour newCrop = Object.Instantiate(prefab, worldPos, Quaternion.identity);
+                newCrop.cropData = cropData;
+                
+                newCrop.isRotten = data.isRotten;
+                
+                System.Reflection.FieldInfo stageField = typeof(CropBehaviour).GetField("currentStage", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (stageField != null)
+                {
+                    stageField.SetValue(newCrop, data.currentStage);
+                }
+                
+                newCrop.UpdateVisual();
+                
+                CropsManager.Instance.allCrops[pos] = newCrop;
+                
+                GameObject tileObj = FarmGrid.Instance.GetTileAt(pos);
+                if (tileObj != null)
+                {
+                    SoilTile soil = tileObj.GetComponent<SoilTile>();
+                    if (soil != null)
+                    {
+                        soil.MarkPlanted();
+                    }
+                }
+            }
+        }
+
+        // Загружаем игрока
         if (saveFile.player != null)
         {
             if (Player.Instance != null)
             {
                 Player.Instance.transform.position = saveFile.player.position;
-                Debug.Log($"[SaveSystem] Позиция игрока загружена: {saveFile.player.position}");
             }
             else
             {
                 pendingPlayerPos = saveFile.player.position;
-                Debug.Log("[SaveSystem] Игрок ещё не создан, позиция сохранена в pending.");
             }
         }
 
-        // 3 Загружаем козу
+        // Загружаем козу
         if (saveFile.goat != null)
         {
             var goat = Object.FindFirstObjectByType<GoatBehavior>();
             if (goat != null)
             {
                 goat.transform.position = saveFile.goat.position;
-                Debug.Log($"[SaveSystem] Позиция козы загружена: {saveFile.goat.position}");
             }
             else
             {
                 pendingGoatPos = saveFile.goat.position;
-                Debug.Log("[SaveSystem] Коза ещё не создана, позиция сохранена в pending.");
             }
         }
 
-        Debug.Log("[SaveSystem] Загрузка завершена!");
+        // Загружаем инвентарь
+        if (saveFile.inventory != null && saveFile.inventory.items != null && 
+            InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
+        {
+            var inv = InventoryController.Instance.mainInventory;
+            
+            for (int i = 2; i < inv.items.Count; i++)
+            {
+                inv.items[i].id = 0;
+                inv.items[i].count = 0;
+            }
+            
+            int slotIndex = 2;
+            foreach (var itemData in saveFile.inventory.items)
+            {
+                if (slotIndex >= inv.items.Count) break;
+                
+                if (string.IsNullOrEmpty(itemData.itemName))
+                {
+                    Debug.LogWarning("Пропущен предмет с пустым именем");
+                    continue;
+                }
+                
+                Item item = DataBase.Instance.GetItemByName(itemData.itemName, itemData.isSeed);
+                if (item != null)
+                {
+                    inv.items[slotIndex].id = item.id;
+                    inv.items[slotIndex].count = itemData.count;
+                    slotIndex++;
+                }
+            }
+            
+            inv.UpdateInventory();
+            InventoryController.Instance.UpdateHotbarVisuals(); // Обновляем хотбар
+        }
+
     }
 
     // Применяем отложенные позиции, если объекты появились позже
@@ -218,7 +326,6 @@ public static class SaveSystem
         {
             Player.Instance.transform.position = pendingPlayerPos.Value;
             pendingPlayerPos = null;
-            Debug.Log($"[SaveSystem] Применена отложенная позиция игрока: {Player.Instance.transform.position}");
         }
 
         if (pendingGoatPos.HasValue)
@@ -228,25 +335,31 @@ public static class SaveSystem
             {
                 goat.transform.position = pendingGoatPos.Value;
                 pendingGoatPos = null;
-                Debug.Log($"[SaveSystem] Применена отложенная позиция козы: {goat.transform.position}");
             }
         }
     }
 
-    // Старые методы для совместимости
     public static void SaveAllTiles() => SaveGame();
     public static void LoadAllTiles() => LoadGame();
 
-    // =====================
-    // Классы данных
-    // =====================
+
+
      [System.Serializable]
     public class SaveFile
     {
         public List<SaveData> tiles;
+        public List<CropSaveData> crops;
         public PlayerData player;
         public GoatData goat;
         public InventoryData inventory;
+    }
+    public class CropSaveData
+    {
+        public int gridX;
+        public int gridY;
+        public string cropType;
+        public int currentStage;
+        public bool isRotten;
     }
 
     [System.Serializable]
@@ -270,7 +383,8 @@ public static class SaveSystem
     [System.Serializable]
     public class ItemSlotData
     {
-        public int id;
+        public string itemName;
         public int count;
+        public bool isSeed;
     }
 }

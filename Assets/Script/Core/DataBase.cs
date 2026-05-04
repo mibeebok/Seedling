@@ -68,16 +68,20 @@ public class DataBase : MonoBehaviour
             item.cropType == type &&
             item.type == (isSeed ? ItemType.Seed : ItemType.Vegetable));
     }
-    void Start()
+    public Item GetItemByName(string itemName, bool isSeed)
     {
-        DebugAllItems();
-    }
-    public void DebugAllItems()
-    {
-        Debug.Log("=== Все предметы в базе ===");
-        foreach (Item item in items)
+        foreach (var item in items)
         {
-            Debug.Log($"ID: {item.id}, Name: {item.name}, Type: {item.type}, CropType: {item.cropType}");
+            if (item != null && item.name == itemName)
+            {
+                // Проверяем тип: Seed или Vegetable
+                if (isSeed && item.type == ItemType.Seed)
+                    return item;
+                if (!isSeed && item.type == ItemType.Vegetable)
+                    return item;
+            }
         }
+        Debug.LogError($"Предмет не найден: {itemName} (isSeed={isSeed})");
+        return null;
     }
 }

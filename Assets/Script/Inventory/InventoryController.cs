@@ -310,7 +310,7 @@ public class InventoryController : MonoBehaviour
         UpdateHotbarVisuals();
     }
 
-    private void UpdateHotbarVisuals()
+    public void UpdateHotbarVisuals()
     {
         if (slotRenderers == null) return;
 

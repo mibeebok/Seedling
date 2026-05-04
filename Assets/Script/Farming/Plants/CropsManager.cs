@@ -132,7 +132,7 @@ public class CropsManager : MonoBehaviour
     }
 
     
-    private CropBehaviour GetCropPrefab(CropType cropType)
+    public CropBehaviour GetCropPrefab(CropType cropType)
     {
         switch (cropType)
         {
