@@ -35,6 +35,7 @@ public class SleepController : Sounds
     public AudioClip alarmSound;
     private bool alarmPlayed = false;
     private Coroutine tickCoroutine;
+    public bool isSleeping = false;
 
     private void Start()
     {
@@ -58,10 +59,10 @@ public class SleepController : Sounds
         currentSleep = Mathf.Clamp(currentSleep, 0f, maxSleep);
         UpdateSleepUI();
         
-        if (darknessPanel != null)
+        if (darknessPanel != null && !isSleeping)
         {
             float sleepPercentage = currentSleep / maxSleep * 100f;
-            darknessPanel.alpha = sleepPercentage < 50f ? 0.7f * (1f - sleepPercentage / 50f) : 0f;
+            darknessPanel.alpha = sleepPercentage < 30f ? 0.7f * (1f - sleepPercentage / 30f) : 0f;
         }
 
         if (currentSleep <= 0 && !warningActive && !isDestroying)
@@ -133,7 +134,7 @@ public class SleepController : Sounds
         if (sleepSlider == null) return;
         sleepSlider.value = currentSleep;
         
-        float sleepPercentage = currentSleep / maxSleep * 20f;
+        float sleepPercentage = currentSleep / maxSleep * 100f;
         
         if (sleepPercentage >= 50f)
             sleepSlider.fillRect.GetComponent<Image>().color = wellRestedColor;

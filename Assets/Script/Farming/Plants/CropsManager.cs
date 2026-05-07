@@ -80,7 +80,7 @@ public class CropsManager : MonoBehaviour
         SleepController sleepController = FindObjectOfType<SleepController>();
         if (sleepController != null)
         {
-            sleepController.ConsumeEnergy(70f);
+            sleepController.ConsumeEnergy(5f);
         }
 
         if (allCrops.ContainsKey(gridPos))
