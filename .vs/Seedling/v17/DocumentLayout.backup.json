@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\ui\\bookbuttonposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\bookbuttonposition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\bookhotkey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\bookhotkey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\npcinteractions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\npcinteractions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\dialogueline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\dialogueline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "BookButtonPosition.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookButtonPosition.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookButtonPosition.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookButtonPosition.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\BookButtonPosition.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAADwvzEAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T19:45:52.441Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookHotkey.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookHotkey.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookHotkey.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookHotkey.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\BookHotkey.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T19:36:22.507Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BookUI.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookUI.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\BookUI.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwH4AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T18:48:37.026Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NPCInteractions.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\NPCInteractions.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\NPCInteractions.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\NPCInteractions.cs",
+              "RelativeToolTip": "Assets\\Script\\NPC\\NPCInteractions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T17:12:22.236Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DialogueLine.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueLine.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueLine.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueLine.cs",
+              "RelativeToolTip": "Assets\\Script\\NPC\\DialogueLine.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T17:12:15.788Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DialogueManager.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueManager.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
+              "RelativeToolTip": "Assets\\Script\\NPC\\DialogueManager.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAwwIYAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T17:06:44.067Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
