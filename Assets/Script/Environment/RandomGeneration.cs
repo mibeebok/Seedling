@@ -1,11 +1,24 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Collections;
 
-public class FlowersGeneration : MonoBehaviour
+public class RandomGeneration : MonoBehaviour
 {
     public GameObject[] objects;
-    void Start()
+    public static HashSet<Vector2Int> occupiedPositions = new HashSet<Vector2Int>();
+    
+    IEnumerator Start()
     {
+        yield return new WaitUntil(() => FarmGrid.Instance != null && FarmGrid.Instance.isGridGenerated);
+        
         int rand = Random.Range(0, objects.Length);
-        Instantiate(objects[rand], transform.position, Quaternion.identity);
+        Vector3 pos = transform.position;
+        pos.z = 0;
+        GameObject spawned = Instantiate(objects[rand], pos, Quaternion.identity);
+        spawned.tag = "Obstacle";
+        
+        Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(spawned.transform.position);
+        occupiedPositions.Add(gridPos);
+        
     }
 }

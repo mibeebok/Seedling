@@ -15,6 +15,9 @@ public class HouseController : MonoBehaviour
     [SerializeField] private Transform playerVisual;
     [SerializeField] private float sleepRestoreAmount = 100f;
     [SerializeField] private float sleepDepletionRate = 1.5f;
+    
+    [Header("UI Дня")]
+    public Text dayText;
 
     private Transform player;
     private bool isInteractable = true;
@@ -30,16 +33,12 @@ public class HouseController : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Сохранённый день: " + PlayerPrefs.GetInt("DaysPassed", 0));
-
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
         sleepController = FindObjectOfType<SleepController>();
         
         if (!playerVisual && player)
             playerVisual = player.Find("PlayerVisual");
 
-        if (!doorAnimator)
-            Debug.LogError("Animator не назначен!");
 
         if (darknessPanel)
         {
@@ -61,11 +60,10 @@ public class HouseController : MonoBehaviour
         }
     }
 
-    private IEnumerator NightTransition()
+   private IEnumerator NightTransition()
     {
         isInteractable = false;
 
-        // Блокируем затемнение от SleepController
         if (sleepController != null)
             sleepController.isSleeping = true;
 
@@ -78,23 +76,27 @@ public class HouseController : MonoBehaviour
         if (playerVisual)
             playerVisual.gameObject.SetActive(false);
 
-        // Затемнение
         yield return StartCoroutine(FadeScreen(0f, 1f));
         
-        // Восстанавливаем сон
-        if (sleepController != null)
+        yield return new WaitForSecondsRealtime(1f);
+
+        DaysPassed++;
+
+        if (dayText != null)
         {
-            sleepController.RestoreSleep(sleepRestoreAmount);
-            sleepController.SetDepletionRate(sleepDepletionRate);
+            dayText.text = $"День {DaysPassed}";
+            dayText.gameObject.SetActive(true);
         }
 
-        // Ждём ночь
+        yield return new WaitForSecondsRealtime(3f);
+
+        if (dayText != null)
+            dayText.gameObject.SetActive(false);
+
         yield return new WaitForSecondsRealtime(nightDuration);
         
-        // Осветление
         yield return StartCoroutine(FadeScreen(1f, 0f));
 
-        // Разблокируем затемнение ПОСЛЕ осветления
         if (sleepController != null)
             sleepController.isSleeping = false;
 
@@ -104,7 +106,6 @@ public class HouseController : MonoBehaviour
         if (doorAnimator)
             doorAnimator.SetBool(doorBoolParameter, false);
 
-        DaysPassed++;
         OnNewDay?.Invoke();
 
         isInteractable = true;

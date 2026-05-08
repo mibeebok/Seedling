@@ -1,6 +1,6 @@
-using UnityEngine;
 using System.Collections;
-
+using System.Collections.Generic;
+using UnityEngine;
 
 public class MattockController : Sounds
 {
@@ -8,6 +8,7 @@ public class MattockController : Sounds
     public InventoryController inventoryController;
     public Animator handsAnimator;
     public Transform playerTransform;
+    public DialogueManager dialogueManager;
 
     [Header("Mattock Setting")]
     public int mattockItemId = 2;
@@ -16,7 +17,10 @@ public class MattockController : Sounds
     public float interactionRadius = 3.5f;
 
     [Header("Sprites")]
-    public Sprite plowedSprite; // Спрайт для вспаханной земли
+    public Sprite plowedSprite;
+
+    [Header("Настройки")]
+    public LayerMask obstacleMask = ~0;
 
     private bool isMattock = false;
 
@@ -36,46 +40,61 @@ public class MattockController : Sounds
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
         if (Vector2.Distance(playerTransform.position, mousePos) > interactionRadius)
-        {
-            Debug.Log("Блок не входит в радиус для вспашки (2.5f)");
             return;
+
+        Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(mousePos, 1.5f);
+        bool isOccupied = false;
+
+        foreach (var col in nearbyColliders)
+        {
+            if (col.CompareTag("Obstacle"))
+            {
+                isOccupied = true;
+                break;
+            }
         }
 
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        
+if (isOccupied)
+{
+    NPCInteraction npc = FindObjectOfType<NPCInteraction>();
+    if (npc != null && npc.dialogueManager != null)
+    {
+        List<DialogueLine> lines = new List<DialogueLine>
+        {
+            new DialogueLine { text = "Здесь нельзя вспахивать! Нужно убрать то, что растёт.", isPlayer = true }
+        };
+        npc.dialogueManager.StartDialogue(lines, "Гриша", npc.npcFace);
+    }
+    return;
+}
 
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
+        
         if (hit.collider != null)
         {
-            // Ищем SoilTile в самом объекте или его родителях
             SoilTile soilTile = hit.collider.GetComponent<SoilTile>() ?? 
-                            hit.collider.GetComponentInParent<SoilTile>();
+                                hit.collider.GetComponentInParent<SoilTile>();
 
             if (soilTile != null)
             {
-                Debug.Log("Найдена земля для вспашки");
-                
-                // Запускаем анимацию
                 if (handsAnimator != null && !isMattock)
                 {
-                    PlaySound(sounds[0],volume: 0.3f, p1:0.9f, p2: 1.2f);
+                    PlaySound(sounds[0], volume: 0.3f, p1: 0.9f, p2: 1.2f);
                     handsAnimator.SetBool(mattockBool, true);
                     StartCoroutine(ResetMattockBool());
                 }
-
-                // Взаимодействуем через метод Plow()
                 soilTile.Plow();
-                // SaveSystem.SaveGame();
             }
         }
     }
+
     IEnumerator ResetMattockBool()
     {
         isMattock = true;
-
         AnimationClip mattockClip = GetAnimationClipByName("Mattock");
         float duration = mattockClip != null ? mattockClip.length : 1f;
-
         yield return new WaitForSeconds(duration);
-
         handsAnimator.SetBool(mattockBool, false);
         isMattock = false;
     }
@@ -88,7 +107,6 @@ public class MattockController : Sounds
             if (clip.name == name)
                 return clip;
         }
-        Debug.LogWarning("Анимация " + name + " не найдена!");
         return null;
     }
 }

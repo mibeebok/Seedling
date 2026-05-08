@@ -18,34 +18,38 @@ public class EcologyController : MonoBehaviour
 
     private void Start()
     {
-        currentEco = maxEco;
-
+        currentEco = 0;
         UpdateEcoUI();
     }
+
     void Update()
     {
         currentEco -= deplicationAmount * deplicationRate * Time.deltaTime;
-        currentEco = Mathf.Clamp(currentEco + deplicationAmount, 0f, maxEco);
+        currentEco = Mathf.Clamp(currentEco, 0f, maxEco);
         UpdateEcoUI();
     }
 
     public void RestoreEco(float amount)
     {
         currentEco = Mathf.Clamp(currentEco + amount, 0f, maxEco);
+        UpdateEcoUI(); 
     }
 
-    public void SetDeplicationRate(float rate)
+    public void ReduceEco(float amount)
     {
-        deplicationRate = rate;
+        currentEco = Mathf.Clamp(currentEco - amount, 0f, maxEco);
+        UpdateEcoUI();
     }
 
     private void UpdateEcoUI()
     {
         if (ecoSlider == null) return;
-
+        
+        ecoSlider.value = currentEco;
+        
         float ecoPercentage = currentEco / maxEco * 100f;
 
-        if (ecoPercentage >= 100)
+        if (ecoPercentage >= 50f)
             ecoSlider.fillRect.GetComponent<Image>().color = wellColor;
         else if (ecoPercentage >= 30f)
             ecoSlider.fillRect.GetComponent<Image>().color = sosoColor;

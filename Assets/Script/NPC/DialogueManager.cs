@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-        // Вставляем имя и лицо NPC во все его реплики
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ NPC пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         for (int i = 0; i < lines.Count; i++)
         {
             if (!lines[i].isPlayer)
@@ -57,25 +57,25 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine line = lines[currentIndex];
 
-        // Смена фона
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         if (dialogueBackgroundImage != null)
         {
             dialogueBackgroundImage.sprite = line.isPlayer ? playerDialogueSprite : npcDialogueSprite;
         }
 
-        // Лицо
+        // пїЅпїЅпїЅпїЅ
         faceImage.sprite = line.isPlayer ? playerFace : line.speakerFace;
 
-        // Имя
+        // пїЅпїЅпїЅ
         nameText.text = line.isPlayer ? playerName : line.speakerName;
 
-        // Текст
+        // пїЅпїЅпїЅпїЅпїЅ
         dialogueText.text = line.text;
 
-        // Меняем расположение UI (лево/право)
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI (пїЅпїЅпїЅпїЅ/пїЅпїЅпїЅпїЅпїЅ)
         if (line.isPlayer)
         {
-            // Реплика игрока — слева
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ
             faceImage.rectTransform.anchoredPosition = new Vector2(-254, 11);
             nameText.rectTransform.anchoredPosition = new Vector2(-254, -71);
             dialogueText.rectTransform.anchoredPosition = new Vector2(57, 3);
@@ -83,7 +83,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            // Реплика NPC — справа
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ NPC пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             faceImage.rectTransform.anchoredPosition = new Vector2(254, 11);
             nameText.rectTransform.anchoredPosition = new Vector2(254, -71);
             dialogueText.rectTransform.anchoredPosition = new Vector2(-57, -3);

@@ -190,6 +190,10 @@ public class SleepController : Sounds
                     Destroy(crop.gameObject);
             }
             CropsManager.Instance.allCrops.Clear();
+
+            EcologyController ecoController = FindObjectOfType<EcologyController>();
+            if (ecoController != null)
+                ecoController.ReduceEco(cropKeys.Count * 3f); // -3 за каждое растение
             
             SoilTile[] allTiles = FindObjectsOfType<SoilTile>();
             foreach (var tile in allTiles)

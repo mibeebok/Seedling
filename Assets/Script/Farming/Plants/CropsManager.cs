@@ -134,6 +134,12 @@ public class CropsManager : MonoBehaviour
         {
             sleepController.ConsumeEnergy(5f);
         }
+
+        EcologyController ecoController = FindObjectOfType<EcologyController>();
+        if (ecoController != null)
+        {
+            ecoController.RestoreEco(5f); // 5 единиц экологии за растение
+        }
         
         return true;
     }
@@ -175,11 +181,20 @@ public class CropsManager : MonoBehaviour
             
             if (crop.isRotten)
             {
-                Debug.Log($"Гнилое растение на {pos} удалено");
                 Destroy(crop.gameObject);
                 allCrops.Remove(pos);
                 soil.MarkHarvested();
                 continue;
+            }
+            if (crop.CurrentStage >= crop.cropData.growthStages.Length - 1)
+            {
+                Destroy(crop.gameObject);
+                allCrops.Remove(pos);
+                soil.MarkHarvested();
+                
+                EcologyController ecoController = FindObjectOfType<EcologyController>();
+                if (ecoController != null)
+                    ecoController.ReduceEco(3f);
             }
             
             if (soil.isWatered)
@@ -213,38 +228,19 @@ public class CropsManager : MonoBehaviour
     {
         if (allCrops.TryGetValue(gridPosition, out CropBehaviour crop))
         {
-            if (CropInfoUI.Instance != null)
-            {
-                CropInfoUI.Instance.HideInfo();
-            }
-
-            if (crop.cropData == null || crop.cropData.growthStages == null)
-            {
-                Debug.LogError("Нет данных о стадиях роста!");
-                return;
-            }
-
-            if (crop.CurrentStage < 2)
-            {
-                Debug.Log("Растение ещё не выросло!");
-                return;
-            }
-            
-            if (crop.CurrentStage > 3)
-            {
-                Debug.Log("Растение уже сгнило, нельзя собрать!");
-                return;
-            }
-
             Item harvestItem = crop.Harvest(out int yield);
             if (harvestItem != null && InventoryController.Instance != null)
             {
                 InventoryController.Instance.AddItem(harvestItem, yield);
-                Debug.Log($"Собран урожай: {harvestItem.name} x{yield}");
             }
 
             Destroy(crop.gameObject);
             allCrops.Remove(gridPosition);
+
+            EcologyController ecoController = FindObjectOfType<EcologyController>();
+            if (ecoController != null)
+                ecoController.ReduceEco(2f);
+
 
             GameObject tileObj = FarmGrid.Instance.GetTileAt(gridPosition);
             if (tileObj != null)

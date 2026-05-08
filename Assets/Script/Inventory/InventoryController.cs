@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
@@ -143,6 +144,23 @@ public class InventoryController : MonoBehaviour
                     var collider = slot.gameObject.AddComponent<BoxCollider2D>();
                     collider.size = new Vector2(1, 1);
                 }
+                
+                GameObject textObj = new GameObject("CountText");
+                textObj.transform.SetParent(slot);
+                textObj.transform.localPosition = new Vector3(0.35f, -0.35f, -0.1f);
+                textObj.transform.localScale = Vector3.one * 0.3f;
+
+                TextMesh textMesh = textObj.AddComponent<TextMesh>();
+                textMesh.text = "";
+                textMesh.fontSize = 16;
+                textMesh.color = Color.white;
+                textMesh.anchor = TextAnchor.MiddleCenter;
+                textMesh.alignment = TextAlignment.Center;
+                textMesh.offsetZ = -2f;
+
+                MeshRenderer meshRenderer = textObj.GetComponent<MeshRenderer>();
+                meshRenderer.sortingLayerName = "Default";
+                meshRenderer.sortingOrder = 6;
             }
         }
     }
@@ -327,6 +345,17 @@ public class InventoryController : MonoBehaviour
                     Item item = GetItemInSlot(i);
                     slotRenderers[i].sprite = item?.img;
                     slotRenderers[i].enabled = item != null;
+
+                    // Показываем количество
+                    if (i < mainInventory.items.Count)
+                    {
+                        var countText = slotRenderers[i].GetComponentInChildren<TextMesh>();
+                        if (countText != null)
+                        {
+                            int count = mainInventory.items[i].count;
+                            countText.text = count > 1 ? count.ToString() : "";
+                        }
+                    }
                 }
                 else
                 {
