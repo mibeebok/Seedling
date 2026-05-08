@@ -36,11 +36,14 @@ public class CropBehaviour : MonoBehaviour
         UpdateVisual();
         
         currentStage = 0;
+
+        spriteRenderer.sortingLayerName = "Default";
+        spriteRenderer.sortingOrder = 0;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C)) // Check camera
+        if (Input.GetKeyDown(KeyCode.C))
         {
             Camera cam = Camera.main;
             if (cam != null)
@@ -60,7 +63,7 @@ public class CropBehaviour : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.I)) // Info button
+        if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("=== ИНФОРМАЦИЯ О РАСТЕНИИ ===");
             Debug.Log($"Name: {gameObject.name}");
@@ -81,27 +84,6 @@ public class CropBehaviour : MonoBehaviour
         }
     }
 
-//следующие 2 метода логирование
-    private void OnDrawGizmosSelected()
-    {
-        // Рисуем красный куб вокруг растения в редакторе
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, Vector3.one * 0.5f);
-        
-        // Рисуем зеленую линию вверх
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(transform.position, transform.position + Vector3.up * 0.3f);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (Application.isPlaying)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, 0.2f);
-        }
-    }
-
     private void UpdateSorting()
     {
         spriteRenderer.sortingLayerName = "Plants";
@@ -109,15 +91,9 @@ public class CropBehaviour : MonoBehaviour
     }
     private void OnMouseDown()
     {
-        Debug.Log($"Клик по растению! Стадия: {currentStage + 1}/{cropData.growthStages.Length}");
-        
         if (currentStage >= 2 && currentStage <= 3)
         {
             CollectHarvest();
-        }
-        else
-        {
-            Debug.Log("Растение ещё не выросло!");
         }
     }
     private void OnMouseEnter()
@@ -193,7 +169,6 @@ public class CropBehaviour : MonoBehaviour
             return;
         }
         
-        // Убираем проверку isRotten, чтобы гнилое растение не росло
         if (isRotten) 
         {
             return;

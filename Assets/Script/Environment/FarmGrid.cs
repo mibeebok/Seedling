@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Tilemaps;
 
 public class FarmGrid : Sounds
 {
@@ -13,12 +12,12 @@ public class FarmGrid : Sounds
     public GameObject tilePrefab;
     
     [Header("Border Settings")]
-    public GameObject borderPrefab; // Префаб границы (горы/камни)
-    public int borderThickness = 3; // Толщина границы в ячейках
+    public GameObject borderPrefab;
+    public int borderThickness = 3;
     public bool generateBorders = true;
 
     private GameObject[,] grid;
-    private GameObject borderContainer; // Контейнер для границ
+    private GameObject borderContainer;
     public bool isGridGenerated = false;
 
     private AudioSource musicSource;
@@ -123,7 +122,6 @@ public class FarmGrid : Sounds
 
     private IEnumerator GenerateGridCoroutine(Vector3 center, System.Action onComplete)
     {
-        // Создаем контейнер для границ
         if (generateBorders && borderPrefab != null)
         {
             borderContainer = new GameObject("Borders");
@@ -131,7 +129,6 @@ public class FarmGrid : Sounds
             GenerateBorders(center);
         }
 
-        // Генерируем основную сетку
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -156,13 +153,11 @@ public class FarmGrid : Sounds
 
     private void GenerateBorders(Vector3 center)
     {
-        // Вычисляем границы мира
         float worldMinX = -center.x;
         float worldMaxX = (gridSizeX - 1) * cellSize - center.x;
         float worldMinY = -center.y;
         float worldMaxY = (gridSizeY - 1) * cellSize - center.y;
 
-        // Расширяем границы на толщину бордера
         int startX = -borderThickness;
         int endX = gridSizeX + borderThickness;
         int startY = -borderThickness;
@@ -172,7 +167,7 @@ public class FarmGrid : Sounds
         {
             for (int y = startY; y < endY; y++)
             {
-                // Проверяем, находится ли позиция ЗА пределами игровой сетки
+                
                 bool isOutsideGrid = x < 0 || x >= gridSizeX || y < 0 || y >= gridSizeY;
                 
                 if (isOutsideGrid)
@@ -185,7 +180,6 @@ public class FarmGrid : Sounds
                     );
                     borderTile.name = $"Border_{x}_{y}";
                     
-                    // Добавляем коллайдер если его нет
                     if (borderTile.GetComponent<Collider2D>() == null)
                     {
                         BoxCollider2D collider = borderTile.AddComponent<BoxCollider2D>();
@@ -196,7 +190,6 @@ public class FarmGrid : Sounds
         }
     }
 
-    // Проверка, находится ли позиция за пределами игрового мира
     public bool IsPositionOutsideWorld(Vector3 worldPosition)
     {
         Vector2Int gridPos = WorldToGridPosition(worldPosition);
@@ -222,7 +215,6 @@ public class FarmGrid : Sounds
     {
         if (!Application.isPlaying) return;
         
-        // Рисуем границы игрового мира
         Vector3 gridCenter = new Vector3(
             (gridSizeX - 1) * cellSize * 0.5f,
             (gridSizeY - 1) * cellSize * 0.5f,
@@ -235,15 +227,12 @@ public class FarmGrid : Sounds
             (gridSizeY - 1) * cellSize - gridCenter.y,
             0
         );
-        
-        // Красная рамка - граница игрового мира
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(
             (worldMin + worldMax) * 0.5f,
             new Vector3(worldMax.x - worldMin.x, worldMax.y - worldMin.y, 0.1f)
         );
         
-        // Синяя рамка - внешняя граница с бордерами
         if (generateBorders)
         {
             Gizmos.color = Color.blue;
@@ -255,7 +244,6 @@ public class FarmGrid : Sounds
             );
         }
         
-        // Рисуем сетку если нужно
         if (grid != null)
         {
             Gizmos.color = Color.cyan;
@@ -289,5 +277,17 @@ public class FarmGrid : Sounds
         float halfWidth = (gridSizeX * cellSize) / 2f;
         float halfHeight = (gridSizeY * cellSize) / 2f;
         return new Vector2(halfWidth, halfHeight);
+    }
+
+    public void PauseMusic()
+    {
+        if (musicSource != null && musicSource.isPlaying)
+            musicSource.Pause();
+    }
+
+    public void ResumeMusic()
+    {
+        if (musicSource != null && !musicSource.isPlaying)
+            musicSource.UnPause();
     }
 }

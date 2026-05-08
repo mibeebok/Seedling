@@ -86,6 +86,6 @@ public class Vegetable : Crop
     private void Awake()
     {
         isSeed = false;
-        maxStack = 16; // Овощи меньше стэкаются
+        maxStack = 16; // Овощи меньше стакаются
     }
 }

@@ -76,14 +76,16 @@ public class CropsManager : MonoBehaviour
     public bool TryPlantSeed(Item seedItem, Vector2 worldPosition)
     {
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
-        Vector3 mouseScreenPos = Input.mousePosition;
-        
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, 10f));
+
+        SleepController sleepController = FindObjectOfType<SleepController>();
+        if (sleepController != null)
+        {
+            sleepController.ConsumeEnergy(5f);
+        }
 
         if (allCrops.ContainsKey(gridPos))
-        {
             return false;
-        }
+        
 
         GameObject tileObject = FarmGrid.Instance.GetTileAt(gridPos);
         if (tileObject == null)
@@ -127,6 +129,11 @@ public class CropsManager : MonoBehaviour
         newCrop.UpdateVisual();
         
         soilTile.MarkPlanted();
+        
+        if (sleepController != null)
+        {
+            sleepController.ConsumeEnergy(5f);
+        }
         
         return true;
     }

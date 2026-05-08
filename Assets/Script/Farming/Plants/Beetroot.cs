@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Beetroot", menuName = "Crops/Beetroot", order = 4)]

@@ -65,18 +65,20 @@ public class HouseController : MonoBehaviour
     {
         isInteractable = false;
 
-        // Открываем дверь (используем реальное время)
+        // Блокируем затемнение от SleepController
+        if (sleepController != null)
+            sleepController.isSleeping = true;
+
         if (doorAnimator)
         {
             doorAnimator.SetBool(doorBoolParameter, true);
             yield return new WaitForSecondsRealtime(0.5f);
         }
 
-        // Скрываем персонажа
         if (playerVisual)
             playerVisual.gameObject.SetActive(false);
 
-        // Затемнение (не зависит от timeScale)
+        // Затемнение
         yield return StartCoroutine(FadeScreen(0f, 1f));
         
         // Восстанавливаем сон
@@ -86,23 +88,23 @@ public class HouseController : MonoBehaviour
             sleepController.SetDepletionRate(sleepDepletionRate);
         }
 
-        // Ждём ночь (реальное время)
+        // Ждём ночь
         yield return new WaitForSecondsRealtime(nightDuration);
         
         // Осветление
         yield return StartCoroutine(FadeScreen(1f, 0f));
 
-        // Показываем персонажа
+        // Разблокируем затемнение ПОСЛЕ осветления
+        if (sleepController != null)
+            sleepController.isSleeping = false;
+
         if (playerVisual) 
             playerVisual.gameObject.SetActive(true);
 
-        // Закрываем дверь
         if (doorAnimator)
             doorAnimator.SetBool(doorBoolParameter, false);
 
         DaysPassed++;
-        Debug.Log($"Всего дней: {DaysPassed}");
-        
         OnNewDay?.Invoke();
 
         isInteractable = true;
@@ -120,8 +122,6 @@ public class HouseController : MonoBehaviour
         }
         darknessPanel.alpha = end;
         darknessPanel.blocksRaycasts = end > 0.5f;
-
-        darknessPanel.gameObject.SetActive(true);
     }
 
     private void OnDrawGizmosSelected()
