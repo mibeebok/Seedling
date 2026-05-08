@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 public class DialogueManager : MonoBehaviour
 {
     public GameObject dialogueBox;
@@ -18,12 +19,23 @@ public class DialogueManager : MonoBehaviour
     private List<DialogueLine> lines;
     private int currentIndex = 0;
     private bool isDialogueActive = false;
+    private bool isTyping = false;
 
     void Update()
     {
         if (isDialogueActive && Input.GetMouseButtonDown(0))
         {
-            ShowNextLine();
+            if (isTyping)
+            {
+                StopAllCoroutines();
+                dialogueText.text = lines[currentIndex].text;
+                isTyping = false;
+            }
+            else
+            {
+                ShowNextLine();
+            }
+                
         }
     }
 
@@ -34,7 +46,9 @@ public class DialogueManager : MonoBehaviour
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-        // ��������� ��� � ���� NPC �� ��� ��� �������
+         if (Player.Instance != null)
+            Player.Instance.SetMovementBlocked(true);
+
         for (int i = 0; i < lines.Count; i++)
         {
             if (!lines[i].isPlayer)
@@ -89,8 +103,21 @@ public class DialogueManager : MonoBehaviour
             dialogueText.rectTransform.anchoredPosition = new Vector2(-57, -3);
 
         }
+
+        StartCoroutine(TypeLines(line.text));
     }
 
+    IEnumerator TypeLines(string textToType)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+        foreach (char letter in textToType.ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(0.05f);
+        }
+        isTyping = false;
+    }
 
     void ShowNextLine()
     {
@@ -102,5 +129,8 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         dialogueBox.SetActive(false);
+
+        if (Player.Instance != null)
+            Player.Instance.SetMovementBlocked(false);
     }
 }
