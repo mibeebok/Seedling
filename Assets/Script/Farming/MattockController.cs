@@ -55,19 +55,19 @@ public class MattockController : Sounds
         }
 
         
-if (isOccupied)
-{
-    NPCInteraction npc = FindObjectOfType<NPCInteraction>();
-    if (npc != null && npc.dialogueManager != null)
-    {
-        List<DialogueLine> lines = new List<DialogueLine>
+        if (isOccupied)
         {
-            new DialogueLine { text = "Здесь нельзя вспахивать! Нужно убрать то, что растёт.", isPlayer = true }
-        };
-        npc.dialogueManager.StartDialogue(lines, "Гриша", npc.npcFace);
-    }
-    return;
-}
+            NPCInteraction npc = FindObjectOfType<NPCInteraction>();
+            if (npc != null && npc.dialogueManager != null)
+            {
+                List<DialogueLine> lines = new List<DialogueLine>
+                {
+                    new DialogueLine { text = "Я не буду вспахивать тут землю. Здесь уже растет прекрасное растение.", isPlayer = true }
+                };
+                npc.dialogueManager.StartDialogue(lines, "Гриша", npc.npcFace);
+            }
+            return;
+        }
 
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero);
         
