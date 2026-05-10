@@ -90,8 +90,11 @@ public class HouseController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(3f);
 
-        if (dayText != null)
-            dayText.gameObject.SetActive(false);
+        if (sleepController != null)
+        {
+            sleepController.RestoreSleep(sleepRestoreAmount);
+            sleepController.SetDepletionRate(sleepDepletionRate);
+        }
 
         yield return new WaitForSecondsRealtime(nightDuration);
         

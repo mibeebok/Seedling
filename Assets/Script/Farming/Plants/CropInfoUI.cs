@@ -1,11 +1,11 @@
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class CropInfoUI : MonoBehaviour
 {
     public static CropInfoUI Instance { get; private set; }
     public GameObject infoPanel;
-    public TextMeshProUGUI infoText;
+    public Text infoText;
     
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class CropInfoUI : MonoBehaviour
         if (infoPanel == null) return;
         
         Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPosition);
-        infoPanel.transform.position = screenPos + new Vector3(0, 50, 0);
+        infoPanel.transform.position = screenPos;
         infoText.text = text;
         infoPanel.SetActive(true);
     }
