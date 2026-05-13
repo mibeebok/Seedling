@@ -52,12 +52,14 @@ public class BookUI : MonoBehaviour
 
     private MattockController mattock;
     private WateringCanController wateringCan;
+    private InventoryController inventoryController;
 
     private bool isOpen = false;
     void Start()
     {
         mattock = FindObjectOfType<MattockController>();
         wateringCan = FindObjectOfType<WateringCanController>();
+        inventoryController = FindObjectOfType<InventoryController>();
 
         ApplyButtonStyle(profileButton, true);
         ApplyButtonStyle(residentsButton, false);
@@ -86,6 +88,9 @@ public class BookUI : MonoBehaviour
             mattock.enabled = !isOpen;
         if (wateringCan != null)
             wateringCan.enabled = !isOpen;
+
+        if (inventoryController != null)
+            inventoryController.enabled = !isOpen;
 
         if (isOpen)
         {

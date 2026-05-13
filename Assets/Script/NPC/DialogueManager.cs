@@ -13,6 +13,8 @@ public class DialogueManager : MonoBehaviour
     public Sprite npcDialogueSprite;
     public Sprite playerDialogueSprite;
 
+    private InventoryController inventoryController;
+
     public Sprite playerFace;
     public string playerName;
 
@@ -21,6 +23,11 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private bool isTyping = false;
 
+
+    private void Start()
+    {
+        inventoryController = FindObjectOfType<InventoryController>();
+    }
     void Update()
     {
         if (isDialogueActive && Input.GetMouseButtonDown(0))
@@ -49,6 +56,9 @@ public class DialogueManager : MonoBehaviour
          if (Player.Instance != null)
             Player.Instance.SetMovementBlocked(true);
 
+        if (inventoryController != null)
+            inventoryController.enabled = false;
+
         for (int i = 0; i < lines.Count; i++)
         {
             if (!lines[i].isPlayer)
@@ -71,25 +81,19 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine line = lines[currentIndex];
 
-        // ����� ����
         if (dialogueBackgroundImage != null)
         {
             dialogueBackgroundImage.sprite = line.isPlayer ? playerDialogueSprite : npcDialogueSprite;
         }
 
-        // ����
         faceImage.sprite = line.isPlayer ? playerFace : line.speakerFace;
 
-        // ���
         nameText.text = line.isPlayer ? playerName : line.speakerName;
 
-        // �����
         dialogueText.text = line.text;
 
-        // ������ ������������ UI (����/�����)
         if (line.isPlayer)
         {
-            // ������� ������ � �����
             faceImage.rectTransform.anchoredPosition = new Vector2(-254, 11);
             nameText.rectTransform.anchoredPosition = new Vector2(-254, -71);
             dialogueText.rectTransform.anchoredPosition = new Vector2(57, 3);
@@ -97,7 +101,6 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            // ������� NPC � ������
             faceImage.rectTransform.anchoredPosition = new Vector2(254, 11);
             nameText.rectTransform.anchoredPosition = new Vector2(254, -71);
             dialogueText.rectTransform.anchoredPosition = new Vector2(-57, -3);
@@ -132,5 +135,8 @@ public class DialogueManager : MonoBehaviour
 
         if (Player.Instance != null)
             Player.Instance.SetMovementBlocked(false);
+
+        if (inventoryController != null)
+            inventoryController.enabled = true;
     }
 }
