@@ -1,14 +1,21 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Collections.Generic;
 
 public class SettingController : MonoBehaviour
 {
     public bool isFullScreen = true;
     
+    [Header("Audio Mixer")]
+    public AudioMixer audioMixer;
+    
     [Header("UI")]
     public Dropdown dropdown;
     public Slider musicSlider;
+    public Slider sfxSlider;
+    public GameObject settingsPanel;
+    public BlockUnderPanel blockUnderPanel; // Добавьте ссылку
     
     Resolution[] rsl;
     List<string> resolutions;
@@ -27,22 +34,24 @@ public class SettingController : MonoBehaviour
     
     void Start()
     {
-        // Настройка слайдера громкости
         if (musicSlider != null)
         {
-            // Загружаем сохранённое значение
             float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
             musicSlider.value = savedVolume;
-            
-            // Применяем громкость сразу
             ApplyMusicVolume(savedVolume);
-            
-            // Подписываемся на изменения
             musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
+        }
+        
+        if (sfxSlider != null)
+        {
+            float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
+            sfxSlider.value = savedSFXVolume;
+            ApplySFXVolume(savedSFXVolume);
+            sfxSlider.onValueChanged.AddListener(ApplySFXVolume);
         }
     }
     
-    private void ApplyMusicVolume(float volume)
+    public void ApplyMusicVolume(float volume)
     {
         FarmGrid farmGrid = FindObjectOfType<FarmGrid>();
         
@@ -53,9 +62,31 @@ public class SettingController : MonoBehaviour
             {
                 musicSource.volume = volume;
             }
-            
-            PlayerPrefs.SetFloat("MusicVolume", volume);
-            PlayerPrefs.Save();
+        }
+        
+        PlayerPrefs.SetFloat("MusicVolume", volume);
+        PlayerPrefs.Save();
+    }
+    
+    public void ApplySFXVolume(float volume)
+    {
+        float dB = volume > 0 ? Mathf.Log10(volume) * 20 : -80f;
+        audioMixer.SetFloat("SFXVolume", dB);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
+        PlayerPrefs.Save();
+    }
+
+    public void CloseSettings()
+    {
+        // Используем BlockUnderPanel если он есть
+        if (blockUnderPanel != null)
+        {
+            blockUnderPanel.ClosePanel();
+        }
+        // Или просто деактивируем панель
+        else if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
         }
     }
 

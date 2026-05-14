@@ -76,7 +76,6 @@ public class PauseButtonPosition : MonoBehaviour
 
     public void ResumeGame()
     {
-        //  Через ToggleMenu (если меню активно)
         if (menu != null && menu.activeSelf)
         {
             ToggleMenu();

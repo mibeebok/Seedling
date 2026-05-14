@@ -144,7 +144,8 @@ public class Inventory : MonoBehaviour
             
             if (i < TOOL_SLOTS)
             {
-                img.sprite = data.items[i + 1]?.img;
+                if (items[i].id >= 0 && items[i].id < data.items.Count)
+                    img.sprite = data.items[items[i].id].img;
                 img.preserveAspect = true;
             }
             else

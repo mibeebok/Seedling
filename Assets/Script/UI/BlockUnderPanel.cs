@@ -1,10 +1,9 @@
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class BlockUnderPanel : MonoBehaviour
 {
-    [Header("Настрйоки")]
+    [Header("Настройки")]
     [SerializeField] private GameObject panel;
     [SerializeField] private GameObject parentMenu;
     private CanvasGroup panelCanvasGroup;
@@ -18,7 +17,6 @@ public class BlockUnderPanel : MonoBehaviour
         if (panelCanvasGroup == null)
         {
             panelCanvasGroup = panel.AddComponent<CanvasGroup>();
-
         }
 
         if (parentMenu != null)
@@ -30,7 +28,7 @@ public class BlockUnderPanel : MonoBehaviour
             }
         }
 
-        panelCanvasGroup.alpha =0;
+        panelCanvasGroup.alpha = 0;
         panelCanvasGroup.interactable = false;
         panelCanvasGroup.blocksRaycasts = false;
 
@@ -52,9 +50,10 @@ public class BlockUnderPanel : MonoBehaviour
             OpenPanel();
         }
     }
+    
     public void OpenPanel()
     {
-        panelCanvasGroup.alpha =1;
+        panelCanvasGroup.alpha = 1;
         panelCanvasGroup.interactable = true;
         panelCanvasGroup.blocksRaycasts = true;
 
@@ -68,20 +67,20 @@ public class BlockUnderPanel : MonoBehaviour
 
     public void ClosePanel()
     {
-        panelCanvasGroup.alpha =0;
+        panelCanvasGroup.alpha = 0;
         panelCanvasGroup.interactable = false;
         panelCanvasGroup.blocksRaycasts = false;
 
         if(parentMenuCanvasGroup != null)
         {
-            panelCanvasGroup.interactable = true;
-            panelCanvasGroup.blocksRaycasts = true;
+            parentMenuCanvasGroup.interactable = true;  // Было panelCanvasGroup - ОШИБКА!
+            parentMenuCanvasGroup.blocksRaycasts = true; // Было panelCanvasGroup - ОШИБКА!
         }
-        isPanelOpen=false;
+        isPanelOpen = false;
     }
+    
     public bool IsPanelOpen()
     {
         return isPanelOpen;
     }
- 
 }
