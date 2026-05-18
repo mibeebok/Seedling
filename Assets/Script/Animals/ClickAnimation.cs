@@ -1,38 +1,30 @@
 using UnityEngine;
+using UnityEngine.EventSystems; 
 
-public class ClickAnimation : MonoBehaviour
+public class ClickAnimation : MonoBehaviour, IPointerClickHandler
 {
     private Animator _animator;
     private AudioSource _audioSource;
 
     [SerializeField] private AudioClip clickSound;
+    private const string CLICK_TRIGGER = "Click";
 
-    void Start()
+    void Awake()
     {
-        // Кэшируем компоненты, чтобы не искать их каждый кадр
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
-
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            PlayClick();
-        }
-    }
-
-    void PlayClick()
+    public void OnPointerClick(PointerEventData eventData)
     {
         if (_animator != null)
         {
-            _animator.SetTrigger("Click");
+            _animator.SetTrigger(CLICK_TRIGGER);
         }
 
         if (_audioSource != null && clickSound != null)
         {
-            _audioSource.PlayOneShot(clickSound); 
+            _audioSource.PlayOneShot(clickSound);
         }
     }
 }
