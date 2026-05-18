@@ -131,6 +131,7 @@
     <Compile Include="Assets\Script\UI\SettingController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Script\Parametrs\SceneLoader.cs" />
     <Compile Include="Assets\Script\Player\SavePosition.cs" />
     <Compile Include="Assets\Script\UI\BookHotkey.cs" />
     <Compile Include="Assets\Script\Player\Player.cs" />
