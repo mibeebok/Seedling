@@ -5563,7 +5563,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 12
   m_TargetDisplay: 0
 --- !u!224 &279212693
 RectTransform:
@@ -6727,6 +6727,8 @@ MonoBehaviour:
   confirmButton: {fileID: 1531741661}
   cancelButton: {fileID: 138295499}
   clickCooldown: 0.5
+  returnToMainMenu: 1
+  mainSceneName: Game
 --- !u!1 &355664566
 GameObject:
   m_ObjectHideFlags: 0
@@ -16442,6 +16444,8 @@ MonoBehaviour:
   confirmButton: {fileID: 1804657926}
   cancelButton: {fileID: 1672959424}
   clickCooldown: 0.5
+  returnToMainMenu: 0
+  mainSceneName: Game
 --- !u!1 &881155883
 GameObject:
   m_ObjectHideFlags: 0
