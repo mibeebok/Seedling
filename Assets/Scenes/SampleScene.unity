@@ -39945,7 +39945,7 @@ GameObject:
   - component: {fileID: 2096805856}
   - component: {fileID: 2096805858}
   - component: {fileID: 2096805859}
-  m_Layer: 6
+  m_Layer: 4
   m_Name: goat_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40104,7 +40104,7 @@ MonoBehaviour:
   playInterval: 6
   minVolume: 0.1
   maxVolume: 0.3
-  goatAnimator: {fileID: 0}
+  goatAnimator: {fileID: 2096805855}
   scaredParameter: IsScared
   movingParameter: IsMoving
   spawnAreaMin: {x: 0, y: 0}
@@ -40228,6 +40228,12 @@ MonoBehaviour:
   detectionRange: 5
   screenMargin: 0.1
   directionJitter: 30
+  obstacleCheckRadius: 0.5
+  obstacleCheckDistance: 0.8
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  avoidAngleStep: 45
 --- !u!1 &2099251375
 GameObject:
   m_ObjectHideFlags: 0
