@@ -54,6 +54,19 @@ public class SleepController : Sounds
     private void Update()
     {
         if (isDestroying) return;
+
+        if (isSleeping)
+        {
+            if (warningActive)
+            {
+                warningActive = false;
+                if(tickCoroutine != null) StopCoroutine(tickCoroutine);
+                if(warningPanel != null) warningPanel.SetActive(false);
+                if(FarmGrid.Instance != null) FarmGrid.Instance.ResumeMusic();
+                alarmPlayed = false;
+            }
+            return;
+        }
         
         currentSleep -= depletionAmount * depletionRate * Time.deltaTime;
         currentSleep = Mathf.Clamp(currentSleep, 0f, maxSleep);
@@ -127,6 +140,16 @@ public class SleepController : Sounds
             if (FarmGrid.Instance != null)
                 FarmGrid.Instance.ResumeMusic();
         }
+        alarmPlayed = false;
+    }
+
+    public void StartSleeping()
+    {
+        isSleeping = true;
+    }
+    public void StopSleeping()
+    {
+        isSleeping = false;
     }
 
     private void UpdateSleepUI()
@@ -223,6 +246,7 @@ public class SleepController : Sounds
         }
         
         isDestroying = false;
+        alarmPlayed = false;
 
         if (FarmGrid.Instance != null)
             FarmGrid.Instance.ResumeMusic();
@@ -230,7 +254,7 @@ public class SleepController : Sounds
 
     private IEnumerator TickCoroutine()
     {
-        int ticks = Mathf.CeilToInt(warningTime); // 10 тиков для 10 секунд
+        int ticks = Mathf.CeilToInt(warningTime);
         for (int i = 0; i < ticks; i++)
         {
             if (!warningActive) break;

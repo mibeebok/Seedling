@@ -65,7 +65,6 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.34f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Script\Parametrs\LoadingManager.cs" />
     <Compile Include="Assets\Script\UI\BookButtonPosition.cs" />
     <Compile Include="Assets\Script\UI\CanvasPosition.cs" />
     <Compile Include="Assets\Script\NPC\DialogueLine.cs" />

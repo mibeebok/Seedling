@@ -65,7 +65,7 @@ public class HouseController : MonoBehaviour
         isInteractable = false;
 
         if (sleepController != null)
-            sleepController.isSleeping = true;
+            sleepController.StartSleeping();
 
         if (doorAnimator)
         {
@@ -90,6 +90,11 @@ public class HouseController : MonoBehaviour
 
         yield return new WaitForSecondsRealtime(3f);
 
+        if (dayText != null)
+        {
+            dayText.gameObject.SetActive(false);
+        }
+
         if (sleepController != null)
         {
             sleepController.RestoreSleep(sleepRestoreAmount);
@@ -101,7 +106,7 @@ public class HouseController : MonoBehaviour
         yield return StartCoroutine(FadeScreen(1f, 0f));
 
         if (sleepController != null)
-            sleepController.isSleeping = false;
+            sleepController.StopSleeping();
 
         if (playerVisual) 
             playerVisual.gameObject.SetActive(true);
