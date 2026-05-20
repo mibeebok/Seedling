@@ -14,6 +14,6 @@ public class StartScreen : MonoBehaviour
     }
     public void PlayPressed()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("LoadingScreen");
     }
 }
