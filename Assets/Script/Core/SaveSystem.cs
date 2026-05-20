@@ -180,8 +180,15 @@ public static class SaveSystem
             }
         }
 
-        // 5 Записываем в файл
-        File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
+        // Сохраняем деньги
+        if (MoneyDisplay.Instance != null)
+            saveFile.money = MoneyDisplay.Instance.GetMoney();
+        else
+            Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не сохранены");
+
+
+            // 5 Записываем в файл
+            File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
         Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
     }
 
@@ -190,6 +197,10 @@ public static class SaveSystem
     {
         if (!File.Exists(SavePath))
         {
+            if (MoneyDisplay.Instance != null)
+                MoneyDisplay.Instance.SetMoney(100);
+            else
+                Debug.LogWarning("MoneyDisplay.Instance не найден, начальные деньги не установлены");
             return;
         }
 
@@ -317,6 +328,11 @@ public static class SaveSystem
             InventoryController.Instance.UpdateHotbarVisuals(); // Обновляем хотбар
         }
 
+        // Загружаем деньги
+            if (MoneyDisplay.Instance != null)
+                MoneyDisplay.Instance.SetMoney(saveFile.money);
+            else
+                Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не восстановлены");
     }
 
     // Применяем отложенные позиции, если объекты появились позже
@@ -352,6 +368,7 @@ public static class SaveSystem
         public PlayerData player;
         public GoatData goat;
         public InventoryData inventory;
+        public int money;
     }
     public class CropSaveData
     {

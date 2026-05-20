@@ -18,10 +18,20 @@ public class DialogueManager : MonoBehaviour
     public Sprite playerFace;
     public string playerName;
 
+    public GameObject choicePanel;
+    public Button dialogueChoiceButton;
+    public Button shopChoiceButton;
+
+    public ShopUI shopUI;
+
     private List<DialogueLine> lines;
     private int currentIndex = 0;
     private bool isDialogueActive = false;
     private bool isTyping = false;
+
+    private List<DialogueLine> pendingLines;
+    private string pendingNpcName;
+    private Sprite pendingNpcFace;
 
 
     private void Start()
@@ -48,12 +58,58 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(List<DialogueLine> dialogueLines, string npcName, Sprite npcFace)
     {
+
+        if (npcName == "Терентий")
+        {
+            pendingLines = dialogueLines;
+            pendingNpcName = npcName;
+            pendingNpcFace = npcFace;
+
+            ResetDialogueToNPC(npcFace, npcName);
+
+            dialogueBox.SetActive(true);
+            dialogueText.gameObject.SetActive(false);
+
+            choicePanel.SetActive(true);
+
+            dialogueChoiceButton.onClick.RemoveAllListeners();
+            dialogueChoiceButton.onClick.AddListener(OnDialogueChoice);
+
+            shopChoiceButton.onClick.RemoveAllListeners();
+            shopChoiceButton.onClick.AddListener(OnShopChoice);
+            return;
+        }
+
+        StartNormalDialogue(dialogueLines, npcName, npcFace);
+    }
+
+    private void ResetDialogueToNPC(Sprite npcFace, string npcName)
+    {
+        faceImage.sprite = npcFace;
+        nameText.text = npcName;
+
+        faceImage.rectTransform.anchoredPosition = new Vector2(254, 11);
+        nameText.rectTransform.anchoredPosition = new Vector2(254, -71);
+        dialogueText.rectTransform.anchoredPosition = new Vector2(-57, -3);
+
+        if (dialogueBackgroundImage != null)
+            dialogueBackgroundImage.sprite = npcDialogueSprite;
+
+        faceImage.gameObject.SetActive(true);
+        nameText.gameObject.SetActive(true);
+
+        dialogueText.gameObject.SetActive(false);
+    }
+
+    private void StartNormalDialogue(List<DialogueLine> dialogueLines, string npcName, Sprite npcFace)
+    {
+
         lines = dialogueLines;
         currentIndex = 0;
         isDialogueActive = true;
         dialogueBox.SetActive(true);
 
-         if (Player.Instance != null)
+        if (Player.Instance != null)
             Player.Instance.SetMovementBlocked(true);
 
         if (inventoryController != null)
@@ -69,6 +125,29 @@ public class DialogueManager : MonoBehaviour
         }
 
         ShowCurrentLine();
+    }
+
+    private void OnDialogueChoice()
+    {
+        choicePanel.SetActive(false);
+        dialogueText.gameObject.SetActive(true);
+
+        StartNormalDialogue(pendingLines, pendingNpcName, pendingNpcFace);
+    }
+
+    private void OnShopChoice()
+    {
+        choicePanel.SetActive(false);
+        dialogueText.gameObject.SetActive(true);
+        OpenShop();
+    }
+
+    private void OpenShop()
+    {
+        if (shopUI != null)
+            shopUI.OpenShop();
+        else
+            Debug.LogError("ShopUI не назначен в DialogueManager!");
     }
 
     void ShowCurrentLine()
@@ -132,6 +211,12 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         dialogueBox.SetActive(false);
+
+        if (choicePanel != null) choicePanel.SetActive(false);
+
+        pendingLines = null;
+        pendingNpcName = null;
+        pendingNpcFace = null;
 
         if (Player.Instance != null)
             Player.Instance.SetMovementBlocked(false);

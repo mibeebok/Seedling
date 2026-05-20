@@ -1,74 +1,63 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoneyDisplay : MonoBehaviour
+public class ShopMoneyDisplay : MonoBehaviour
 {
-    public static MoneyDisplay Instance { get; private set; }
-
-    public Sprite[] digitSprites;   
+    public Sprite[] digitSprites;
     public Sprite dotSprite;
 
-    public Image iconImage;         
-    public Image[] digitImages;     
+    public Image currencyIcon;
+    public Image[] digitImages;
     public Image dotImage;
-
-    public int GetMoney() => currentMoney;
 
     public Vector2 normalDigit2Position;
     public Vector2 normalDotPosition;
-
     public Vector2 thousandDigit2Position;
-    public Vector2 thosandDotPosition;
+    public Vector2 thousandDotPosition;
 
     private int currentMoney;
-
-    private void Awake()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            Destroy(gameObject);
-    }
     void Start()
     {
         if (digitImages == null || digitImages.Length < 5)
-        {
-            Debug.LogError("MoneyDisplay: не назначены digitImages (нужно 5)");
-            return;
-        }
-        if (dotImage == null) Debug.LogError("MoneyDisplay: не назначен dotImage");
-        if (iconImage == null) Debug.LogError("MoneyDisplay: не назначена iconImage");
+            Debug.LogError("ShopMoneyDisplay: не назначены digitImages");
+        if (digitSprites == null || digitSprites.Length < 10)
+            Debug.LogError("ShopMoneyDisplay: не назначены digitSprites");
+        
+        if (dotSprite == null) Debug.LogWarning("ShopMoneyDisplay: dotSprite не назначен");
+        if (dotImage != null && dotSprite != null) dotImage.sprite = dotSprite;
+
     }
 
-    public void SetMoney(int amount)
+    public void UpdateMoneyDisplay(int money)
     {
-        currentMoney = amount;
+        currentMoney = money;
         UpdateDisplay();
     }
 
-    void UpdateDisplay()
+    private void UpdateDisplay()
     {
-        if (digitImages.Length < 5 || dotImage == null) return;
+        if (digitImages.Length < 5 || digitImages == null) return;
 
         for (int i = 0; i < digitImages.Length; i++)
             digitImages[i].gameObject.SetActive(false);
-        dotImage.gameObject.SetActive(false);
+
+        if(dotImage != null) dotImage.gameObject.SetActive(false);
 
         if (currentMoney <= 9999)
         {
-
-            string s = currentMoney.ToString("D4"); 
+            string s = currentMoney.ToString("D4");
             for (int i = 0; i < 4; i++)
             {
                 int dig = s[i] - '0';
-                digitImages[i].sprite = digitSprites[dig];
+                if (digitSprites != null && dig < digitSprites.Length && digitSprites[dig] != null)
+                    digitImages[i].sprite = digitSprites[dig];
+                else
+                    Debug.LogError($"digitSprites[{dig}] is missing");
                 digitImages[i].gameObject.SetActive(true);
-
             }
 
             if (digitImages.Length > 2) digitImages[2].rectTransform.anchoredPosition = normalDigit2Position;
-            dotImage.rectTransform.anchoredPosition = normalDotPosition;
+            if (dotImage != null)dotImage.rectTransform.anchoredPosition = normalDotPosition;
         }
         else
         {
@@ -86,14 +75,7 @@ public class MoneyDisplay : MonoBehaviour
             dotImage.gameObject.SetActive(true);
 
             if (digitImages.Length > 2) digitImages[2].rectTransform.anchoredPosition = thousandDigit2Position;
-            dotImage.rectTransform.anchoredPosition = thosandDotPosition;
+            dotImage.rectTransform.anchoredPosition = thousandDotPosition;
         }
-    }
-
-    public void SubtractMoney(int amount)
-    {
-        currentMoney -= amount;
-        UpdateDisplay();
-        SaveSystem.SaveGame();
     }
 }

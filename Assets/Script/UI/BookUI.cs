@@ -81,6 +81,8 @@ public class BookUI : MonoBehaviour
 
     public void ToggleWindow()
     {
+        if (ShopUI.IsShopOpen) return;
+
         isOpen = !isOpen;
         bookWindow.SetActive(isOpen);
 

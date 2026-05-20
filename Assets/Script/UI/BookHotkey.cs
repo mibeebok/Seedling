@@ -7,6 +7,8 @@ public class BookHotkey : MonoBehaviour
 
     void Update()
     {
+        if (ShopUI.IsShopOpen) return;
+
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (bookUI != null)
