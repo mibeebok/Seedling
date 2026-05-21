@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Button))]
@@ -17,6 +18,10 @@ public class ExitController : MonoBehaviour
     
     [Tooltip("Задержка между кликами (секунды)")]
     [SerializeField] private float clickCooldown = 0.5f;
+    [Header("Действие при подтверждении")]
+    [Tooltip("Если включено - загружает сцену Game вместо выхода из приложения")]
+    [SerializeField] private bool returnToMainMenu = false;
+    [SerializeField]private string mainSceneName = "Game";
 
     private Button _exitButton;
     private float _lastClickTime;
@@ -24,33 +29,20 @@ public class ExitController : MonoBehaviour
 
     private void Awake()
     {
-        // Инициализация компонентов
         _exitButton = GetComponent<Button>();
         
-        #if UNITY_EDITOR
-        // Проверка ссылок в редакторе
-        if (exitWindow == null)
-            Debug.LogError("Не назначено окно выхода!", this);
-        if (confirmButton == null)
-            Debug.LogError("Не назначена кнопка подтверждения!", this);
-        if (cancelButton == null)
-            Debug.LogError("Не назначена кнопка отмены!", this);
-        #endif
     }
 
     private void Start()
     {
-        // Находим родительский Canvas
         _parentCanvas = exitWindow.GetComponentInParent<Canvas>();
         
-        // Инициализация окна
         if (exitWindow != null)
         {
             exitWindow.SetActive(false);
             CenterWindow();
         }
 
-        // Подписка на события кнопок
         _exitButton.onClick.AddListener(OnExitButtonClick);
         
         if (confirmButton != null)
@@ -62,7 +54,6 @@ public class ExitController : MonoBehaviour
 
     private void OnExitButtonClick()
     {
-        // Защита от спама кликами
         if (Time.unscaledTime - _lastClickTime < clickCooldown) return;
         _lastClickTime = Time.unscaledTime;
         
@@ -79,11 +70,6 @@ public class ExitController : MonoBehaviour
         if (shouldOpen)
         {
             CenterWindow();
-            Debug.Log("Окно выхода открыто", exitWindow);
-        }
-        else
-        {
-            Debug.Log("Окно выхода закрыто");
         }
     }
 
@@ -91,7 +77,6 @@ public class ExitController : MonoBehaviour
     {
         if (exitWindow == null) return;
 
-        // Для UI элементов
         if (exitWindow.TryGetComponent<RectTransform>(out var rectTransform))
         {
             rectTransform.anchorMin = Vector2.one * 0.5f;
@@ -99,7 +84,6 @@ public class ExitController : MonoBehaviour
             rectTransform.pivot = Vector2.one * 0.5f;
             rectTransform.anchoredPosition = Vector2.zero;
         }
-        // Для обычных GameObject
         else
         {
             exitWindow.transform.position = GetScreenCenter();
@@ -116,25 +100,27 @@ public class ExitController : MonoBehaviour
 
     private void OnConfirmClick()
     {
-        Debug.Log("Подтверждение выхода");
-        
-        // Выход из приложения
-        #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-        #else
-        Application.Quit();
-        #endif
+        if (returnToMainMenu)
+        {
+            SceneManager.LoadScene(mainSceneName);
+        }
+        else
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+            Application.Quit();
+            #endif
+        }
     }
 
     private void OnCancelClick()
     {
-        Debug.Log("Отмена выхода");
         ToggleExitWindow();
     }
 
     private void OnDestroy()
     {
-        // Отписка от событий для предотвращения утечек памяти
         if (_exitButton != null)
             _exitButton.onClick.RemoveListener(OnExitButtonClick);
         
