@@ -5,35 +5,47 @@ using System.Collections.Generic;
 
 public class SettingController : MonoBehaviour
 {
+    [Tooltip("Текущее состояние полноэкранного режима")]
     public bool isFullScreen = true;
-    
-    [Header("Audio Mixer")]
+
+    [Header("Аудиомикшер")]
+    [Tooltip("Основной AudioMixer для SFX. В сцене меню оставьте поле пустым")]
     public AudioMixer audioMixer;
-    
-    [Header("UI")]
+
+    [Header("Элементы интерфейса")]
+    [Tooltip("Выпадающий список разрешений экрана")]
     public Dropdown dropdown;
+    [Tooltip("Слайдер громкости музыки")]
     public Slider musicSlider;
+    [Tooltip("Слайдер громкости звуковых эффектов (SFX)")]
     public Slider sfxSlider;
+    [Tooltip("Панель настроек (будет скрываться при закрытии)")]
     public GameObject settingsPanel;
-    public BlockUnderPanel blockUnderPanel; // Добавьте ссылку
-    
+    [Tooltip("Блокировка под панелью (если используется). Если нет – панель просто скроется")]
+    public BlockUnderPanel blockUnderPanel;
+
+    [Header("Источники музыки")]
+    [Tooltip("AudioSource фоновой музыки в главном меню (если есть). В игре можно оставить пустым")]
+    public AudioSource menuMusicSource;
+
     Resolution[] rsl;
     List<string> resolutions;
-    
-    public void Awake() 
+
+    public void Awake()
     {
         resolutions = new List<string>();
         rsl = Screen.resolutions;
-        foreach(var i in rsl)
+        foreach (var i in rsl)
         {
             resolutions.Add(i.width + "x" + i.height);
         }
         dropdown.ClearOptions();
         dropdown.AddOptions(resolutions);
     }
-    
+
     void Start()
     {
+        //музыка
         if (musicSlider != null)
         {
             float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
@@ -41,7 +53,8 @@ public class SettingController : MonoBehaviour
             ApplyMusicVolume(savedVolume);
             musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
         }
-        
+
+        // SFX
         if (sfxSlider != null)
         {
             float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
@@ -50,44 +63,41 @@ public class SettingController : MonoBehaviour
             sfxSlider.onValueChanged.AddListener(ApplySFXVolume);
         }
     }
-    
+
     public void ApplyMusicVolume(float volume)
     {
+        if (menuMusicSource != null)
+            menuMusicSource.volume = volume;
+
         FarmGrid farmGrid = FindObjectOfType<FarmGrid>();
-        
         if (farmGrid != null)
         {
             AudioSource musicSource = farmGrid.GetComponent<AudioSource>();
             if (musicSource != null)
-            {
                 musicSource.volume = volume;
-            }
         }
-        
+
         PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
     }
-    
+
     public void ApplySFXVolume(float volume)
     {
-        float dB = volume > 0 ? Mathf.Log10(volume) * 20 : -80f;
-        audioMixer.SetFloat("SFXVolume", dB);
+        if (audioMixer != null)
+        {
+            float dB = volume > 0 ? Mathf.Log10(volume) * 20 : -80f;
+            audioMixer.SetFloat("SFXVolume", dB);
+        }
         PlayerPrefs.SetFloat("SFXVolume", volume);
         PlayerPrefs.Save();
     }
 
     public void CloseSettings()
     {
-        // Используем BlockUnderPanel если он есть
         if (blockUnderPanel != null)
-        {
             blockUnderPanel.ClosePanel();
-        }
-        // Или просто деактивируем панель
         else if (settingsPanel != null)
-        {
             settingsPanel.SetActive(false);
-        }
     }
 
     public void FulllScreenToggle()
@@ -100,12 +110,12 @@ public class SettingController : MonoBehaviour
     {
         ApplyMusicVolume(volumeSlider);
     }
-    
+
     public void Quality(int q)
     {
         QualitySettings.SetQualityLevel(q);
     }
-    
+
     public void Resolution(int r)
     {
         Screen.SetResolution(rsl[r].width, rsl[r].height, isFullScreen);
