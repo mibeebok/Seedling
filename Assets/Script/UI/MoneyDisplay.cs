@@ -96,4 +96,11 @@ public class MoneyDisplay : MonoBehaviour
         UpdateDisplay();
         SaveSystem.SaveGame();
     }
+
+    public void AddMoney(int amount)
+    {
+        currentMoney += amount;
+        UpdateDisplay();
+        SaveSystem.SaveGame();
+    }
 }
