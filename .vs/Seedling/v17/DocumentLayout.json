@@ -3,28 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\sellharvestui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\sellharvestui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\shopui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\shopui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\ui\\moneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\moneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\ui\\shopmoneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\shopmoneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\sellitemsslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\sellitemsslotui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\bookui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\shopmoneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\shopmoneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\moneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\ui\\moneydisplay.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\ui\\bookhotkey.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -42,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -50,28 +58,28 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "SaveSystem.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Core\\SaveSystem.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
-              "RelativeToolTip": "Assets\\Script\\Core\\SaveSystem.cs",
-              "ViewState": "AgIAADYBAAAAAAAAAAAAAEMBAAARAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "SellItemsSlotUI.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\SellItemsSlotUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\SellItemsSlotUI.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\SellItemsSlotUI.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\SellItemsSlotUI.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAAAE0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T16:59:09.2Z",
+              "WhenOpened": "2026-05-21T19:23:35.008Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MoneyDisplay.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\MoneyDisplay.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\UI\\MoneyDisplay.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\MoneyDisplay.cs",
-              "RelativeToolTip": "Assets\\Script\\UI\\MoneyDisplay.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAswEcAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "SellHarvestUI.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\SellHarvestUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\SellHarvestUI.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\SellHarvestUI.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\SellHarvestUI.cs",
+              "ViewState": "AgIAAMoAAAAAAAAAAAAAwNAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T15:11:04.59Z",
+              "WhenOpened": "2026-05-21T18:58:34.412Z",
               "EditorCaption": ""
             },
             {
@@ -82,27 +90,63 @@
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\ShopUI.cs",
               "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\ShopUI.cs",
               "RelativeToolTip": "Assets\\Script\\UI\\ShopUI.cs",
-              "ViewState": "AgIAANEAAAAAAAAAAAAAwNsAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAACUAAAAAAAAAAAAqwP4AAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-18T16:17:50.149Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ShopMoneyDisplay.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\ShopMoneyDisplay.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\ShopMoneyDisplay.cs",
               "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\ShopMoneyDisplay.cs",
               "RelativeToolTip": "Assets\\Script\\UI\\ShopMoneyDisplay.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAwwDYAAABGAAAAAAAAAA==",
+              "ViewState": "AgIAACkAAAAAAAAAAAAUwEAAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T14:48:27.83Z",
+              "WhenOpened": "2026-05-20T14:48:27.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BookUI.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookUI.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\BookUI.cs",
+              "ViewState": "AgIAACUBAAAAAAAAAAAqwDQBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-19T19:18:11.36Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MoneyDisplay.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\MoneyDisplay.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\UI\\MoneyDisplay.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\MoneyDisplay.cs",
+              "RelativeToolTip": "Assets\\Script\\UI\\MoneyDisplay.cs",
+              "ViewState": "AgIAAEAAAAAAAAAAAAAswE8AAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T15:11:04.59Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 6,
+              "Title": "SaveSystem.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Core\\SaveSystem.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
+              "RelativeToolTip": "Assets\\Script\\Core\\SaveSystem.cs",
+              "ViewState": "AgIAADMBAAAAAAAAAIBJwEMBAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-20T16:59:09.2Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "BookHotkey.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookHotkey.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookHotkey.cs",
@@ -114,19 +158,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "BookUI.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\UI\\BookUI.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\UI\\BookUI.cs",
-              "RelativeToolTip": "Assets\\Script\\UI\\BookUI.cs",
-              "ViewState": "AgIAACUBAAAAAAAAAAAqwDEBAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-19T19:18:11.36Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "DialogueManager.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueManager.cs",
@@ -138,7 +170,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 9,
               "Title": "DialogueLine.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueLine.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueLine.cs",

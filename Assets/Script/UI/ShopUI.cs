@@ -33,6 +33,9 @@ public class ShopUI : MonoBehaviour
     public ShopMoneyDisplay shopMoneyDisplay;
     private MoneyDisplay globalMoneyDisplay;
 
+    public Button sellHarvestButton;
+    public SellHarvestUI sellHarvestUI;
+
 
     [System.Serializable]
     public class ShopItem
@@ -45,11 +48,11 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
-        mattock = FindObjectOfType<MattockController>();
-        wateringCan = FindObjectOfType<WateringCanController>();
-        inventoryController = FindObjectOfType<InventoryController>();
+        mattock = FindFirstObjectByType<MattockController>();
+        wateringCan = FindFirstObjectByType<WateringCanController>();
+        inventoryController = FindFirstObjectByType<InventoryController>();
 
-        globalMoneyDisplay = FindObjectOfType<MoneyDisplay>();
+        globalMoneyDisplay = FindAnyObjectByType<MoneyDisplay>();
 
         if (shopMoneyDisplay == null)
             shopMoneyDisplay = GetComponentInChildren<ShopMoneyDisplay>();
@@ -78,6 +81,9 @@ public class ShopUI : MonoBehaviour
 
         if (globalMoneyDisplay == null) Debug.LogError("globalMoneyDisplay not found!");
         if (shopMoneyDisplay == null) Debug.LogError("shopMoneyDisplay not found!");
+
+        sellHarvestButton.onClick.RemoveAllListeners();
+        sellHarvestButton.onClick.AddListener(OpenSellPanelDelayed);
     }
 
     public void OpenShop()
@@ -99,7 +105,7 @@ public class ShopUI : MonoBehaviour
             Debug.LogError($"shopMoneyDisplay is null? {shopMoneyDisplay == null}, globalMoneyDisplay null? {globalMoneyDisplay == null}");
         }
 
-            PopulateShop();
+        PopulateShop();
     }
 
     private void PopulateShop()
@@ -240,9 +246,12 @@ public class ShopUI : MonoBehaviour
         if (quantityPanel != null) quantityPanel.SetActive(false);
         if (errorPanel != null) errorPanel.SetActive(false);
 
-        DialogueManager dm = FindObjectOfType<DialogueManager>();
+        DialogueManager dm = FindFirstObjectByType<DialogueManager>();
         if (dm != null) dm.EndDialogue();
     }
 
-  
+    public void OpenSellPanelDelayed()
+    {
+        sellHarvestUI.OpenSellPanel();
+    }  
 }

@@ -128,10 +128,12 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Script\Core\DataBase.cs" />
+    <Compile Include="Assets\Script\UI\SellHarvestUI.cs" />
     <Compile Include="Assets\Script\Parametrs\SleepController.cs" />
     <Compile Include="Assets\Script\Farming\SoilTile.cs" />
     <Compile Include="Assets\Script\UI\SettingController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Script\UI\SellItemsSlotUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Script\Player\SavePosition.cs" />
     <Compile Include="Assets\Script\UI\BookHotkey.cs" />
