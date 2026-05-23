@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Audio;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class SettingController : MonoBehaviour
 {
@@ -62,6 +63,24 @@ public class SettingController : MonoBehaviour
             ApplySFXVolume(savedSFXVolume);
             sfxSlider.onValueChanged.AddListener(ApplySFXVolume);
         }
+
+        //resolution
+        if (dropdown != null && rsl != null && rsl.Length > 0)
+        {
+            int maxResIndex = 0;
+            int maxArea = 0;
+            for (int i=0; i<rsl.Length; i++)
+            {
+                int area = rsl[i].width * rsl[i].height;
+                if (area > maxArea)
+                {
+                    maxArea = area;
+                    maxResIndex =i;
+                }
+            }
+            dropdown.value = maxResIndex;
+            Resolution(maxResIndex);
+        }
     }
 
     public void ApplyMusicVolume(float volume)
@@ -119,5 +138,18 @@ public class SettingController : MonoBehaviour
     public void Resolution(int r)
     {
         Screen.SetResolution(rsl[r].width, rsl[r].height, isFullScreen);
+    }
+
+    public void OpenSetting()
+    {
+        float savedMusic = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
+
+        if (musicSlider != null)
+        {
+            musicSlider.onValueChanged.RemoveListener(ApplyMusicVolume);
+            musicSlider.value = savedMusic;
+            musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
+        } 
+        if (settingsPanel != null) settingsPanel.SetActive(true);
     }
 }
