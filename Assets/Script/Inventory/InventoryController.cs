@@ -186,9 +186,17 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            HandleItemUse(mousePos);
-            HandleMouseClick();
+            if (GetRaycastHitAtMouse().collider != null)
+            {
+                HandleMouseClick();
+            }
+            else
+            {
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(mousePos);
+                Vector2 tileCenter = FarmGrid.Instance.GridToWorldPosition(gridPos);
+                HandleItemUse(tileCenter);
+            }
         }
     }
 

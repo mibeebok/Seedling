@@ -8,6 +8,6 @@ public static class ItemExtensions
     public static CropType GetCropType(this Item item)
     {
         if (item == null) return CropType.None;
-        return item.cropType; // Теперь тип растения хранится прямо в предмете
+        return item.cropType;
     }
 }

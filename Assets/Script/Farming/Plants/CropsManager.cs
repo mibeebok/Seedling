@@ -77,12 +77,6 @@ public class CropsManager : MonoBehaviour
     {
         Vector2Int gridPos = FarmGrid.Instance.WorldToGridPosition(worldPosition);
 
-        SleepController sleepController = FindObjectOfType<SleepController>();
-        if (sleepController != null)
-        {
-            sleepController.ConsumeEnergy(5f);
-        }
-
         if (allCrops.ContainsKey(gridPos))
             return false;
         
@@ -130,6 +124,7 @@ public class CropsManager : MonoBehaviour
         
         soilTile.MarkPlanted();
         
+        SleepController sleepController = FindObjectOfType<SleepController>();
         if (sleepController != null)
         {
             sleepController.ConsumeEnergy(5f);

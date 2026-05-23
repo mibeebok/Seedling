@@ -205,8 +205,8 @@ public class FarmGrid : Sounds
             0
         );
         
-        int gridX = Mathf.FloorToInt((worldPosition.x + gridCenter.x) / cellSize);
-        int gridY = Mathf.FloorToInt((worldPosition.y + gridCenter.y) / cellSize);
+        int gridX = Mathf.RoundToInt((worldPosition.x + gridCenter.x) / cellSize);
+        int gridY = Mathf.RoundToInt((worldPosition.y + gridCenter.y) / cellSize);
                 
         return new Vector2Int(gridX, gridY);
     }
