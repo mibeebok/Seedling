@@ -238,16 +238,14 @@ public class ShopUI : MonoBehaviour
     public void CloseShop()
     {
         IsShopOpen = false;
-
-        EnableMovementScripts(true);
         if (Player.Instance != null) Player.Instance.SetMovementBlocked(false);
 
         if (shopWindow != null) shopWindow.SetActive(false);
         if (quantityPanel != null) quantityPanel.SetActive(false);
         if (errorPanel != null) errorPanel.SetActive(false);
 
-        DialogueManager dm = FindFirstObjectByType<DialogueManager>();
-        if (dm != null) dm.EndDialogue();
+        DialogueManager dm = FindFirstObjectByType < DialogueManager > ();
+        if (dm != null) dm.OnShopClosed();
     }
 
     public void OpenSellPanelDelayed()

@@ -81,6 +81,7 @@
     <Compile Include="Assets\Script\Core\SaveSystem.cs" />
     <Compile Include="Assets\Script\UI\MenuController.cs" />
     <Compile Include="Assets\Script\UI\WindowExitController.cs" />
+    <Compile Include="Assets\Script\Quests\QuestDatabase.cs" />
     <Compile Include="Assets\Script\Inventory\ItemExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\Script\UI\BookUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
+    <Compile Include="Assets\Script\Quests\QuestCompleteUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Script\Parametrs\SimpleLoader.cs" />
     <Compile Include="Assets\Script\Animals\GoatEscape.cs" />
@@ -114,6 +116,7 @@
     <Compile Include="Assets\Script\Environment\RandomGeneration.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\Script\NPC\NPCInteractions.cs" />
+    <Compile Include="Assets\Script\Quests\QuestTask.cs" />
     <Compile Include="Assets\Script\Player\PlayerBounds.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Potato.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropsManager.cs" />
@@ -123,7 +126,9 @@
     <Compile Include="Assets\Script\UI\ShopUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
+    <Compile Include="Assets\Script\UI\ButtonHoverColor.cs" />
     <Compile Include="Assets\Script\Core\DataBase.cs" />
+    <Compile Include="Assets\Script\Quests\Quest.cs" />
     <Compile Include="Assets\Script\UI\SellHarvestUI.cs" />
     <Compile Include="Assets\Script\Parametrs\SleepController.cs" />
     <Compile Include="Assets\Script\Farming\SoilTile.cs" />
@@ -137,12 +142,14 @@
     <Compile Include="Assets\Script\UI\MoneyDisplayPosition.cs" />
     <Compile Include="Assets\Script\Inventory\ItemPickup.cs" />
     <Compile Include="Assets\Script\Animals\GoatBehavior.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneManager.cs" />
     <Compile Include="Assets\Script\UI\CameraController.cs" />
     <Compile Include="Assets\Script\Core\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Script\Core\SaveData.cs" />
     <Compile Include="Assets\Script\Farming\SoilTileWateringCan.cs" />
+    <Compile Include="Assets\Script\NPC\DialogueDatabase.cs" />
     <Compile Include="Assets\Script\Environment\FarmGrid.cs" />
     <Compile Include="Assets\Script\UI\MoneyDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
@@ -160,7 +167,9 @@
     <Compile Include="Assets\Script\Parametrs\EcologyController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Crop.cs" />
+    <Compile Include="Assets\Script\UI\TutorialPanelController.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Beetroot.cs" />
+    <Compile Include="Assets\Script\Quests\QuestManager.cs" />
     <Compile Include="Assets\Script\Audio\Sounds.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,7 @@ public static class SaveSystem
 
     private static HashSet<Vector2Int> changedTiles = new HashSet<Vector2Int>();
 
+
     public static void MarkTileChanged(Vector2Int pos)
     {
         changedTiles.Add(pos);
@@ -185,7 +186,8 @@ public static class SaveSystem
             saveFile.money = MoneyDisplay.Instance.GetMoney();
         else
             Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не сохранены");
-
+        // Сохраняем интро катсцену
+        saveFile.introCutscenePlayed = CutsceneManager.IntroCutscenePlayed;
 
             // 5 Записываем в файл
             File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
@@ -201,6 +203,7 @@ public static class SaveSystem
                 MoneyDisplay.Instance.SetMoney(100);
             else
                 Debug.LogWarning("MoneyDisplay.Instance не найден, начальные деньги не установлены");
+            CutsceneManager.NotifyGameLoaded();
             return;
         }
 
@@ -333,6 +336,10 @@ public static class SaveSystem
                 MoneyDisplay.Instance.SetMoney(saveFile.money);
             else
                 Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не восстановлены");
+
+        // Загружаем флаг интро катсцены
+        CutsceneManager.IntroCutscenePlayed = saveFile.introCutscenePlayed;
+        CutsceneManager.NotifyGameLoaded();
     }
 
     // Применяем отложенные позиции, если объекты появились позже
@@ -369,6 +376,7 @@ public static class SaveSystem
         public GoatData goat;
         public InventoryData inventory;
         public int money;
+        public bool introCutscenePlayed;
     }
     public class CropSaveData
     {
