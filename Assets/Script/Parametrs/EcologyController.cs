@@ -28,6 +28,16 @@ public class EcologyController : MonoBehaviour
         currentEco = Mathf.Clamp(currentEco, 0f, maxEco);
         UpdateEcoUI();
     }
+    
+    public float CurrentEco
+    {
+        get => currentEco;
+        set
+        {
+            currentEco = Mathf.Clamp(value, 0f, maxEco);
+            UpdateEcoUI();
+        }
+    }
 
     public void RestoreEco(float amount)
     {

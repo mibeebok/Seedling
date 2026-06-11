@@ -1,24 +1,24 @@
-using UnityEngine;
+// using UnityEngine;
 
-public class SavePosition : MonoBehaviour
-{
-    public GameObject player;
+// public class SavePosition : MonoBehaviour
+// {
+//     public GameObject player;
 
-    public void Save()
-    {
-        if (player == null)
-        {
-            Debug.LogError("[SavePosition] Игрок не назначен");
-            return;
-        }
+//     public void Save()
+//     {
+//         if (player == null)
+//         {
+//             Debug.LogError("[SavePosition] Игрок не назначен");
+//             return;
+//         }
 
-        // SaveSystem.SaveGame();
+//         // SaveSystem.SaveGame();
 
-        PlayerPrefs.SetFloat("playerX", player.transform.position.x);
-        PlayerPrefs.SetFloat("playerY", player.transform.position.y);
+//         PlayerPrefs.SetFloat("playerX", player.transform.position.x);
+//         PlayerPrefs.SetFloat("playerY", player.transform.position.y);
        
-        PlayerPrefs.Save();
+//         PlayerPrefs.Save();
 
-        Debug.Log("[SavePosition] Игра успешно сохарнена");
-    }
-}
+//         Debug.Log("[SavePosition] Игра успешно сохарнена");
+//     }
+// }

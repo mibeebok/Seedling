@@ -16,87 +16,10 @@ public static class SaveSystem
         changedTiles.Add(pos);
     }
 
-    public static void SaveModifiedTiles()
-    {
-        if (changedTiles.Count == 0)
-        {
-            Debug.Log("[SaveSystem] Нет изменённых тайлов для сохранения.");
-            return;
-        }
-
-        SaveFile saveFile;
-
-        // Если файл уже существует — загружаем, чтобы не потерять старые данные
-        if (File.Exists(SavePath))
-            saveFile = JsonUtility.FromJson<SaveFile>(File.ReadAllText(SavePath));
-        else
-            saveFile = new SaveFile { tiles = new List<SaveData>() };
-
-        // Словарь для быстрого поиска существующих тайлов
-        var tileMap = new Dictionary<Vector2Int, SaveData>();
-        foreach (var t in saveFile.tiles)
-        {
-            var pos = FarmGrid.Instance.WorldToGridPosition(t.position);
-            tileMap[pos] = t;
-        }
-
-        // Обновляем только изменённые
-        foreach (var pos in changedTiles)
-        {
-            var tile = FarmGrid.Instance.GetTileAt(pos);
-            if (tile != null)
-            {
-                var soil = tile.GetComponent<SoilTile>();
-                if (soil != null)
-                    tileMap[pos] = soil.GetSaveData();
-            }
-        }
-
-        // Перезаписываем обновлённый список
-        saveFile.tiles = new List<SaveData>(tileMap.Values);
-
-        // Сохраняем остальное (игрок, коза, инвентарь — по желанию)
-        if (Player.Instance != null)
-            saveFile.player = new PlayerData { position = Player.Instance.transform.position };
-
-        var goat = Object.FindFirstObjectByType<GoatBehavior>();
-        if (goat != null)
-            saveFile.goat = new GoatData { position = goat.transform.position };
-
-        if (InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
-        {
-            var inv = InventoryController.Instance.mainInventory;
-            saveFile.inventory = new InventoryData
-            {
-                items = new List<ItemSlotData>()
-            };
-            for (int i = 2; i < inv.items.Count; i++)
-            {
-                var slot = inv.items[i];
-                if (slot.id != 0 && slot.count > 0)  // ← Сохраняем только не пустые слоты
-                {
-                    Item item = DataBase.Instance.GetItemById(slot.id);
-                    if (item != null && !string.IsNullOrEmpty(item.name))  // ← Проверяем что имя не пустое
-                    {
-                        saveFile.inventory.items.Add(new ItemSlotData
-                        {
-                            itemName = item.name,
-                            count = slot.count,
-                            isSeed = item.type == ItemType.Seed
-                        });
-                    }
-                }
-            }
-        }
-
-        File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
-
-        changedTiles.Clear();
-    }
-
     public static void SaveGame()
     {
         var saveFile = new SaveFile();
+        Debug.Log($"[SaveGame] CropsManager.Instance exists: {CropsManager.Instance != null}, allCrops count: {CropsManager.Instance?.allCrops.Count ?? 0}");
 
         // Сохраняем тайлы земли
         saveFile.tiles = new List<SaveData>();
@@ -118,21 +41,30 @@ public static class SaveSystem
         saveFile.crops = new List<CropSaveData>();
         if (CropsManager.Instance != null)
         {
+            Debug.Log($"[SaveGame] CropsManager OK, allCrops count: {CropsManager.Instance.allCrops.Count}");
             foreach (var kvp in CropsManager.Instance.allCrops)
             {
                 var crop = kvp.Value;
+                Debug.Log($"[SaveGame] Processing crop at {kvp.Key}: crop={crop != null}, cropData={crop?.cropData != null}");
                 if (crop != null && crop.cropData != null)
                 {
-                    saveFile.crops.Add(new CropSaveData
+                    var saveData = new CropSaveData
                     {
                         gridX = kvp.Key.x,
                         gridY = kvp.Key.y,
                         cropType = crop.cropData.cropType.ToString(),
                         currentStage = crop.CurrentStage,
                         isRotten = crop.isRotten
-                    });
+                    };
+                    saveFile.crops.Add(saveData);
+                    Debug.Log($"[SaveGame] Added crop: {saveData.cropType} at ({saveData.gridX},{saveData.gridY})");
+                }
+                else
+                {
+                    Debug.LogWarning("[SaveGame] Crop or cropData is NULL, skipping");
                 }
             }
+            Debug.Log($"[SaveGame] Final crops list count: {saveFile.crops.Count}");
         }
 
         // Сохраняем игрока
@@ -186,9 +118,16 @@ public static class SaveSystem
         else
             Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не сохранены");
 
+        //сохраняем экологию
+        var ecoController = Object.FindFirstObjectByType<EcologyController>();
+        if (ecoController != null)
+            saveFile.ecology = ecoController.CurrentEco;
 
-            // 5 Записываем в файл
-            File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
+        string json = JsonUtility.ToJson(saveFile, true);
+        Debug.Log($"[SaveGame] JSON length: {json.Length}");
+
+        // 5 Записываем в файл
+        File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
         Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
     }
 
@@ -333,6 +272,14 @@ public static class SaveSystem
                 MoneyDisplay.Instance.SetMoney(saveFile.money);
             else
                 Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не восстановлены");
+        
+        
+        //загружаем экологию
+        var ecoController = Object.FindFirstObjectByType<EcologyController>();
+        if (ecoController != null)
+            ecoController.CurrentEco = saveFile.ecology;
+
+        Debug.Log($"[SaveSystem] Игра загружена. Путь: {SavePath}");
     }
 
     // Применяем отложенные позиции, если объекты появились позже
@@ -369,7 +316,9 @@ public static class SaveSystem
         public GoatData goat;
         public InventoryData inventory;
         public int money;
+        public float ecology;
     }
+    [System.Serializable]
     public class CropSaveData
     {
         public int gridX;
@@ -378,7 +327,6 @@ public static class SaveSystem
         public int currentStage;
         public bool isRotten;
     }
-
     [System.Serializable]
     public class PlayerData
     {

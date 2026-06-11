@@ -15,7 +15,7 @@ public class AutoSaveManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(saveInterval);
-            SaveSystem.SaveModifiedTiles();
+            SaveSystem.SaveGame();
         }
     }
 }
