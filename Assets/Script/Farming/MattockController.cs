@@ -64,7 +64,7 @@ public class MattockController : Sounds
                 {
                     new DialogueLine { text = "Я не буду вспахивать тут землю. Здесь уже растет прекрасное растение.", isPlayer = true }
                 };
-                npc.dialogueManager.StartDialogue(lines, "Гриша", npc.npcFace);
+                npc.dialogueManager.StartDialogueFromCode(lines, "Гриша");
             }
             return;
         }

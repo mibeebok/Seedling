@@ -2,25 +2,37 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
+using Unity.Burst.CompilerServices;
 public class DialogueManager : MonoBehaviour
 {
+    public System.Action OnDialogueEnded;
+
+    [Header("UI Elements")]
     public GameObject dialogueBox;
     public Image dialogueBackgroundImage;
     public Image faceImage;
     public Text nameText;
     public Text dialogueText;
+    public GameObject hintText;
+    public Transform choiceContainer;
+    public GameObject choiceButtonPrefab;
 
+    [Header("Sprites")]
     public Sprite npcDialogueSprite;
     public Sprite playerDialogueSprite;
-
-    private InventoryController inventoryController;
-
     public Sprite playerFace;
     public string playerName;
 
-    public GameObject choicePanel;
-    public Button dialogueChoiceButton;
-    public Button shopChoiceButton;
+    [Header("NPC Sprites")]
+    public Sprite tioliSprite;
+    public Sprite ihvilnichtSprite;
+    public Sprite finnickSprite;
+    public Sprite terentySprite;
+
+    private InventoryController inventoryController;
+    private MattockController mattock;
+    private WateringCanController wateringCan;
 
     public ShopUI shopUI;
 
@@ -29,63 +41,118 @@ public class DialogueManager : MonoBehaviour
     private bool isDialogueActive = false;
     private bool isTyping = false;
 
-    private List<DialogueLine> pendingLines;
-    private string pendingNpcName;
-    private Sprite pendingNpcFace;
+    private Coroutine glowCoroutine;
+    public RectTransform hintRect;
 
+    private bool isChoiceActive = false;
+    private bool isShopOpened = false;
+
+    private string currentNPCName;
+    private Dictionary<string, Sprite> npcSprites;
+
+    private void Awake()
+    {
+        npcSprites = new Dictionary<string, Sprite>();
+    }
 
     private void Start()
     {
-        inventoryController = FindObjectOfType<InventoryController>();
+        inventoryController = FindFirstObjectByType<InventoryController>();
+        mattock = FindFirstObjectByType<MattockController>();
+        wateringCan = FindFirstObjectByType<WateringCanController>();
+
+        npcSprites["Тиоли"] = tioliSprite;
+        npcSprites["Ихвильнихт"] = ihvilnichtSprite;
+        npcSprites["Финник"] = finnickSprite;
+        npcSprites["Терентий"] = terentySprite;
+
+        if (hintText != null) hintText.SetActive(false);
+        if (choiceContainer != null) choiceContainer.gameObject.SetActive(false);
     }
     void Update()
     {
-        if (isDialogueActive && Input.GetMouseButtonDown(0))
+        if (!isDialogueActive) return;
+
+        if (isChoiceActive)
+            return;
+
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
             if (isTyping)
             {
                 StopAllCoroutines();
                 dialogueText.text = lines[currentIndex].text;
                 isTyping = false;
+                if (hintText != null) StartGlowHint();
             }
             else
             {
                 ShowNextLine();
             }
-                
         }
+
     }
 
-    public void StartDialogue(List<DialogueLine> dialogueLines, string npcName, Sprite npcFace)
+    public void StartDialogueByKey(string dialogueKey)
     {
-
-        if (npcName == "Терентий")
+        List<DialogueLine> dialogue = DialogueDatabase.GetDialogue(dialogueKey);
+        if (dialogue == null || dialogue.Count == 0)
         {
-            pendingLines = dialogueLines;
-            pendingNpcName = npcName;
-            pendingNpcFace = npcFace;
-
-            ResetDialogueToNPC(npcFace, npcName);
-
-            dialogueBox.SetActive(true);
-            dialogueText.gameObject.SetActive(false);
-
-            choicePanel.SetActive(true);
-
-            dialogueChoiceButton.onClick.RemoveAllListeners();
-            dialogueChoiceButton.onClick.AddListener(OnDialogueChoice);
-
-            shopChoiceButton.onClick.RemoveAllListeners();
-            shopChoiceButton.onClick.AddListener(OnShopChoice);
+            Debug.LogError($"Диалог с ключом '{dialogueKey}' не найден!");
             return;
         }
 
-        StartNormalDialogue(dialogueLines, npcName, npcFace);
+        string firstSpeaker = dialogue[0].speakerName;
+        Sprite firstFace = GetSpriteForSpeaker(firstSpeaker);
+        StartDialogue(dialogue, firstSpeaker, firstFace);
+    }
+
+    public void StartDialogueByKey(string dialogueKey, string npcName)
+    {
+        List<DialogueLine> dialogue = DialogueDatabase.GetDialogue(dialogueKey);
+        if (dialogue == null || dialogue.Count == 0) return;
+        Sprite npcFace = GetSpriteForSpeaker(npcName);
+        StartDialogue(dialogue, npcName, npcFace);
+    }
+
+    public void StartIntroDialogue() => StartDialogueByKey("Intro");
+
+    private void StartDialogue(List<DialogueLine> dialogueLines, string npcName, Sprite npcFace)
+    {
+        lines = dialogueLines;
+        currentIndex = 0;
+        isDialogueActive = true;
+        dialogueBox.SetActive(true);
+        currentNPCName = npcName;
+
+        if (Player.Instance != null)
+            Player.Instance.SetMovementBlocked(true);
+        if (inventoryController != null)
+            inventoryController.enabled = false;
+        if (mattock != null)
+            mattock.enabled = false;
+        if (wateringCan != null)
+            wateringCan.enabled = false;
+
+        ResetDialogueToNPC(npcFace, npcName);
+        dialogueText.gameObject.SetActive(true);
+        if (choiceContainer != null) choiceContainer.gameObject.SetActive(false);
+        if (hintText != null) hintText.SetActive(false);
+
+        ShowCurrentLine();
+    }
+
+    public void StartDialogueFromCode(List<DialogueLine> dialogueLines, string speakerName)
+    {
+        Sprite speakerFace = GetSpriteForSpeaker(speakerName);
+        StartDialogue(dialogueLines, speakerName, speakerFace);
     }
 
     private void ResetDialogueToNPC(Sprite npcFace, string npcName)
     {
-        faceImage.sprite = npcFace;
+        Sprite finalFace = npcFace != null ? npcFace : GetSpriteForSpeaker(npcName);
+
+        faceImage.sprite = finalFace;
         nameText.text = npcName;
 
         faceImage.rectTransform.anchoredPosition = new Vector2(254, 11);
@@ -95,59 +162,22 @@ public class DialogueManager : MonoBehaviour
         if (dialogueBackgroundImage != null)
             dialogueBackgroundImage.sprite = npcDialogueSprite;
 
-        faceImage.gameObject.SetActive(true);
-        nameText.gameObject.SetActive(true);
-
-        dialogueText.gameObject.SetActive(false);
+        SetHintPosition(false);
     }
 
-    private void StartNormalDialogue(List<DialogueLine> dialogueLines, string npcName, Sprite npcFace)
+    private void ResetDialogueToPlayer()
     {
+        faceImage.sprite = playerFace;
+        nameText.text = playerName;
 
-        lines = dialogueLines;
-        currentIndex = 0;
-        isDialogueActive = true;
-        dialogueBox.SetActive(true);
+        faceImage.rectTransform.anchoredPosition = new Vector2(-254, 11);
+        nameText.rectTransform.anchoredPosition = new Vector2(-254, -71);
+        dialogueText.rectTransform.anchoredPosition = new Vector2(57, 3);
 
-        if (Player.Instance != null)
-            Player.Instance.SetMovementBlocked(true);
+        if (dialogueBackgroundImage != null)
+            dialogueBackgroundImage.sprite = playerDialogueSprite;
 
-        if (inventoryController != null)
-            inventoryController.enabled = false;
-
-        for (int i = 0; i < lines.Count; i++)
-        {
-            if (!lines[i].isPlayer)
-            {
-                lines[i].speakerName = npcName;
-                lines[i].speakerFace = npcFace;
-            }
-        }
-
-        ShowCurrentLine();
-    }
-
-    private void OnDialogueChoice()
-    {
-        choicePanel.SetActive(false);
-        dialogueText.gameObject.SetActive(true);
-
-        StartNormalDialogue(pendingLines, pendingNpcName, pendingNpcFace);
-    }
-
-    private void OnShopChoice()
-    {
-        choicePanel.SetActive(false);
-        dialogueText.gameObject.SetActive(true);
-        OpenShop();
-    }
-
-    private void OpenShop()
-    {
-        if (shopUI != null)
-            shopUI.OpenShop();
-        else
-            Debug.LogError("ShopUI не назначен в DialogueManager!");
+        SetHintPosition(true);
     }
 
     void ShowCurrentLine()
@@ -160,68 +190,198 @@ public class DialogueManager : MonoBehaviour
 
         DialogueLine line = lines[currentIndex];
 
-        if (dialogueBackgroundImage != null)
-        {
-            dialogueBackgroundImage.sprite = line.isPlayer ? playerDialogueSprite : npcDialogueSprite;
-        }
-
-        faceImage.sprite = line.isPlayer ? playerFace : line.speakerFace;
-
-        nameText.text = line.isPlayer ? playerName : line.speakerName;
-
-        dialogueText.text = line.text;
-
         if (line.isPlayer)
         {
-            faceImage.rectTransform.anchoredPosition = new Vector2(-254, 11);
-            nameText.rectTransform.anchoredPosition = new Vector2(-254, -71);
-            dialogueText.rectTransform.anchoredPosition = new Vector2(57, 3);
-            
+            ResetDialogueToPlayer();
         }
         else
-        {
-            faceImage.rectTransform.anchoredPosition = new Vector2(254, 11);
-            nameText.rectTransform.anchoredPosition = new Vector2(254, -71);
-            dialogueText.rectTransform.anchoredPosition = new Vector2(-57, -3);
+            ResetDialogueToNPC(line.speakerFace, line.speakerName);
 
+        if (line.choices != null && line.choices.Length > 0)
+        {
+            ShowChoiceButtons(line.choices);
+            dialogueText.text = line.text;
+            if (hintText != null) hintText.SetActive(false);
+            isTyping = false;
+            return;
         }
+
+        dialogueText.gameObject.SetActive(true);
+        if (choiceContainer != null) choiceContainer.gameObject.SetActive(false);
 
         StartCoroutine(TypeLines(line.text));
     }
 
-    IEnumerator TypeLines(string textToType)
+    private void ShowChoiceButtons(DialogueChoice[] choices)
+    {
+        isChoiceActive = true;
+
+        foreach (Transform child in choiceContainer)
+            Destroy(child.gameObject);
+
+        foreach (var choice in choices)
+        {
+            GameObject btnObj = Instantiate(choiceButtonPrefab, choiceContainer);
+            Button btn = btnObj.GetComponent<Button>();
+            Text btnText = btn.GetComponentInChildren<Text>();
+            btnText.text = choice.buttonText;
+            int nextIndex = choice.nextLineIndex;
+            btn.onClick.AddListener(() => OnChoiceSelected(nextIndex));
+
+            ButtonHoverColor hover = btnObj.AddComponent<ButtonHoverColor>();
+            hover.targetText = btnText;
+            hover.hoverColor = new Color(219f/255f, 177f/255f, 111f/255f);
+        }
+        choiceContainer.gameObject.SetActive(true);
+        dialogueText.gameObject.SetActive(true);
+        if (hintText != null) hintText.SetActive(false);
+    }
+
+    private void OnChoiceSelected(int nextIndex)
+    {
+        isChoiceActive = false;
+        choiceContainer.gameObject.SetActive(false);
+
+        if (nextIndex == -1)
+        {
+            if (shopUI != null)
+            {
+                isShopOpened = true;
+                shopUI.OpenShop();
+                dialogueBox.SetActive(false);
+            }
+            else
+                Debug.LogError("ShopUI is null!");
+            return;
+        }
+        currentIndex = nextIndex;
+        ShowCurrentLine();
+    }
+
+   private IEnumerator TypeLines(string textToType)
     {
         isTyping = true;
         dialogueText.text = "";
+        if (hintText != null) hintText.SetActive(false);
         foreach (char letter in textToType.ToCharArray())
         {
             dialogueText.text += letter;
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSecondsRealtime(0.05f);
         }
         isTyping = false;
+        if (hintText != null) StartGlowHint();
     }
 
-    void ShowNextLine()
+    private void ShowNextLine()
     {
+        if (currentIndex + 1 >= lines.Count)
+        {
+            EndDialogue();
+            return;
+        }
         currentIndex++;
         ShowCurrentLine();
+    }
+
+    private void StartGlowHint()
+    {
+        if (glowCoroutine != null) StopCoroutine(glowCoroutine);
+        glowCoroutine = StartCoroutine(GlowHint());
+    }
+
+    private IEnumerator GlowHint()
+    {
+        Text hint = hintText.GetComponent<Text>();
+        if (hint == null) yield break;
+
+        hintText.SetActive(true);
+        Color originalColor = hint.color;
+        Color goldenColor = new Color(219f/255f, 177f/255f, 111f/255f);
+
+        float duration = 3.0f;
+        float t = 0;
+
+        while (!isTyping && isDialogueActive)
+        {
+            t += Time.unscaledDeltaTime / duration;
+            float factor = (Mathf.Sin(t * Mathf.PI * 2) + 1) / 2f;
+            hint.color = Color.Lerp(originalColor, goldenColor, factor);
+            yield return null;
+        }
+        hintText.SetActive(false);
+        hint.color = originalColor;
+    }
+
+    private void SetHintPosition(bool isPlayer)
+    {
+        if (hintRect == null) return;
+        if (isPlayer)
+            hintRect.anchoredPosition = new Vector2(37f, -71.865f);
+        else
+            hintRect.anchoredPosition = new Vector2(-35.56f, -71.44f);
+    }
+
+    private Sprite GetSpriteForSpeaker(string speakerName)
+    {
+        if (speakerName == playerName) return playerFace;
+        if (npcSprites.ContainsKey(speakerName))
+            return npcSprites[speakerName];
+        return null;
     }
 
     public void EndDialogue()
     {
         isDialogueActive = false;
+        isChoiceActive = false;
         dialogueBox.SetActive(false);
 
-        if (choicePanel != null) choicePanel.SetActive(false);
+        if (choiceContainer != null) choiceContainer.gameObject.SetActive(false);
+        if (hintText != null) hintText.SetActive(false);
+        if (glowCoroutine != null) StopCoroutine(glowCoroutine);
 
-        pendingLines = null;
-        pendingNpcName = null;
-        pendingNpcFace = null;
+        if (!CutsceneManager.IsPlaying)
+        {
+            if (Player.Instance != null)
+                Player.Instance.SetMovementBlocked(false);
 
-        if (Player.Instance != null)
-            Player.Instance.SetMovementBlocked(false);
+            if (!isShopOpened)
+            {
+                if (inventoryController != null)
+                    inventoryController.enabled = true;
+                if (mattock != null) mattock.enabled = true;
+                if (wateringCan != null) wateringCan.enabled = true;
+            }
 
-        if (inventoryController != null)
-            inventoryController.enabled = true;
+        }
+
+        if (!string.IsNullOrEmpty(currentNPCName))
+        {
+            string taskDesc = GetQuestTaskDescription(currentNPCName);
+            QuestManager.Instance.CompleteTask(taskDesc);
+        }
+
+        OnDialogueEnded?.Invoke();
+    }
+
+    public void OnShopClosed()
+    {
+        isShopOpened = false;
+
+        if (inventoryController != null) inventoryController.enabled = true;
+        if (mattock != null) mattock.enabled = true;
+        if (wateringCan != null) wateringCan.enabled = true;
+        if (Player.Instance != null) Player.Instance.SetMovementBlocked(false);
+    }
+
+    private string GetQuestTaskDescription(string npcName)
+    {
+        switch (npcName)
+        {
+            case "Терентий": return "Поговорить с Терентием";
+            case "Финник": return "Поговорить с Финником";
+            case "Ихвильнихт": return "Поговорить с Ихвильнихтом";
+            case "Тиоли": return "Поговорить с Тиоли";
+            default: return $"Поговорить с {npcName}";
+        }
     }
 }

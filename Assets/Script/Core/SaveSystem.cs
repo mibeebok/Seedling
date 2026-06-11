@@ -11,6 +11,7 @@ public static class SaveSystem
 
     private static HashSet<Vector2Int> changedTiles = new HashSet<Vector2Int>();
 
+
     public static void MarkTileChanged(Vector2Int pos)
     {
         changedTiles.Add(pos);
@@ -122,6 +123,9 @@ public static class SaveSystem
         var ecoController = Object.FindFirstObjectByType<EcologyController>();
         if (ecoController != null)
             saveFile.ecology = ecoController.CurrentEco;
+            
+        // Сохраняем интро катсцену
+        saveFile.introCutscenePlayed = CutsceneManager.IntroCutscenePlayed;
 
         string json = JsonUtility.ToJson(saveFile, true);
         Debug.Log($"[SaveGame] JSON length: {json.Length}");
@@ -140,6 +144,7 @@ public static class SaveSystem
                 MoneyDisplay.Instance.SetMoney(100);
             else
                 Debug.LogWarning("MoneyDisplay.Instance не найден, начальные деньги не установлены");
+            CutsceneManager.NotifyGameLoaded();
             return;
         }
 
@@ -280,6 +285,10 @@ public static class SaveSystem
             ecoController.CurrentEco = saveFile.ecology;
 
         Debug.Log($"[SaveSystem] Игра загружена. Путь: {SavePath}");
+
+        // Загружаем флаг интро катсцены
+        CutsceneManager.IntroCutscenePlayed = saveFile.introCutscenePlayed;
+        CutsceneManager.NotifyGameLoaded();
     }
 
     // Применяем отложенные позиции, если объекты появились позже
@@ -317,6 +326,7 @@ public static class SaveSystem
         public InventoryData inventory;
         public int money;
         public float ecology;
+        public bool introCutscenePlayed;
     }
     [System.Serializable]
     public class CropSaveData

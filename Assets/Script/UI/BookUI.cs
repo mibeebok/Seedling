@@ -47,6 +47,8 @@ public class BookUI : MonoBehaviour
     public Button inProgressButton;
     public Button completedButton;
 
+    private bool showingInProgress = true;
+
     public Sprite plusSprite;
     public Sprite minusSprite;
 
@@ -57,9 +59,9 @@ public class BookUI : MonoBehaviour
     private bool isOpen = false;
     void Start()
     {
-        mattock = FindObjectOfType<MattockController>();
-        wateringCan = FindObjectOfType<WateringCanController>();
-        inventoryController = FindObjectOfType<InventoryController>();
+        mattock = FindFirstObjectByType<MattockController>();
+        wateringCan = FindFirstObjectByType<WateringCanController>();
+        inventoryController = FindFirstObjectByType<InventoryController>();
 
         ApplyButtonStyle(profileButton, true);
         ApplyButtonStyle(residentsButton, false);
@@ -85,6 +87,10 @@ public class BookUI : MonoBehaviour
 
         isOpen = !isOpen;
         bookWindow.SetActive(isOpen);
+
+        var tutorialPanel = FindFirstObjectByType<TutorialPanelController>();
+        if (tutorialPanel != null && tutorialPanel.gameObject.activeSelf)
+            tutorialPanel.HidePanel();
 
         if (mattock != null)
             mattock.enabled = !isOpen;
@@ -143,66 +149,6 @@ public class BookUI : MonoBehaviour
                 if (iconImg != null) iconImg.sprite = rd.icon;
             }
         }
-    }
-
-    public void PopulateQuests(bool showInProgress)
-    {
-        if (questsContentContainer == null || questCardPrefab == null)
-        {
-            Debug.LogWarning("questsContentContainer не назначены");
-            return;
-        }
-
-        foreach (Transform child in questsContentContainer)
-            Destroy(child.gameObject);
-
-        if (showInProgress)
-        {
-            if (questCardPrefab == null)
-            {
-                Debug.LogWarning("Нет префаба для активных квестов");
-                return;
-            }
-
-            foreach (QuestData qd in questsInProgress)
-            {
-                GameObject card = Instantiate(questCardPrefab, questsContentContainer);
-                FillQuestCardForActive(card, qd);
-            }
-        }
-        else 
-        {
-            if (completedQuestCardPrefab == null)
-            {
-                Debug.LogWarning("Нет префаба для завершённых квестов");
-                return;
-            }
-
-            foreach (QuestData qd in questsCompleted)
-            {
-                GameObject card = Instantiate(completedQuestCardPrefab, questsContentContainer);
-                CompletedQuestCardController controller = card.GetComponent<CompletedQuestCardController>();
-
-                if (controller != null)
-                {
-                    controller.SetData(qd.name, qd.description);
-                    controller.plusSprite = plusSprite;
-                    controller.minusSprite = minusSprite;
-                }
-                else 
-                {
-                    Transform nameObj = card.transform.Find("HeaderPanel/QuestName");
-                    if (nameObj != null) nameObj.GetComponent<Text>().text = qd.name;
-
-                    Transform thoughtsObj = card.transform.Find("DetailsPanel/GrishaThoughts");
-
-                    if (thoughtsObj != null) thoughtsObj.GetComponent<Text>().text = qd.description;
-                }
-            }
-        }
-
-        if (questsScrollRect != null)
-            questsScrollRect.verticalNormalizedPosition = 1f;
     }
 
     private void FillQuestCardForActive(GameObject card, QuestData qd)
@@ -275,17 +221,19 @@ public class BookUI : MonoBehaviour
         ApplyButtonStyle(rulesButton, false);
         ApplyButtonStyle(questButton, true);
 
-        PopulateQuests(true);
+        RefreshQuestsFromManager();
     }
 
     public void OnInProgressClicked()
     {
-        PopulateQuests(true);
+        showingInProgress = true;
+        RefreshQuestsFromManager();
     }
 
     public void OnCompletedClicked()
     {
-        PopulateQuests(false);
+        showingInProgress = false;
+        RefreshQuestsFromManager();
     }
 
     private void ApplyButtonStyle(Button btn, bool isActive)
@@ -307,6 +255,63 @@ public class BookUI : MonoBehaviour
         }
     }
 
+    public void RefreshQuestsFromManager()
+    {
+        if (QuestManager.Instance == null) return;
+        PopulateQuestsFromManager(showingInProgress);
+    }
+
+    private void PopulateQuestsFromManager(bool showInProgress)
+    {
+        if (questsContentContainer == null) return;
+
+        foreach (Transform child in questsContentContainer)
+            Destroy(child.gameObject);
+
+        var quests = showInProgress ? QuestManager.Instance.activeQuests : QuestManager.Instance.completedQuests;
+
+        foreach (var quest in quests)
+        {
+            if (showInProgress)
+            {
+                GameObject card = Instantiate(questCardPrefab, questsContentContainer);
+                Transform nameObj = card.transform.Find("QuestName");
+                if (nameObj != null) nameObj.GetComponent<Text>().text = quest.questName;
+                Transform descObj = card.transform.Find("QuestDescription");
+                if (descObj != null) descObj.GetComponent<Text>().text = quest.description;
+                Transform progObj = card.transform.Find("QuestProgress");
+                if (progObj != null)
+                {
+                    string progressText = "";
+                    int completed = 0;
+                    foreach (var task in quest.tasks)
+                        if (task.isCompleted) completed++;
+                    progressText = $"{completed}/{quest.tasks.Count}. ";
+                    for (int i = 0; i < quest.tasks.Count; i++)
+                    {
+                        if (i > 0) progressText += "\n";
+                        if (quest.tasks[i].isCompleted)
+                            progressText += $"<color=green>{quest.tasks[i].description}</color>";
+                        else
+                            progressText += quest.tasks[i].description;
+
+                    }
+                    progObj.GetComponent<Text>().text = progressText;
+                }
+            }
+            else
+            {
+                GameObject card = Instantiate(completedQuestCardPrefab, questsContentContainer);
+                CompletedQuestCardController controller = card.GetComponent<CompletedQuestCardController>();
+                if (controller != null)
+                {
+                    controller.SetData(quest.questName, quest.completionNotes);
+                    controller.plusSprite = plusSprite;
+                    controller.minusSprite = minusSprite;
+                }
+            }
+        }
+    }
     private void SetProfileActive(bool active)
     {
         if (profileContent != null) profileContent.SetActive(active);

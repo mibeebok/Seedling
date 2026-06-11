@@ -4,13 +4,11 @@ using UnityEngine;
 public class NPCInteraction : MonoBehaviour
 {
     public DialogueManager dialogueManager;
-    public List<DialogueLine> dialogueLines;
+    public string dialogueKey;
+    public string npcName;
 
     public GameObject TextE;
-
-    public string npcName;
-    public Sprite npcFace;
-
+    
     private bool playerInRange = false;
 
     void Update()
@@ -19,7 +17,7 @@ public class NPCInteraction : MonoBehaviour
         {
             TextE.SetActive(false);
 
-            dialogueManager.StartDialogue(dialogueLines, npcName, npcFace);
+            dialogueManager.StartDialogueByKey(dialogueKey, npcName);
         }
     }
 
@@ -27,8 +25,9 @@ public class NPCInteraction : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TextE.SetActive(true);
             playerInRange = true;
+            if (!CutsceneManager.IsPlaying && TextE != null)
+            TextE.SetActive(true);
         }
     }
 
@@ -38,8 +37,15 @@ public class NPCInteraction : MonoBehaviour
         {
             TextE.SetActive(false);
             playerInRange = false;
-            dialogueManager.EndDialogue(); 
+            if (dialogueManager != null)
+                dialogueManager.EndDialogue(); 
         }
+    }
+
+    public void RefreshTextE()
+    {
+        if (TextE != null)
+            TextE.SetActive(playerInRange);
     }
 
 }
