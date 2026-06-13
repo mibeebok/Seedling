@@ -623,6 +623,136 @@ public static class DialogueDatabase
                 isPlayer = false
             },
         };
+
+        allDialogues["DialogueQuest8"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Доброе утро, молодёжь. Кажется, ты пришёл не семена рассматривать, я прав?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Мы тут с Тиоли случайно наткнулись на вот этот старый рисунок. Это… он лежал в завалах, где раньше был дом Тиоли.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Хм… ты точно готов это услышать?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Да. Мне нужно знать правду.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "2017 год. Финник тогда уже вовсю врал, но… это был несчастный случай. Финник с другими лисами хотели просто напугать семью Тиоли – бросить горящую ветку в окно. Но ветер изменил своё направление…",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ихвильнихт действительно был первым на месте. Он пытался спасти их… но было поздно. Жители решили просто обвинить его, не разбираясь.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Это… глупо. Разве Ихвильнихт чем-то заслужил к себе такое отношение? Почему подумали на него?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "К сожалению, здесь даже я не смог ничем помочь, жители наотрез отказываются верить во что-то иное. Тем более без доказательств. Именно поэтому я решил на время уйти в отставку.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Отставку?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Я был хранителем леса. Но эта история навсегда изменила нашу деревню. Сейчас на моё место метит Финник. Слушай… не допусти этого, ладно?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Я постараюсь поступить правильно.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+        };
+
+        allDialogues["DialogueQuest9.1"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Боже… что здесь было?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Привет! Ой... эм, а что тут произошло?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            }
+        };
+        allDialogues["DialogueQuest9.2"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Я… не уверен. Я думал, что это Финник, но… посмотри, здесь волчьи следы и шерсть.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Терентий наврал? Я теперь ничего не понимаю.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Думаю, пока рано делать выводы. Думаю, имеет смысл сходить к Ихвильнихту и к Финнику, поговорить и посмотреть, как они будут себя вести.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Думаю, ты прав. Ну что, тогда не будем терять времени?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+        };
     }
 
     public static List<DialogueLine> GetDialogue(string key)

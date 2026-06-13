@@ -161,4 +161,42 @@ public static class QuestDatabase
         quest.npcDialogueChanges = new List<NPCDialogueChange>();
         return quest;
     }
+    public static Quest EighthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 8. Тайны, тайны, тайны...";
+        quest.description = "Сегодня ровно неделя, как я живу в деревне Росток. Я всё ещё пока мало понимаю, что здесь происходит, но я намерен докопаться до правды. Уверен, в этом мне немного поможет Терентий. Ну что, в путь?";
+        quest.completionNotes = "«Сегодня я узнал… много нового. Информации так много, и она так шокирует, что я теряюсь в своих мыслях. Но я понял то, что слепо доверять пока никому не стоит. Я должен наблюдать за Финником, чтобы понять, кто прав, а кто нет.».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Попытаться узнать у Терентия о Финнике и Ихвильнихте", isCompleted = false }
+    };
+        quest.rewardMoney = 10;          
+        quest.rewardCropType = CropType.Potato;  
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>
+        {
+             new NPCDialogueChange { npcName = "Терентий", newDialogueKey = "TerentyNeutral"}
+        };
+
+        return quest;
+    }
+    public static Quest NinthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 9. Завелась крыса?";
+        quest.description = "Сегодня я проснулся со странным ощущением, словно что-то… конкретно не то. Что бы это могло значить?";
+        quest.completionNotes = "«Я был уверен, что почти разгадал тайны этой деревни, но теперь… теперь я ни в чём не уверен. Кому мне верить? Кому вообще можно верить?».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Разобраться, в чём дело", isCompleted = false },
+        new QuestTask { description = "Поговорить с Тиоли", isCompleted = false }
+    };
+        quest.rewardMoney = 15;
+        quest.rewardCropType = CropType.Potato;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>(); 
+
+        return quest;
+    }
 }

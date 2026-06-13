@@ -14,7 +14,9 @@ public class QuestManager : MonoBehaviour
     private Coroutine plowWaterCoroutine;
     private Coroutine carrotCoroutine;
 
-    public GameObject quest7ProgressText; 
+    public GameObject quest7ProgressText;
+    public GameObject triggerZoneQ9_1;
+    public GameObject triggerZoneQ8;
     public GameObject triggerZoneQ5;
     public GameObject triggerZoneQ7;
     public GameObject quest7Arrows;
@@ -166,8 +168,21 @@ public class QuestManager : MonoBehaviour
         {
             if (quest7Arrows != null) quest7Arrows.SetActive(false);
             if (quest7ProgressText != null) quest7ProgressText.SetActive(false);
+
+            Quest eighthQuest = QuestDatabase.EighthQuest();
+            AddQuest(eighthQuest);
+            if (triggerZoneQ8 != null) triggerZoneQ8.SetActive(true);
+            hasNext = true;
         }
-            ShowQuestCompletePanel(quest, hasNext);
+        if (quest.questName == "Квест 8. Тайны, тайны, тайны...")
+        {
+            Quest ninthQuest = QuestDatabase.NinthQuest();
+            AddQuest(ninthQuest);
+            if (triggerZoneQ9_1 != null) triggerZoneQ9_1.SetActive(true);
+            hasNext = true;
+        }
+
+        ShowQuestCompletePanel(quest, hasNext);
         SaveSystem.SaveGame();
     }
 
