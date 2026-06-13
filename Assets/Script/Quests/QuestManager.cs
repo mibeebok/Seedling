@@ -14,6 +14,8 @@ public class QuestManager : MonoBehaviour
     private Coroutine plowWaterCoroutine;
     private Coroutine carrotCoroutine;
 
+    public GameObject triggerZoneQ5;
+
     private void Awake()
     {
         if (Instance == null)
@@ -119,6 +121,24 @@ public class QuestManager : MonoBehaviour
             Quest thirdQuest = QuestDatabase.ThirdQuest();
             AddQuest(thirdQuest);
 
+            hasNext = true;
+        }
+
+        if (quest.questName == " вест 3. я-огородник")
+        {
+            Quest fourthQuest = QuestDatabase.FourthQuest();
+            AddQuest(fourthQuest);
+            SetNPCQuestDialogue("“иоли", "TioliDialogueQuest4");
+            hasNext = true;
+        }
+
+        if (quest.questName == " вест 4. ѕервый друг")
+        {
+            Quest fifthQuest = QuestDatabase.FifthQuest();
+            AddQuest(fifthQuest);
+            SetNPCQuestDialogue("»хвильнихт", "IhvilnichtDialogueQuest5");
+            if (triggerZoneQ5 != null)
+                triggerZoneQ5.SetActive(true);
             hasNext = true;
         }
 

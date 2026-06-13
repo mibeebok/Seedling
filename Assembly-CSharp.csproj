@@ -83,6 +83,7 @@
     <Compile Include="Assets\Script\UI\MenuController.cs" />
     <Compile Include="Assets\Script\UI\WindowExitController.cs" />
     <Compile Include="Assets\Script\Quests\QuestDatabase.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuestFifth.cs" />
     <Compile Include="Assets\Script\Cutscenes\HomeTriggerForCutscenes.cs" />
     <Compile Include="Assets\Script\Inventory\ItemExtensions.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Assets\Script\Animals\GoatBehavior.cs" />
     <Compile Include="Assets\Script\Cutscenes\CutsceneManager.cs" />
     <Compile Include="Assets\Script\UI\CameraController.cs" />
+    <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest5.cs" />
     <Compile Include="Assets\Script\Core\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />

@@ -335,6 +335,252 @@ public static class DialogueDatabase
                 isPlayer = false
             }
         };
+
+        allDialogues["TioliDialogueQuest4"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Привет, Тиоли. Как поживаешь?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Привет, Гриша! Здорово, что ты пришёл. У меня всё хорошо, а как у тебя продвижения? Уже привык, или пока ещё нет?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "В целом неплохо. Постепенно узнаю что-то новое. И кстати говоря, об этом. Не хочу лезть не в своё дело, но мне показалось, что тебя что-то беспокоит. Ты можешь поделиться, возможно, тебе станет легче.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "...(неуверенно осмотрелась по сторонам, размышляя, что ей делать).",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ну... это довольно непонятная ситуация. Насчёт... 2017 года. Ты ведь не знаешь, что там произошло, правда? (голос Тиоли слегка дрогнул, словно она пыталась сдержать внутри себя бурю эмоций).",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+             new DialogueLine
+            {
+                text = "Нет, я не знаю. Те события как-то связаны с тобой?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Да, это... напрямую связано со мной. Точнее, с моими родными. Они... кто-то из жителей поджёг дом, где была моя семья. Я в это время ночевала в гостях у подруги, как вдруг мы услышали шум, а далее очень сильно запахло дымом...",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+              new DialogueLine
+            {
+                text = "Мы сразу выбежали на улицу, и в ужасе заметили, что дым... исходит со стороны моего дома. Когда мы прибежали, там уже была толпа из жителей. А дом уже догорал. С моей спящей внутри семьёй.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+             new DialogueLine
+            {
+                text = "Боже мой... кому вообще в голову пришла такая жестокость?... Вы их наказали?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "А вот здесь уже проблема. Никто точно не знает всю историю. На месте происшествия первым оказался Ихвильнихт, и как-то жители решили между собой, что это было его рук дело.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "А на следующее утро Финник подтвердил, что видел, как волк поджигал дом. Ихвильнихта изгнали с деревни.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+             new DialogueLine
+            {
+                text = "То есть как, просто взяли и изгнали? Без доказательств? У вас в деревне разве нет чего-то, типа... полиции? Суда? Такие вопросы нельзя оставлять нерешёнными.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+             new DialogueLine
+            {
+                text = "Нет, у нас немного по-другому всё работает. У нас есть хранитель леса, точнее, был. Терентий временно в отставке, а на его место метит Финник.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Кстати говоря, о Финнике, мне кажется, он совсем не тот, за кого себя выдаёт.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Почему такие мысли?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Финник раньше был лучшим другом Ихвильнихта. Они вместе росли, можно сказать. Не разлей вода были.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "А потом Финник связался с компанией каких-то лисов, и я полагаю, на него оказали плохое влияние. Именно тогда между этими двумя начались конфликты.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "То есть, ты хочешь сказать… Финник мог подставить Ихвильнихта? Но зачем ему это делать?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "А вот здесь мои догадки оканчиваются. Я в тупике. Уже столько лет пытаюсь разгадать, что на самом деле произошло.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Я пыталась говорить с Ихвильнихтом, но он молчит, как партизан. Даже не знаю, как вытянуть из него хотя-бы слово.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "А что, если мне попробовать? В прошлый раз, вроде-бы, мы с ним смогли поговорить.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Я уверен, что к каждому можно найти свой подход. К тому же, если его совесть чиста, это в его же интересах решить конфликт.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Думаю, ты прав. Мы хотя-бы попытаемся, верно? Ладно, тогда в путь.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            }
+        };
+
+        allDialogues["IhvilnichtDialogueQuest5"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Привет, дружище! Мы пришли… в общем, у нас есть к тебе пару вопросов. Сможешь ответить нам?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Дружище?.. (волк нахмурился, слегка отходя назад, соблюдая дистанцию). Вопросы?.. Что вам от меня нужно?",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "(слегка отступая назад, чтобы дать волку пространство). Извини, мы не пришли ругаться с тобой. Мы просто хотим… узнать правду. Вот и всё.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Правду? Ты думаешь, после стольких лет это поменяет хоть что-то? (Ихвильнихт огрызается, обнажив клыки).",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Слушай, я понимаю, что тебе наверняка больно, если ты невиновен. Так может быть, самое время раскрыть правду? Мы пришли не с целью вредить тебе.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Я… действительно не поджигал дом. Я просто прибежал раньше всех. Пытался что-то предпринять, но было слишком поздно, внутрь было даже не проникнуть. Вот только мне никто не поверил (в голосе звучала боль).",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Знаешь… ты звучишь убедительно. Но… к сожалению, нам нужны доказательства.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "(горько усмехаясь), А, ну да, как иначе. На словах уже никто и ни во что не верит…",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Слушай, я понимаю твою боль, но мы ведь должны как-то доказать всем, что ты невиновен.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Я очень хочу тебе поверить, но Гриша прав, доказательства… они могут играть ключевую роль.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ну тогда удачи вам хоть что-то найти. Уверен, спустя столько лет вы уже ничего не обнаружите.",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            }
+        };
     }
 
     public static List<DialogueLine> GetDialogue(string key)

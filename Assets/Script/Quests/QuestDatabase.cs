@@ -78,4 +78,48 @@ public static class QuestDatabase
 
         return quest;
     }
+
+    public static Quest FourthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 4. Первый друг";
+        quest.description = "Кажется, в этой деревне не так уж и скучно. По крайней мере, выглядит так, словно у меня появился друг – кролик Тиоли. Правда, я чувствую, что она чего-то словно не договаривает. Меня это слегка напрягает, но я уверен, что разберусь со всем.";
+        quest.completionNotes = "«Если честно, не ожидал, что эта деревня скрывает в себе такую трагедию. Бедняжка Тиоли… надеюсь, мы с ней сможем добраться до истины.».";
+
+        quest.tasks = new List<QuestTask>
+        {
+            new QuestTask { description = "Навестить Тиоли", isCompleted = false},
+            new QuestTask { description = "Попытаться выяснить, что её тревожит", isCompleted = false}
+        };
+        quest.rewardMoney = 15;
+        quest.rewardCropType = CropType.Rastberry;
+        quest.rewardSeedCount = 1;
+
+        quest.npcDialogueChanges = new List<NPCDialogueChange>
+       {
+           new NPCDialogueChange { npcName = "Тиоли", newDialogueKey = "TioliNeutral"}
+       };
+        return quest;
+    }
+    public static Quest FifthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 5. Начало положено";
+        quest.description = "Чувствую, диалог выдастся тяжёлым, но мы хотя-бы начнём что-то делать. Не порядок, что такие вещи в деревне остаются под завесой тайны. Хотя бы для успокоения Тиоли мы обязаны попытаться. Надеюсь, Ихвильнихт не будет сильно упираться. А может, его задобрить? Что же может понравиться волку…";
+        quest.completionNotes = "«Ну, разговор состоялся. Ихвильнихт, похоже, не враг. Но доказательств у нас пока нет… нужно искать дальше.».";
+
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Поговорить с Ихвильнихтом", isCompleted = false }
+    };
+        quest.rewardMoney = 15;
+        quest.rewardCropType = CropType.Beetroot;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>
+        {
+             new NPCDialogueChange { npcName = "Ихвильнихт", newDialogueKey = "IhvilnichtNeutral"}
+        };
+
+        return quest;
+    }
 }

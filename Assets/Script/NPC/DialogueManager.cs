@@ -386,7 +386,8 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(currentNPCName))
         {
             string taskDesc = GetQuestTaskDescription(currentNPCName);
-            QuestManager.Instance.CompleteTask(taskDesc);
+            if (currentDialogueKey != "IhvilnichtDialogueQuest5")
+                QuestManager.Instance.CompleteTask(taskDesc);
         }
 
         if (currentDialogueKey == "TioliDialogueQuest2" && currentNPCName == "Тиоли")
@@ -397,6 +398,13 @@ public class DialogueManager : MonoBehaviour
             if (houseTriggerZone != null)
                 houseTriggerZone.SetActive(true);
         }
+
+        if (currentDialogueKey == "TioliDialogueQuest4" && currentNPCName == "Тиоли")
+        {
+            QuestManager.Instance.CompleteTask("Навестить Тиоли");
+            QuestManager.Instance.CompleteTask("Попытаться выяснить, что её тревожит");
+        }
+
         OnDialogueEnded?.Invoke(currentNPCName);
         Canvas.ForceUpdateCanvases();
     }
