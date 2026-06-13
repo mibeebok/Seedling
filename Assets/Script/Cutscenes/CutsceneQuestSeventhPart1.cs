@@ -1,11 +1,9 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class CutsceneQuestThird : MonoBehaviour
+public class CutsceneQuestSeventhPart1 : MonoBehaviour
 {
     public static bool IsPlaying { get; private set; } = false;
-    public static bool hasPlayed = false;
-
     public PlayableDirector director;
     public DialogueManager dialogueManager;
 
@@ -17,13 +15,12 @@ public class CutsceneQuestThird : MonoBehaviour
 
     void Start()
     {
-        inventoryController = FindFirstObjectByType<InventoryController>();
-        mattock = FindFirstObjectByType<MattockController>();
-        wateringCan = FindFirstObjectByType<WateringCanController>();
+        inventoryController = FindObjectOfType<InventoryController>();
+        mattock = FindObjectOfType<MattockController>();
+        wateringCan = FindObjectOfType<WateringCanController>();
 
         if (dialogueManager != null)
             dialogueManager.OnDialogueEnded += ResumeTimeLine;
-
         if (director != null)
         {
             director.played += OnCutsceneStart;
@@ -32,9 +29,6 @@ public class CutsceneQuestThird : MonoBehaviour
     }
     public void StartCutscene()
     {
-        if (hasPlayed) return;
-        hasPlayed = true;
-
         GameState.IsCutscenePlaying = true;
         SetAllTextEActive(false);
         ToggleUI(false);
@@ -62,13 +56,8 @@ public class CutsceneQuestThird : MonoBehaviour
         Time.timeScale = 1f;
         if (dialogueManager != null)
             dialogueManager.OnDialogueEnded -= ResumeTimeLine;
-
-        GameObject finnick = GameObject.Find("fox_0");
-        if (finnick != null)
-        {
-            finnick.transform.position = new Vector3(20.78462f, -33.87714f, 0f);
-        }
     }
+
     private void ToggleUI(bool active)
     {
         foreach (var obj in uiToDisableDuringCutscene)
@@ -77,14 +66,14 @@ public class CutsceneQuestThird : MonoBehaviour
 
     private void SetAllTextEActive(bool active)
     {
-        var allNPCs = FindObjectsByType<NPCInteraction>(FindObjectsSortMode.None);
+        var allNPCs = FindObjectsOfType<NPCInteraction>();
         foreach (var npc in allNPCs)
             if (npc.TextE != null) npc.TextE.SetActive(active);
     }
 
     private void RefreshAllTextE()
     {
-        var allNPCs = FindObjectsByType<NPCInteraction>(FindObjectsSortMode.None);
+        var allNPCs = FindObjectsOfType<NPCInteraction>();
         foreach (var npc in allNPCs)
             npc.RefreshTextE();
     }
@@ -98,7 +87,6 @@ public class CutsceneQuestThird : MonoBehaviour
     {
         Time.timeScale = 1f;
     }
-
     private void BlockControls(bool block)
     {
         if (inventoryController != null) inventoryController.enabled = !block;
@@ -110,6 +98,6 @@ public class CutsceneQuestThird : MonoBehaviour
     public void PauseAndStartDialogue()
     {
         PauseForDialogue();
-        dialogueManager.StartDialogueByKey("FinnickDialogueQuest3", "Финник");
+        dialogueManager.StartDialogueByKey("DialogueQuest7.1", "Гриша");
     }
 }

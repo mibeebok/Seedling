@@ -66,6 +66,7 @@
     <Compile Include="Assets\Script\NPC\DialogueLine.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Script\Inventory\Inventory.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneStarter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Script\UI\CompletedQuestCardController.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Carrot.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\Script\Core\SaveSystem.cs" />
     <Compile Include="Assets\Script\Cutscenes\FinnickTriggerZoneQ3.cs" />
     <Compile Include="Assets\Script\UI\MenuController.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuestSeventhPart1.cs" />
     <Compile Include="Assets\Script\UI\WindowExitController.cs" />
     <Compile Include="Assets\Script\Quests\QuestDatabase.cs" />
     <Compile Include="Assets\Script\Cutscenes\CutsceneQuestFifth.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Script\Player\PlayerVisual.cs" />
     <Compile Include="Assets\Script\Cutscenes\GameState.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuestSeventhPart2.cs" />
     <Compile Include="Assets\Script\Core\AutoSaveManager.cs" />
     <Compile Include="Assets\Script\Player\HandsController.cs" />
     <Compile Include="Assets\Script\Cutscenes\CutsceneQuestThird.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="Assets\Script\Quests\Quest.cs" />
     <Compile Include="Assets\Script\UI\SellHarvestUI.cs" />
     <Compile Include="Assets\Script\Parametrs\SleepController.cs" />
+    <Compile Include="Assets\Script\Quests\ClueButtonHandler.cs" />
     <Compile Include="Assets\Script\Farming\SoilTile.cs" />
     <Compile Include="Assets\Script\UI\SettingController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -162,6 +166,7 @@
     <Compile Include="Assets\Script\UI\MoneyDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Script\Quests\EvidenceViewer.cs" />
     <Compile Include="Assets\Script\UI\OpenSetting.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropBehaviour.cs" />
     <Compile Include="Assets\Script\Farming\WateringCanController.cs" />
@@ -178,6 +183,7 @@
     <Compile Include="Assets\Script\UI\TutorialPanelController.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Beetroot.cs" />
     <Compile Include="Assets\Script\Quests\QuestManager.cs" />
+    <Compile Include="Assets\Script\Cutscenes\TriggerZoneQ7.cs" />
     <Compile Include="Assets\Script\Audio\Sounds.cs" />
   </ItemGroup>
   <ItemGroup>

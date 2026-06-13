@@ -44,15 +44,15 @@ public class NPCInteraction : MonoBehaviour
             TextE.SetActive(true);
         }
     }
-
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            TextE.SetActive(false);
+            if (TextE != null)
+                TextE.SetActive(false);
             playerInRange = false;
             if (dialogueManager != null)
-                dialogueManager.EndDialogue(); 
+                dialogueManager.EndDialogue();
         }
     }
 

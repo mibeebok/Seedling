@@ -106,6 +106,7 @@ public class ShopUI : MonoBehaviour
         }
 
         QuestManager.Instance.CompleteTask("Посетить лавку Терентия");
+
         if (QuestManager.Instance.IsQuestActive("Квест 3. Я-огородник"))
         {
             var finnickZone = QuestManager.Instance.finnickTriggerZone;
@@ -214,16 +215,21 @@ public class ShopUI : MonoBehaviour
             {
                 InventoryManager.Instance.AddSeedToInventory(currentSelectedItem.cropType, currentQuantity);
                 Debug.Log($"Семена {currentSelectedItem.cropType} добавлены в количестве {currentQuantity}");
+
+                if (currentSelectedItem.cropType == CropType.Rastberry)
+                {
+                    QuestManager.Instance.CompleteTask("Купить семена малины");
+                }
             }
             else
             {
                 Debug.LogError("InventoryManager.Instance не найден! Семена не добавлены");
             }
 
-                quantityPanel.SetActive(false);
+            quantityPanel.SetActive(false);
         }
-        else 
-        { 
+        else
+        {
             if (errorPanel != null) errorPanel.SetActive(true);
         }
     }
@@ -252,12 +258,13 @@ public class ShopUI : MonoBehaviour
         if (quantityPanel != null) quantityPanel.SetActive(false);
         if (errorPanel != null) errorPanel.SetActive(false);
 
-        DialogueManager dm = FindFirstObjectByType < DialogueManager > ();
+        DialogueManager dm = FindFirstObjectByType<DialogueManager>();
         if (dm != null) dm.OnShopClosed();
     }
 
     public void OpenSellPanelDelayed()
     {
         sellHarvestUI.OpenSellPanel();
-    }  
+    }
+
 }

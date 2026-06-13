@@ -14,7 +14,11 @@ public class QuestManager : MonoBehaviour
     private Coroutine plowWaterCoroutine;
     private Coroutine carrotCoroutine;
 
+    public GameObject quest7ProgressText; 
     public GameObject triggerZoneQ5;
+    public GameObject triggerZoneQ7;
+    public GameObject quest7Arrows;
+    private bool clueFound = false;
 
     private void Awake()
     {
@@ -142,7 +146,28 @@ public class QuestManager : MonoBehaviour
             hasNext = true;
         }
 
-        ShowQuestCompletePanel(quest, hasNext);
+        if (quest.questName == "Квест 5. Начало положено")
+        {
+            Quest sixthQuest = QuestDatabase.SixthQuest();
+            AddQuest(sixthQuest);
+            hasNext = true;
+        }
+
+        if (quest.questName == "Квест 6. П-Предприниматель")
+        {
+            Quest seventhQuest = QuestDatabase.SeventhQuest();
+            AddQuest(seventhQuest);
+            if (triggerZoneQ7 != null) triggerZoneQ7.SetActive(true);
+            if (quest7Arrows != null) quest7Arrows.SetActive(true);
+            hasNext = true;
+        }
+
+        if (quest.questName == "Квест 7. Я доберусь до правды")
+        {
+            if (quest7Arrows != null) quest7Arrows.SetActive(false);
+            if (quest7ProgressText != null) quest7ProgressText.SetActive(false);
+        }
+            ShowQuestCompletePanel(quest, hasNext);
         SaveSystem.SaveGame();
     }
 
@@ -350,4 +375,6 @@ public class QuestManager : MonoBehaviour
             if (q.questName == questName) return true;
         return false;
     }
+    public void SetClueFound() => clueFound = true;
+    public bool IsClueFound() => clueFound;
 }

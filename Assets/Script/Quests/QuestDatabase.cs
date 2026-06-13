@@ -122,4 +122,43 @@ public static class QuestDatabase
 
         return quest;
     }
+    public static Quest SixthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 6. П-Предприниматель";
+        quest.description = "Итак, первые шаги сделаны. Урожай – вырос, а значит, пора задуматься о бизнесе. Что там говорил Терентий? Я могу продать ему часть выращенного? Отличная мысль. Ну что, в путь?";
+        quest.completionNotes = "«Ну вот и всё, моя первая прибыль с урожая. Малыми шагами я точно достигну успеха. Нужно продолжать в том же духе. Так, малина… нужно пойти и посадить малину.».";
+
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Посетить лавку Терентия", isCompleted = false },
+        new QuestTask { description = "Продать часть урожая", isCompleted = false },
+        new QuestTask { description = "Купить семена малины", isCompleted = false }
+    };
+        quest.rewardMoney = 10;
+        quest.rewardCropType = CropType.Potato; 
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>(); 
+
+        return quest;
+    }
+    public static Quest SeventhQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 7. Я доберусь до правды";
+        quest.description = "Чтобы начать расследование, в любом фильме или сериале начинают с осмотра места преступления. А значит, мы должны сходить и проверить место, где горел дом. Да, прошло много лет, но может быть нам повезёт, и какие-то улики там останутся.";
+        quest.completionNotes = "«Ух, тяжёлый выдался денёк… но мы теперь на шаг ближе к истине. Я очень рад, что прогресс сдвинулся с мёртвой точки. Не могу поверить, что столько лет никому не было дела до этой трагедии. В голове не укладывается…».";
+
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Найти место, где горел дом", isCompleted = false },
+        new QuestTask { description = "Осмотреться на предмет улик", isCompleted = false }
+    };
+        quest.rewardMoney = 20;
+        quest.rewardCropType = CropType.Rastberry;
+        quest.rewardSeedCount = 1;
+
+        quest.npcDialogueChanges = new List<NPCDialogueChange>();
+        return quest;
+    }
 }

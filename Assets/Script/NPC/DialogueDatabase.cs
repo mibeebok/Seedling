@@ -581,6 +581,48 @@ public static class DialogueDatabase
                 isPlayer = false
             }
         };
+
+        allDialogues["DialogueQuest7.1"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Мы не будем находиться здесь слишком долго. Мы справимся, слышишь? Я уверен, что мы найдём хоть что-то.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Надеюсь ты прав…",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            }
+        };
+        allDialogues["DialogueQuest7.2"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Это… это же Финник и Ихвильнихт, только маленькие… откуда это тут?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ну… слушай, теперь мы знаем, что в пожаре виновен кто-то из них. У нас, так называемый, прогресс. Ну что, следопыт, раскроем это дело, а?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Да! Я думаю, имеет смысл заглянуть к Терентию. Возможно, он что-то знает об этом.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+        };
     }
 
     public static List<DialogueLine> GetDialogue(string key)

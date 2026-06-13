@@ -20,7 +20,10 @@ public class FinnickTriggerZoneQ3 : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             if (cutsceneManager != null)
-                cutsceneManager.StartCutscene();
+            {
+                if (cutsceneManager != null && !CutsceneQuestThird.hasPlayed)
+                    cutsceneManager.StartCutscene();
+            }
             else
                 Debug.LogError("CutsceneQuestThird не назначен в FinnickTriggerZoneQ3");
             gameObject.SetActive(false);

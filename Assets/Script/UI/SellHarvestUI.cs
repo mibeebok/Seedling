@@ -152,6 +152,7 @@ public class SellHarvestUI : MonoBehaviour
         string vegName = GetRussianName(item);
         string message = $"Вы продали {vegName} в количестве: {amount} шт.\nИ получили с этого: {totalMoney} листеньев!";
         ShowConfirmMessage(message);
+        QuestManager.Instance.CompleteTask("Продать часть урожая");
 
         UpdateSlotsCounters();
 
@@ -198,6 +199,7 @@ public class SellHarvestUI : MonoBehaviour
         string soldItems = string.Join(", ", soldItemsList);
         string message = $"Вы продали: {soldItems}\nИ получили с этого: {totalMoney} листеньев!";
         ShowConfirmMessage(message);
+        QuestManager.Instance.CompleteTask("Продать часть урожая");
 
         UpdateSlotsCounters();
 
