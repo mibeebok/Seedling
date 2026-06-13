@@ -11,5 +11,12 @@ public class Quest
     public int rewardMoney;
     public CropType rewardCropType;
     public int rewardSeedCount;
+    public List<NPCDialogueChange> npcDialogueChanges;
 }
 
+[System.Serializable]
+public class NPCDialogueChange
+{
+    public string npcName;
+    public string newDialogueKey;
+}

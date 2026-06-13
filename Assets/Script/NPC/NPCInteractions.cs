@@ -11,13 +11,27 @@ public class NPCInteraction : MonoBehaviour
     
     private bool playerInRange = false;
 
+    private void Start()
+    {
+        if (dialogueManager != null)
+            dialogueManager.OnDialogueEnded += OnDialogueEndedHandler;
+    }
+
+    private void OnDestroy()
+    {
+        if (dialogueManager != null)
+            dialogueManager.OnDialogueEnded -= OnDialogueEndedHandler;
+    }
+
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            TextE.SetActive(false);
-
-            dialogueManager.StartDialogueByKey(dialogueKey, npcName);
+            if (!string.IsNullOrEmpty(dialogueKey))
+            {
+                TextE.SetActive(false);
+                dialogueManager.StartDialogueByKey(dialogueKey, npcName);
+            }
         }
     }
 
@@ -26,7 +40,7 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
-            if (!CutsceneManager.IsPlaying && TextE != null)
+            if (!GameState.IsCutscenePlaying && !string.IsNullOrEmpty(dialogueKey) && TextE != null)
             TextE.SetActive(true);
         }
     }
@@ -46,6 +60,19 @@ public class NPCInteraction : MonoBehaviour
     {
         if (TextE != null)
             TextE.SetActive(playerInRange);
+    }
+
+    private void OnDialogueEndedHandler(string endedNPCName)
+    {
+        if (endedNPCName == npcName && !string.IsNullOrEmpty(dialogueKey) &&
+            (dialogueKey == "TerentyDialogueQuest1" ||
+            dialogueKey == "FinnickDialogueQuest1" ||
+            dialogueKey == "IhvilnichtDialogueQuest1" ||
+            dialogueKey == "Intro"))
+        {
+            dialogueKey = null;
+            if (TextE != null) TextE.SetActive(false);
+        }
     }
 
 }

@@ -130,6 +130,25 @@ public static class SaveSystem
         string json = JsonUtility.ToJson(saveFile, true);
         Debug.Log($"[SaveGame] JSON length: {json.Length}");
 
+        // Сохраняем квесты
+        if (QuestManager.Instance != null)
+        {
+            saveFile.activeQuests = ConvertQuestsToSaveData(QuestManager.Instance.activeQuests);
+            saveFile.completedQuests = ConvertQuestsToSaveData(QuestManager.Instance.completedQuests);
+        }
+
+        // Сохраняем диалоговые ключи NPC
+        var allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsSortMode.None);
+        saveFile.npcDialogueKey = new List<NPCDialogueSaveData>();
+        foreach (var npc in allNPCs)
+        {
+            saveFile.npcDialogueKey.Add(new NPCDialogueSaveData
+            {
+                npcName = npc.npcName,
+                dialogueKey = npc.dialogueKey,
+            });
+        }
+
         // 5 Записываем в файл
         File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
         Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
@@ -286,6 +305,29 @@ public static class SaveSystem
 
         Debug.Log($"[SaveSystem] Игра загружена. Путь: {SavePath}");
 
+        // Загружаем квесты
+        if (saveFile.activeQuests != null)
+        {
+            QuestManager.Instance.LoadQuestsFromSave(saveFile.activeQuests, saveFile.completedQuests);
+        }
+
+        // Восстанавливаем диалоговые ключи NPC
+        if (saveFile.npcDialogueKey != null)
+        {
+            var allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsSortMode.None);
+            foreach (var npcData in saveFile.npcDialogueKey)
+            {
+                foreach (var npc in allNPCs)
+                {
+                    if (npc.npcName == npcData.npcName)
+                    {
+                        npc.dialogueKey = npcData.dialogueKey;
+                        break;
+                    }
+                }
+            }
+        }
+
         // Загружаем флаг интро катсцены
         CutsceneManager.IntroCutscenePlayed = saveFile.introCutscenePlayed;
         CutsceneManager.NotifyGameLoaded();
@@ -311,6 +353,44 @@ public static class SaveSystem
         }
     }
 
+    private static List<QuestSaveData> ConvertQuestsToSaveData(List<Quest> quests)
+    {
+        List<QuestSaveData> result = new List<QuestSaveData> ();
+        foreach (var quest in quests)
+        {
+            QuestSaveData qsd = new QuestSaveData();
+            qsd.questName = quest.questName;
+            qsd.description = quest.description;
+            qsd.completionNotes = quest.completionNotes;
+            qsd.rewardMoney = quest.rewardMoney;
+            qsd.rewardCropType = quest.rewardCropType.ToString();
+            qsd.rewardSeedCount = quest.rewardSeedCount;
+            qsd.tasks = new List<TaskSaveData>();
+            foreach (var task in quest.tasks)
+            {
+                TaskSaveData tsd = new TaskSaveData();
+                tsd.description = task.description;
+                tsd.isCompleted = task.isCompleted;
+                qsd.tasks.Add(tsd);
+            }
+
+            if (quest.npcDialogueChanges != null)
+            {
+                qsd.npcDialogueChanges = new List<NPCDialogueSaveData>();
+                foreach (var change in quest.npcDialogueChanges)
+                {
+                    qsd.npcDialogueChanges.Add(new NPCDialogueSaveData
+                    {
+                        npcName = change.npcName,
+                        dialogueKey = change.newDialogueKey
+                    });
+                }
+            }
+            result.Add(qsd);
+        }
+        return result;
+    }
+
     public static void SaveAllTiles() => SaveGame();
     public static void LoadAllTiles() => LoadGame();
 
@@ -327,6 +407,9 @@ public static class SaveSystem
         public int money;
         public float ecology;
         public bool introCutscenePlayed;
+        public List<QuestSaveData> activeQuests;
+        public List<QuestSaveData> completedQuests;
+        public List<NPCDialogueSaveData> npcDialogueKey;
     }
     [System.Serializable]
     public class CropSaveData
@@ -361,5 +444,32 @@ public static class SaveSystem
         public string itemName;
         public int count;
         public bool isSeed;
+    }
+
+    [System.Serializable]
+    public class QuestSaveData
+    {
+        public string questName;
+        public string description;
+        public string completionNotes;
+        public List<TaskSaveData> tasks;
+        public int rewardMoney;
+        public string rewardCropType;
+        public int rewardSeedCount;
+        public List<NPCDialogueSaveData> npcDialogueChanges;
+    }
+
+    [System.Serializable]
+    public class TaskSaveData
+    {
+        public string description;
+        public bool isCompleted;
+    }
+
+    [System.Serializable]
+    public class NPCDialogueSaveData
+    {
+        public string npcName;
+        public string dialogueKey;
     }
 }

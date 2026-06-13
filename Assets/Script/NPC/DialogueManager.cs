@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using Unity.Burst.CompilerServices;
 public class DialogueManager : MonoBehaviour
 {
-    public System.Action OnDialogueEnded;
+    public System.Action<string> OnDialogueEnded;
 
     [Header("UI Elements")]
     public GameObject dialogueBox;
@@ -49,6 +49,10 @@ public class DialogueManager : MonoBehaviour
 
     private string currentNPCName;
     private Dictionary<string, Sprite> npcSprites;
+
+    private string currentDialogueKey;
+    public TutorialHomeController tutorialHomeController;
+    public GameObject houseTriggerZone;
 
     private void Awake()
     {
@@ -95,6 +99,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogueByKey(string dialogueKey)
     {
+        currentDialogueKey = dialogueKey;
         List<DialogueLine> dialogue = DialogueDatabase.GetDialogue(dialogueKey);
         if (dialogue == null || dialogue.Count == 0)
         {
@@ -109,8 +114,13 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogueByKey(string dialogueKey, string npcName)
     {
+        currentDialogueKey = dialogueKey;
         List<DialogueLine> dialogue = DialogueDatabase.GetDialogue(dialogueKey);
-        if (dialogue == null || dialogue.Count == 0) return;
+        if (dialogue == null || dialogue.Count == 0)
+        {
+            Debug.LogError($"Dialogue with key '{dialogueKey}' not found!");
+            return;
+        } 
         Sprite npcFace = GetSpriteForSpeaker(npcName);
         StartDialogue(dialogue, npcName, npcFace);
     }
@@ -286,6 +296,13 @@ public class DialogueManager : MonoBehaviour
     private void StartGlowHint()
     {
         if (glowCoroutine != null) StopCoroutine(glowCoroutine);
+
+        if (hintText != null)
+        {
+            Text hint = hintText.GetComponent<Text>();
+            if (hint != null)
+                hint.color = Color.black;
+        }
         glowCoroutine = StartCoroutine(GlowHint());
     }
 
@@ -295,21 +312,33 @@ public class DialogueManager : MonoBehaviour
         if (hint == null) yield break;
 
         hintText.SetActive(true);
-        Color originalColor = hint.color;
-        Color goldenColor = new Color(219f/255f, 177f/255f, 111f/255f);
 
-        float duration = 3.0f;
-        float t = 0;
+        Color grayColor = new Color(0.5f, 0.5f, 0.5f, 1f);
+        Color goldenColor = new Color(219f/255f, 177f/255f, 111f/255f);
+        Color blackColor = Color.black;
+
+        float speed = 2.0f;
+        float startTime = Time.realtimeSinceStartup;
 
         while (!isTyping && isDialogueActive)
         {
-            t += Time.unscaledDeltaTime / duration;
-            float factor = (Mathf.Sin(t * Mathf.PI * 2) + 1) / 2f;
-            hint.color = Color.Lerp(originalColor, goldenColor, factor);
+            float elapsed = Time.realtimeSinceStartup - startTime;
+            float factor = (Mathf.Sin(elapsed * speed) + 1) / 2f;
+
+            if (factor < 0.5f)
+            {
+                float t = factor * 2f;
+                hint.color = Color.Lerp(blackColor, grayColor, t);
+            }
+            else
+            {
+                float t = (factor - 0.5f) * 2f;
+                hint.color = Color.Lerp(grayColor, goldenColor, t);
+            }
             yield return null;
         }
         hintText.SetActive(false);
-        hint.color = originalColor;
+        hint.color = blackColor;
     }
 
     private void SetHintPosition(bool isPlayer)
@@ -339,7 +368,7 @@ public class DialogueManager : MonoBehaviour
         if (hintText != null) hintText.SetActive(false);
         if (glowCoroutine != null) StopCoroutine(glowCoroutine);
 
-        if (!CutsceneManager.IsPlaying)
+        if (!GameState.IsCutscenePlaying)
         {
             if (Player.Instance != null)
                 Player.Instance.SetMovementBlocked(false);
@@ -360,7 +389,16 @@ public class DialogueManager : MonoBehaviour
             QuestManager.Instance.CompleteTask(taskDesc);
         }
 
-        OnDialogueEnded?.Invoke();
+        if (currentDialogueKey == "TioliDialogueQuest2" && currentNPCName == "Тиоли")
+        {
+            if (tutorialHomeController != null)
+                tutorialHomeController.ShowPanel();
+
+            if (houseTriggerZone != null)
+                houseTriggerZone.SetActive(true);
+        }
+        OnDialogueEnded?.Invoke(currentNPCName);
+        Canvas.ForceUpdateCanvases();
     }
 
     public void OnShopClosed()

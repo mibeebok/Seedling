@@ -18,9 +18,12 @@ public class QuestCompleteUI : MonoBehaviour
             okButton.onClick.AddListener(() => completeWindow.SetActive(false));
     }
 
-    public void Show(Quest quest)
+    public void Show(Quest quest, bool hasNextQuest = false)
     {
-        questInfoText.text = $"Поздравляю, вы успешно завершили задание \"{quest.questName}\".\nВот ваша награда:";
+        questInfoText.text = $"Поздравляю, вы успешно завершили задание \"{quest.questName}\".";
+        if (hasNextQuest)
+            questInfoText.text += "\n\nУ вас доступно следующее задание!";
+        questInfoText.text += "\n\nВот ваша награда:";
 
         rewardMoneyText.text = $"+{quest.rewardMoney} листеньев";
 
@@ -31,7 +34,7 @@ public class QuestCompleteUI : MonoBehaviour
             if (seedItem != null)
             {
                 rewardItemIcon.sprite = seedItem.img;
-                rewardItemNameText.text = $"{seedItem.name} x {quest.rewardSeedCount}";
+                rewardItemNameText.text = $"{GetRussianSeedName(quest.rewardCropType)} x {quest.rewardSeedCount}";
                 rewardItemIcon.gameObject.SetActive(true);
                 rewardItemNameText.gameObject.SetActive(true);
             }
@@ -49,5 +52,17 @@ public class QuestCompleteUI : MonoBehaviour
         }
         if (completeWindow != null)
             completeWindow.SetActive(true);
+    }
+
+    private string GetRussianSeedName(CropType cropType)
+    {
+        switch (cropType)
+        {
+            case CropType.Potato: return "Картофель";
+            case CropType.Carrot: return "Морковь";
+            case CropType.Beetroot: return "Свекла";
+            case CropType.Rastberry: return "Малина";
+            default: return cropType.ToString();
+        }
     }
 }

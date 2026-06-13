@@ -105,6 +105,14 @@ public class ShopUI : MonoBehaviour
             Debug.LogError($"shopMoneyDisplay is null? {shopMoneyDisplay == null}, globalMoneyDisplay null? {globalMoneyDisplay == null}");
         }
 
+        QuestManager.Instance.CompleteTask("Посетить лавку Терентия");
+        if (QuestManager.Instance.IsQuestActive("Квест 3. Я-огородник"))
+        {
+            var finnickZone = QuestManager.Instance.finnickTriggerZone;
+            if (finnickZone != null && !finnickZone.activeSelf)
+                finnickZone.SetActive(true);
+        }
+
         PopulateShop();
     }
 
