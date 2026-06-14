@@ -164,7 +164,7 @@ public static class SaveSystem
         if (!File.Exists(SavePath))
         {
             if (MoneyDisplay.Instance != null)
-                MoneyDisplay.Instance.SetMoney(100);
+                MoneyDisplay.Instance.SetMoney(0);
             else
                 Debug.LogWarning("MoneyDisplay.Instance не найден, начальные деньги не установлены");
             CutsceneManager.NotifyGameLoaded();

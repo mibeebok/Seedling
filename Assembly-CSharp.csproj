@@ -70,8 +70,11 @@
     <Compile Include="Assets\Script\Cutscenes\CutsceneStarter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Script\UI\CompletedQuestCardController.cs" />
+    <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest14_1.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Carrot.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneStarter14_2.cs" />
+    <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest15.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest12.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropType.cs" />
@@ -94,6 +97,7 @@
     <Compile Include="Assets\Script\Cutscenes\CutsceneQuestFifth.cs" />
     <Compile Include="Assets\Script\Cutscenes\HomeTriggerForCutscenes.cs" />
     <Compile Include="Assets\Script\Inventory\ItemExtensions.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuest14_2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -119,6 +123,7 @@
     <Compile Include="Assets\Script\UI\BookUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Script\Quests\QuestCompleteUI.cs" />
+    <Compile Include="Assets\Script\Quests\FinalButtonController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Script\Cutscenes\CutsceneQuest9_2.cs" />
     <Compile Include="Assets\Script\Parametrs\SimpleLoader.cs" />
@@ -127,6 +132,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Script\Quests\ClueFurHandler.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropInfoUI.cs" />
+    <Compile Include="Assets\Script\Cutscenes\TriggerZoneQ14_2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\Script\UI\PauseButtonPosition.cs" />
@@ -172,6 +178,7 @@
     <Compile Include="Assets\Script\UI\CameraController.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest10.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest5.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuest15.cs" />
     <Compile Include="Assets\Script\Core\GameManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
@@ -179,6 +186,7 @@
     <Compile Include="Assets\Script\Farming\SoilTileWateringCan.cs" />
     <Compile Include="Assets\Script\NPC\DialogueDatabase.cs" />
     <Compile Include="Assets\Script\Environment\FarmGrid.cs" />
+    <Compile Include="Assets\Script\Cutscenes\CutsceneQuest14_1.cs" />
     <Compile Include="Assets\Script\UI\MoneyDisplay.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
@@ -202,6 +210,7 @@
     <Compile Include="Assets\Script\Farming\Plants\Beetroot.cs" />
     <Compile Include="Assets\Script\Quests\QuestManager.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQ7.cs" />
+    <Compile Include="Assets\Script\Parametrs\EndingPanelUI.cs" />
     <Compile Include="Assets\Script\Audio\Sounds.cs" />
   </ItemGroup>
   <ItemGroup>

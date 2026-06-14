@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 using Unity.Burst.CompilerServices;
 public class DialogueManager : MonoBehaviour
 {
+    public static DialogueManager Instance;
+
     public System.Action<string> OnDialogueEnded;
     public System.Action<string, int, int> OnChoiceSelectedEvent;
 
@@ -57,6 +59,16 @@ public class DialogueManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         npcSprites = new Dictionary<string, Sprite>();
     }
 
@@ -307,12 +319,10 @@ public class DialogueManager : MonoBehaviour
     private void StartGlowHint()
     {
         if (glowCoroutine != null) StopCoroutine(glowCoroutine);
-
-        if (hintText != null)
+        if (hintText != null && hintText.activeInHierarchy)
         {
             Text hint = hintText.GetComponent<Text>();
-            if (hint != null)
-                hint.color = Color.black;
+            if (hint != null) hint.color = Color.black;
         }
         glowCoroutine = StartCoroutine(GlowHint());
     }
@@ -373,8 +383,8 @@ public class DialogueManager : MonoBehaviour
     {
         isDialogueActive = false;
         isChoiceActive = false;
-        dialogueBox.SetActive(false);
 
+        if (dialogueBox != null) dialogueBox.SetActive(false);
         if (choiceContainer != null) choiceContainer.gameObject.SetActive(false);
         if (hintText != null) hintText.SetActive(false);
         if (glowCoroutine != null) StopCoroutine(glowCoroutine);

@@ -976,8 +976,8 @@ public static class DialogueDatabase
                 choices = new DialogueChoice[]
                 {
                     new DialogueChoice { buttonText = "Мы знаем, что ты подбросил шерсть Ихвильнихта.", nextLineIndex = 4}, // хороший путь и поинт к тиме волка
-                    new DialogueChoice { buttonText = "Мне нужна твоя правда. Не их - твоя.", nextLineIndex = 12}, // плохой путь и поинт к тиме фокса
-                    new DialogueChoice { buttonText = "(молча положил перед ним шерсть волка).", nextLineIndex = 18} // нейтральный путь и поинт к тиме волка
+                    new DialogueChoice { buttonText = "Мне нужна твоя правда. Не их - твоя.", nextLineIndex = 11}, // плохой путь и поинт к тиме фокса
+                    new DialogueChoice { buttonText = "(молча положил перед ним шерсть волка).", nextLineIndex = 19} // нейтральный путь и поинт к тиме волка
                 }
             },
             // вариант хорошего пути
@@ -1042,7 +1042,7 @@ public static class DialogueDatabase
                 }
             },
             // вариант плохого пути
-            // 12
+            // 11
             new DialogueLine
             {
                 text = "Моя правда? Моя правда в том… что я здесь абсолютно невиновен. Ихвильнихт… у него были причины так сделать. Он не очень ладил со старшим братом Тиоли. (Финник странно смотрел на Тиоли, словно ожидая чего-то).",
@@ -1050,7 +1050,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 13
+            // 12
             new DialogueLine
             {
                 text = "О чём ты говоришь? Они хорошо ладили. Особенно в последние годы… жизни моего брата. Моей семьи.",
@@ -1058,7 +1058,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 14
+            // 13
             new DialogueLine
             {
                 text = "Ты маленький наивный кролик. Прямо, как и твой брат. Поэтому он умер.",
@@ -1066,7 +1066,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 15
+            // 14
             new DialogueLine
             {
                 text = "Ты… ты хоть понимаешь, что ты говоришь и кому ты это говоришь?",
@@ -1074,7 +1074,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = true
             },
-            // 16
+            // 15
             new DialogueLine
             {
                 text = "Ты хотел правды? Я тебе её дал. (лис странно избегал зрительного контакта).",
@@ -1082,7 +1082,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 17
+            // 16
             new DialogueLine
             {
                 text = "Ты явно не всё рассказал. Если хоть что-то в твоих словах было правдой.",
@@ -1090,7 +1090,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = true
             },
-            // 18
+            // 17
             new DialogueLine
             {
                 text = "Как знаешь.",
@@ -1098,7 +1098,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 19
+            // 18
             new DialogueLine
             {
                 text = "",
@@ -1111,7 +1111,7 @@ public static class DialogueDatabase
                 }
             },
             // вариант нейтрального пути
-            // 20
+            // 19
             new DialogueLine
             {
                 text = "И зачем ты принёс мне шерсть? (презрительно взглянул на клочок, но стал нервознее).",
@@ -1119,7 +1119,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 21
+            // 20
             new DialogueLine
             {
                 text = "Ничего не хочешь мне сказать? А точнее, сказать Тиоли?",
@@ -1127,7 +1127,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = true
             },
-            // 22
+            // 21
             new DialogueLine
             {
                 text = "Не понимаю, к чему ты клонишь. Я, если ты вдруг не заметил, лис, а не волк. И у меня рыжая шерсть, а не тёмная. Так что это уж точно не моё.",
@@ -1135,7 +1135,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 23
+            // 22
             new DialogueLine
             {
                 text = "Мы нашли это у дома Гриши, там словно кто-то копался. Скажи честно, это твоих рук дело?",
@@ -1143,7 +1143,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-            // 24
+            // 23
              new DialogueLine
             {
                 text = "Я? Какой смысл мне таким заниматься? Я кандидат на следующего хранителя этого леса. Мне… мне просто это не нужно.",
@@ -1151,7 +1151,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-             // 25
+             // 24
              new DialogueLine
             {
                 text = "Ты ведёшь себя очень подозрительно. Если верить уликам – всё ведёт к Ихвильнихту, но исходя из диалога, доверия к тебе у нас ещё меньше.",
@@ -1159,7 +1159,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = true
             },
-             // 26
+             // 25
              new DialogueLine
             {
                 text = "Я уверен, что ты пожалеешь о своих словах. Просто запомни.",
@@ -1167,7 +1167,7 @@ public static class DialogueDatabase
                 speakerFace = null,
                 isPlayer = false
             },
-             // 27
+             // 26
              new DialogueLine
             {
                 text = "",
@@ -1374,8 +1374,194 @@ public static class DialogueDatabase
                 {
                     new DialogueChoice { buttonText = "Закончить диалог", nextLineIndex = -2}
                 }
-            },
+            }
         };
+
+        allDialogues["DialogueQuest14.1"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Привет, у нас хорошие новости. Мы точно знаем, что ты невиновен.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Стоп… что?",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Мы в лавке Терентия обнаружили, что в найденном клочке твоей шерсти были рыжие волоски. Теперь мы точно уверены, что он пытался тебя подставить.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "И нам не совсем понятно, почему. У тебя случайно нет никаких тайн? Думаю, самое время всё раскрыть.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Я… я знаю, кто устроил поджог. Другие лисы заставили Финника это сделать. Могу предположить, что они не ожидали, что всё зайдёт так далеко, поскольку они очень быстро сбежали с места преступления.",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "И я унюхал в воздухе страх и сожаление.",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Так… вот как. То есть… (она затихла, опустив голову).",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Вот об этом и скажешь жителям. Мы планируем вернуть этой деревне прежнюю жизнь и атмосферу. Финник ответит за свои действия, и все, кто был причастен – тоже.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ты возвращаешься на пост? (радость в голосе)",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Да, сейчас самое время.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Закончить диалог", nextLineIndex = -2}
+                }
+            }
+        };
+
+        allDialogues["DialogueQuest14.2"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Жители Ростка! Сегодня нам открылась правда. Поджог, который потряс нашу деревню, был спланирован. Но виновник не Ихвильнихт. Настоящие преступники – лисы. К сожалению, одним из них является Финник.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Финник, ты выбрал не ту компанию. А я ведь предупреждал, что рано или поздно кто-то пострадает… но вместо того, чтобы нести ответственность за свои поступки, ты решил всё переиграть в свою пользу.",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Финник, тебя ждёт честный суд. А деревню – новое начало.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Завершить", nextLineIndex = -2}
+                }
+            }
+        };
+
+        allDialogues["DialogueQuest15"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Сегодня мы завершаем наше расследование. По всем представленным уликам, а также решению Гриши, мы пришли к заключению, что виновен… Ихвильнихт.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "(шёпотом, Грише) Ты уверен?.. Он ведь даже не пытался оправдаться. Просто... принял это. Это не похоже на вину…",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Я… я не знаю. У нас больше нет улик. Всё указывает на него… (в голосе – сомнение, почти мольба) Что ещё я мог сделать?",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Я не собираюсь защищаться. Если правда не смогла выйти наружу – значит, мне остаётся лишь молчать. Но знайте: я никому не желал зла.",
+                speakerName = "Ихвильнихт",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "(молча стоит позади толпы, его выражение лица непроницаемо.)",
+                speakerName = "Финник",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Ихвильнихт будет изгнан из деревни Росток. Пока новости такие. Дальше – решим.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "У меня плохое предчувствие…",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Завершить игру", nextLineIndex = -2}
+                }
+            }
+        };
+
     }
 
     public static List<DialogueLine> GetDialogue(string key)

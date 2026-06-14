@@ -7,7 +7,7 @@ public class ClueButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public SpriteRenderer clueSpriteRenderer;
     public Sprite normalSprite;
     public Sprite highlightedSprite;
-    public GameObject evidenceCanvas;
+    public GameObject evidencePanel;
     public EvidenceViewer evidenceViewer;
     public QuestManager questManager;
     public TextMesh progressText;
@@ -30,8 +30,8 @@ public class ClueButtonHandler : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (isFound) return;
         isFound = true;
-        if (evidenceCanvas != null)
-            evidenceCanvas.SetActive(true);
+        if (evidencePanel != null)
+            evidencePanel.SetActive(true);
         if (progressText != null)
             progressText.text = "Улика: 1/1";
         clueSpriteRenderer.gameObject.SetActive(false);

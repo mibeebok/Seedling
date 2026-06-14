@@ -54,9 +54,9 @@ public class QuestChoiceHandler : MonoBehaviour
         {
             if (chosenNextIndex == 4)      // "мы знаем, что ты подбросил шерсть..." (хорошо)
                 QuestManager.Instance.AddTeamWolf(1);
-            else if (chosenNextIndex == 12) // "мне нужна твоя правда..." (плохо)
+            else if (chosenNextIndex == 11) // "мне нужна твоя правда..." (плохо)
                 QuestManager.Instance.AddTeamFox(1);
-            else if (chosenNextIndex == 18) // молча положил шерсть (неплохо)
+            else if (chosenNextIndex == 19) // молча положил шерсть (неплохо)
                 QuestManager.Instance.AddTeamWolf(1); // даёт хорошие очки
         }
 

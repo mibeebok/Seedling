@@ -11,6 +11,7 @@ public class NPCInteraction : MonoBehaviour
     
     private bool playerInRange = false;
 
+
     private void Start()
     {
         if (dialogueManager != null)
@@ -51,7 +52,7 @@ public class NPCInteraction : MonoBehaviour
             if (TextE != null)
                 TextE.SetActive(false);
             playerInRange = false;
-            if (dialogueManager != null)
+            if (dialogueManager != null && dialogueManager.gameObject != null)
                 dialogueManager.EndDialogue();
         }
     }

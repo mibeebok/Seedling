@@ -273,13 +273,35 @@ public static class QuestDatabase
         return quest;
     }
 
+    public static Quest FourteenthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 14. Счастливый финал?";
+        quest.description = "Сегодня мы разоблачим Финника перед всей деревней Росток. Я надеюсь, что ещё не поздно. Нельзя позволить ему получить полную власть над деревней.";
+        quest.completionNotes = "";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Пойти к Ихвильнихту", isCompleted = false },
+        new QuestTask { description = "Разоблачить Финника", isCompleted = false }
+    };
+        quest.rewardMoney = 0;
+        quest.rewardCropType = CropType.None;
+        quest.rewardSeedCount = 0;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>();
+        return quest;
+    }
+
     public static Quest FifteenthQuest()
     {
         Quest quest = new Quest();
-        quest.questName = "Квест 15. (будет добавлен позже)";
-        quest.description = "";
-        quest.completionNotes = "";
-        quest.tasks = new List<QuestTask>();
+        quest.questName = "Квест 15. Суд";
+        quest.description = "Сегодня день суда. Что-то мне тревожно… я пытался собрать все улики, и всё же… что-то внутри не даёт покоя. А вдруг я ошибся?";
+        quest.completionNotes = "«Экология упала на ноль, игрок выбрал сторону Финника. Финник получает власть и становится «новым хранителем леса». Но он не заботится о балансе — лишь контролирует. Экология падает. Растения вянут. Начинаются болезни. Жители становятся мрачнее, недоверчивее. Гриша чувствует: он допустил роковую ошибку. Исправить уже поздно. Или нет?».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Прийти на суд Ихвильнихта", isCompleted = false },
+        new QuestTask { description = "Узнать о том, правильным ли было решение", isCompleted = false }
+    };
         quest.rewardMoney = 0;
         quest.rewardCropType = CropType.None;
         quest.rewardSeedCount = 0;

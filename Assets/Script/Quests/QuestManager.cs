@@ -15,6 +15,9 @@ public class QuestManager : MonoBehaviour
     private Coroutine carrotCoroutine;
 
     public GameObject quest7ProgressText;
+    public GameObject triggerZoneQ15;
+    public GameObject triggerZoneQ14_1;
+    public GameObject triggerZoneQ14_2;
     public GameObject triggerZoneQ13;
     public GameObject triggerZoneQ12;
     public GameObject triggerZoneQ11;
@@ -230,11 +233,19 @@ public class QuestManager : MonoBehaviour
                 quest.completionNotes = "«Честно сказать, я не совсем уверен в правильности своего выбора. Но ведь улики… всё ведёт к нему. Надеюсь, я не пожалею о сделанном.».";
                 Quest fifteenthQuest = QuestDatabase.FifteenthQuest();
                 AddQuest(fifteenthQuest);
+                if (triggerZoneQ15 != null) 
+                    triggerZoneQ15.SetActive(true);
                 hasNext = true;
-                // триггер квеста 15 итд
             }
-
             quest12Choice = 0;
+        }
+
+        if (quest.questName == "Квест 13. Состав... шерсти?")
+        {
+            Quest fourteenthQuest = QuestDatabase.FourteenthQuest();
+            AddQuest(fourteenthQuest);
+            if (triggerZoneQ14_1 != null) triggerZoneQ14_1.SetActive(true);
+            hasNext = true;
         }
 
         ShowQuestCompletePanel(quest, hasNext);
@@ -259,6 +270,9 @@ public class QuestManager : MonoBehaviour
 
     private void ShowQuestCompletePanel(Quest quest, bool hasNext = false)
     {
+        if (quest.questName == "Квест 14. Счастливый финал?" || quest.questName == "Квест 15. Суд")
+            return;
+
         QuestCompleteUI ui = FindFirstObjectByType<QuestCompleteUI>();
         if (ui != null)
             ui.Show(quest, hasNext);
