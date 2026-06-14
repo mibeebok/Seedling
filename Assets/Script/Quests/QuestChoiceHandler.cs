@@ -20,12 +20,15 @@ public class QuestChoiceHandler : MonoBehaviour
             case "DialogueQuest11":
                 HandleQuest11(dialogueKey, currentLineIndex, chosenNextIndex);
                 break;
+            case "DialogueQuest12":
+                HandleQuest12(dialogueKey, currentLineIndex, chosenNextIndex);
+                break;
                 // здесь дальше добавлять диалоги
         }
     }
     private void HandleQuest10(string dialogueKey, int currentLineIndex, int chosenNextIndex)
     {
-        // Первый выбор (строка 1)
+        // первый выбор (строка 1)
         if (currentLineIndex == 1)
         {
             if (chosenNextIndex == 2)      // "мы нашли волчью шерсть... (плохо)"
@@ -46,7 +49,7 @@ public class QuestChoiceHandler : MonoBehaviour
     }
     private void HandleQuest11(string dialogueKey, int currentLineIndex, int chosenNextIndex)
     {
-        // Первый выбор (строка 3)
+        // первый выбор (строка 3)
         if (currentLineIndex == 3)
         {
             if (chosenNextIndex == 4)      // "мы знаем, что ты подбросил шерсть..." (хорошо)
@@ -57,5 +60,22 @@ public class QuestChoiceHandler : MonoBehaviour
                 QuestManager.Instance.AddTeamWolf(1); // даёт хорошие очки
         }
 
+    }
+    private void HandleQuest12(string dialogueKey, int currentLineIndex, int chosenNextIndex)
+    {
+        // выбор (стркоа 8)
+        if (currentLineIndex == 8)
+        {
+            if (chosenNextIndex == 9)      // первый вариант "Слушай… а это идея."
+            {
+                QuestManager.Instance.quest12Choice = 1;
+                QuestManager.Instance.AddTeamWolf(1);
+            }
+            else if (chosenNextIndex == 12) // второй вариант "виновен Ихвильнихт"
+            {
+                QuestManager.Instance.quest12Choice = 2;
+                QuestManager.Instance.AddTeamFox(1);
+            }
+        }
     }
 }

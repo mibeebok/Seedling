@@ -15,6 +15,8 @@ public class QuestManager : MonoBehaviour
     private Coroutine carrotCoroutine;
 
     public GameObject quest7ProgressText;
+    public GameObject triggerZoneQ13;
+    public GameObject triggerZoneQ12;
     public GameObject triggerZoneQ11;
     public GameObject triggerZoneQ10;
     public GameObject triggerZoneQ9_1;
@@ -23,6 +25,7 @@ public class QuestManager : MonoBehaviour
     public GameObject triggerZoneQ7;
     public GameObject quest7Arrows;
     private bool clueFound = false;
+    public int quest12Choice = 0;
 
     private void Awake()
     {
@@ -201,6 +204,37 @@ public class QuestManager : MonoBehaviour
             SetNPCQuestDialogue("Тиоли", "TioliDialogueQuest11");
             if (triggerZoneQ11 != null) triggerZoneQ11.SetActive(true);
             hasNext = true;
+        }
+        if (quest.questName == "Квест 11. Что скрывает лис?")
+        {
+            Quest twelfthQuest = QuestDatabase.TwelfthQuest();
+            AddQuest(twelfthQuest);
+            if (triggerZoneQ12 != null) triggerZoneQ12.SetActive(true);
+            hasNext = true;
+        }
+        if (quest.questName == "Квест 12. Так близко, но так далеко")
+        {
+            // заметки гриши в зависимости от выбора
+            if (quest12Choice == 1)
+            {
+                // хороший путь
+                quest.completionNotes = "«Разгадка совсем близко… осталось совсем чуть-чуть, я уже это чувствую.».";
+                Quest thirteenthQuest = QuestDatabase.ThirteenthQuest();
+                AddQuest(thirteenthQuest);
+                if (triggerZoneQ13 != null) triggerZoneQ13.SetActive(true);
+                hasNext = true;
+            }
+            else if (quest12Choice == 2)
+            {
+                // плохой путь
+                quest.completionNotes = "«Честно сказать, я не совсем уверен в правильности своего выбора. Но ведь улики… всё ведёт к нему. Надеюсь, я не пожалею о сделанном.».";
+                Quest fifteenthQuest = QuestDatabase.FifteenthQuest();
+                AddQuest(fifteenthQuest);
+                hasNext = true;
+                // триггер квеста 15 итд
+            }
+
+            quest12Choice = 0;
         }
 
         ShowQuestCompletePanel(quest, hasNext);

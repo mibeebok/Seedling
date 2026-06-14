@@ -1180,6 +1180,202 @@ public static class DialogueDatabase
                 }
             }
         };
+
+        allDialogues["DialogueQuest12"] = new List<DialogueLine>
+        {
+            // 0 
+            new DialogueLine
+            {
+                text = "Вижу, что вопросов у вас стало ещё больше. Что-то нашли?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 1
+            new DialogueLine
+            {
+                text = "Ну можно и так сказать… Мы запутались.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            // 2
+            new DialogueLine
+            {
+                text = "Улики ведут к Ихвильнихту, но по диалогу я чувствую, что Финник врёт. Мы не знаем, кому верить.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 3
+            new DialogueLine
+            {
+                text = "Так, давайте по порядку. Что произошло?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 4
+            new DialogueLine
+            {
+                text = "Одним утром я проснулся и увидел, что на моём участке беспорядок. Рядом были какие-то странные следы, словно волчьи, а также клочок тёмной шерсти. Всё указывало на Ихвильнихта. Но он утверждает, что не врёт.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            // 5
+            new DialogueLine
+            {
+                text = "И пока мы разговаривали, он не пытался заставить ему поверить. А вот Финник наоборот.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            // 6
+            new DialogueLine
+            {
+                text = "Не зря ведь говорят, ‘никогда не доверяй лисам’. Тебе нужно взвесить все ‘за’ и ‘против’. Не торопись с выводами.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 7
+            new DialogueLine
+            {
+                text = "Слушай, у нас ведь есть кусочек шерсти… может, нам стоить взглянуть на него повнимательнее?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 8 - выбор
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Слушай... а это идея.", nextLineIndex = 9}, // хороший вариант
+                    new DialogueChoice { buttonText = "Я думаю, я могу сделать выбор уже сейчас. Мне кажется, что виновен Ихвильнихт.", nextLineIndex = 12} // плохой вариант
+                }
+            },
+            // 9 - хороший путь
+            new DialogueLine
+            {
+                text = "Слушай… а это идея.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            // 10
+            new DialogueLine
+            {
+                text = "Возможно, если в этом замешан Финник, с этой шерстью всё может быть не так однозначно.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            // 11 - конец, хороший путь
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Закончить диалог", nextLineIndex = -2} 
+                }
+            },
+            // 12 - плохой путь
+             new DialogueLine
+            {
+                text = "Слушай… я думаю, я могу сделать выбор уже сейчас. Мне кажется, что виновен Ихвильнихт.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+             // 13
+             new DialogueLine
+            {
+                text = "Ихвильнихт?.. Ты уверен в своём выборе?",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+             // 14
+             new DialogueLine
+            {
+                text = "Ты понимаешь, какие у твоего выбора могут быть последствия? Ты точно уверен?",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+             // 15
+             new DialogueLine
+            {
+                text = "Да, я уверен.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+             // 16 - конец диалога, плохой путь
+             new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Закончить диалог", nextLineIndex = -2}
+                }
+            },
+        };
+
+        allDialogues["DialogueQuest13"] = new List<DialogueLine>
+        {
+            new DialogueLine
+            {
+                text = "Ну конечно… я так и знал, что здесь всё гораздо глубже. Не пойму только, для чего Финнику так жестоко подставлять Ихвильнихта.",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true
+            },
+            new DialogueLine
+            {
+                text = "Возможно, это не столько желание Финника, сколько вынужденная мера. Но его это в любом случае не оправдывает.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Мы срочно должны что-то предпринять. Нельзя дать Финнику стать хранителем леса. Терентий, мне кажется, твоё время возвращаться – вот оно.",
+                speakerName = "Тиоли",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "Да… думаю, мне и правда пора взять всё в свои руки. За работу.",
+                speakerName = "Терентий",
+                speakerFace = null,
+                isPlayer = false
+            },
+            new DialogueLine
+            {
+                text = "",
+                speakerName = "Гриша",
+                speakerFace = null,
+                isPlayer = true,
+                choices = new DialogueChoice[]
+                {
+                    new DialogueChoice { buttonText = "Закончить диалог", nextLineIndex = -2}
+                }
+            },
+        };
     }
 
     public static List<DialogueLine> GetDialogue(string key)

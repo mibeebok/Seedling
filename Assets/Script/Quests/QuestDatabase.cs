@@ -236,5 +236,54 @@ public static class QuestDatabase
 
         return quest;
     }
+    public static Quest TwelfthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 12. Так близко, но так далеко";
+        quest.description = "Доброе утро… или не совсем доброе. Сегодня мы должны обсудить всё с Терентием. Надеюсь, что мы и правда близки к истине. Чувствую себя нервозно.";
+        quest.completionNotes = "";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Поговорить с Терентием", isCompleted = false },
+        new QuestTask { description = "Принять решение", isCompleted = false }
+    };
+        quest.rewardMoney = 15;
+        quest.rewardCropType = CropType.Carrot;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>();
 
+        return quest;
+    }
+    public static Quest ThirteenthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 13. Состав... шерсти?";
+        quest.description = "И так, сегодня у нас день X. Именно сегодня мы можем узнать какую-то важную деталь. Как хорошо, что у Терентия есть всё необходимое для осмотра. Хоть бы нам повезло…";
+        quest.completionNotes = "«Не могу поверить тому, что только что узнал. Мне тяжело думать о том, как себя чувствует Ихвильнихт всё это время. Его когда-то лучший друг так жестоко предал, и в последствии его изгнали из деревни. Удивительно, что он вообще может идти с кем-то на контакт при таком раскладе…».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Подойти в лавку Терентия", isCompleted = false },
+        new QuestTask { description = "Начать детальный осмотр улики", isCompleted = false },
+        new QuestTask { description = "Принять решение", isCompleted = false }
+    };
+        quest.rewardMoney = 20;
+        quest.rewardCropType = CropType.Rastberry;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>();
+        return quest;
+    }
+
+    public static Quest FifteenthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 15. (будет добавлен позже)";
+        quest.description = "";
+        quest.completionNotes = "";
+        quest.tasks = new List<QuestTask>();
+        quest.rewardMoney = 0;
+        quest.rewardCropType = CropType.None;
+        quest.rewardSeedCount = 0;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>();
+        return quest;
+    }
 }
