@@ -7,6 +7,7 @@ using Unity.Burst.CompilerServices;
 public class DialogueManager : MonoBehaviour
 {
     public System.Action<string> OnDialogueEnded;
+    public System.Action<string, int, int> OnChoiceSelectedEvent;
 
     [Header("UI Elements")]
     public GameObject dialogueBox;
@@ -252,6 +253,8 @@ public class DialogueManager : MonoBehaviour
         isChoiceActive = false;
         choiceContainer.gameObject.SetActive(false);
 
+        OnChoiceSelectedEvent?.Invoke(currentDialogueKey, currentIndex, nextIndex);
+
         if (nextIndex == -1)
         {
             if (shopUI != null)
@@ -264,8 +267,16 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogError("ShopUI is null!");
             return;
         }
-        currentIndex = nextIndex;
-        ShowCurrentLine();
+        else if (nextIndex == -2)
+        {
+            EndDialogue();
+        }
+        else
+        {
+            currentIndex = nextIndex;
+            ShowCurrentLine();
+        }
+
     }
 
    private IEnumerator TypeLines(string textToType)
@@ -386,7 +397,7 @@ public class DialogueManager : MonoBehaviour
         if (!string.IsNullOrEmpty(currentNPCName))
         {
             string taskDesc = GetQuestTaskDescription(currentNPCName);
-            if (currentDialogueKey != "IhvilnichtDialogueQuest5")
+            if (currentDialogueKey != "IhvilnichtDialogueQuest5" && currentDialogueKey != "DialogueQuest10")
                 QuestManager.Instance.CompleteTask(taskDesc);
         }
 

@@ -3851,6 +3851,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 8016724653a7e2d47af0d017b783f497, type: 2}
     - {fileID: 11400000, guid: da2a0f175fc952247a7697688bd61669, type: 2}
     - {fileID: 11400000, guid: dfb9049b272e6494a911b6d7a64bdee6, type: 2}
+    - {fileID: 11400000, guid: b7367e9f7fa417c4ca06b78705fd5a6a, type: 2}
+    - {fileID: 11400000, guid: 9184f5e68046ae747b8bc414193b11c7, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -3982,6 +3984,34 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 1559297112}
           m_TargetAssemblyTypeName: CutsceneQuest9_2, Assembly-CSharp
+          m_MethodName: PauseAndStartDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1499467238}
+          m_TargetAssemblyTypeName: CutsceneQuest10, Assembly-CSharp
+          m_MethodName: PauseAndStartDialogue
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 221366941}
+          m_TargetAssemblyTypeName: CutsceneQuest11, Assembly-CSharp
           m_MethodName: PauseAndStartDialogue
           m_Mode: 1
           m_Arguments:
@@ -4976,6 +5006,82 @@ MonoBehaviour:
   - {fileID: 8718284335858754713, guid: d43caa1d4bc82be4883a1cedb22b54e3, type: 3}
   - {fileID: 8970736958905615580, guid: 34e68f00dd24d274eba1daf0379724f2, type: 3}
   - {fileID: 4481169944758140841, guid: b7718cb842f5f724fbc3649784c5a404, type: 3}
+--- !u!1 &221366939
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 221366940}
+  - component: {fileID: 221366942}
+  - component: {fileID: 221366941}
+  m_Layer: 0
+  m_Name: CutsceneQuest11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &221366940
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221366939}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.347319, y: 13.060511, z: 0.19332583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &221366941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221366939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59cff44492d6ec4a869f9120948db0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 221366942}
+  dialogueManager: {fileID: 150920843}
+  uiToDisableDuringCutscene:
+  - {fileID: 1970771571}
+  - {fileID: 1747943726}
+  - {fileID: 1171179073}
+  - {fileID: 1506571770}
+  - {fileID: 1310528683}
+--- !u!320 &221366942
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 221366939}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 8a9a40607aa27134ebc1a583954497c7, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 9123227215142780239, guid: 8a9a40607aa27134ebc1a583954497c7, type: 2}
+    value: {fileID: 282412561}
+  - key: {fileID: 3043486968640562811, guid: 8a9a40607aa27134ebc1a583954497c7, type: 2}
+    value: {fileID: 282412561}
+  - key: {fileID: 601188171926481958, guid: 8a9a40607aa27134ebc1a583954497c7, type: 2}
+    value: {fileID: 150920844}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &226904128
 GameObject:
   m_ObjectHideFlags: 0
@@ -5365,6 +5471,50 @@ MonoBehaviour:
   - {fileID: 7350432068926855263, guid: b393244e09931df4d966cce71bc35e44, type: 3}
   - {fileID: 3310600264517622499, guid: 70d96521c9ea3a545b01f5b1424f862e, type: 3}
   - {fileID: 3966230418439256930, guid: 056877ecbe9d1a049a3c11fad28e9574, type: 3}
+--- !u!1 &238930333
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 238930334}
+  - component: {fileID: 238930335}
+  m_Layer: 0
+  m_Name: QuestChoiceHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &238930334
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238930333}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.819745, y: 19.205797, z: 0.16162726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &238930335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238930333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cbb2bd9b2f5c3d41a0b308ab073a9fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &245988101
 GameObject:
   m_ObjectHideFlags: 0
@@ -10056,6 +10206,98 @@ MonoBehaviour:
   - {fileID: 8718284335858754713, guid: d43caa1d4bc82be4883a1cedb22b54e3, type: 3}
   - {fileID: 8970736958905615580, guid: 34e68f00dd24d274eba1daf0379724f2, type: 3}
   - {fileID: 4481169944758140841, guid: b7718cb842f5f724fbc3649784c5a404, type: 3}
+--- !u!1 &434608375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 434608376}
+  - component: {fileID: 434608377}
+  - component: {fileID: 434608378}
+  m_Layer: 0
+  m_Name: TriggerZoneQuest11
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &434608376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434608375}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 20.64, y: -34.93, z: 0.19332583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &434608377
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434608375}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.13188457, y: 1.1045303}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 3.3079739, y: 3.2090607}
+  m_EdgeRadius: 0
+--- !u!114 &434608378
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434608375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b943cf54d0efc2b40b229da52958a47d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneManager: {fileID: 221366941}
 --- !u!1 &436061602
 GameObject:
   m_ObjectHideFlags: 0
@@ -10677,7 +10919,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &442992189
 Transform:
   m_ObjectHideFlags: 0
@@ -10735,7 +10977,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 2.961979, y: 1.4515991}
+  m_Offset: {x: 4.612547, y: 3.1783476}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -10745,7 +10987,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 17.707253, y: 12.19804}
+  m_Size: {x: 14.4061165, y: 8.744543}
   m_EdgeRadius: 0
 --- !u!114 &442992191
 MonoBehaviour:
@@ -24284,6 +24526,8 @@ MonoBehaviour:
   completedQuests: []
   finnickTriggerZone: {fileID: 1204587026}
   quest7ProgressText: {fileID: 1235186955}
+  triggerZoneQ11: {fileID: 434608375}
+  triggerZoneQ10: {fileID: 1885562270}
   triggerZoneQ9_1: {fileID: 1665504216}
   triggerZoneQ8: {fileID: 651555240}
   triggerZoneQ5: {fileID: 141605856}
@@ -35585,7 +35829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1497452185
 Transform:
   m_ObjectHideFlags: 0
@@ -35722,6 +35966,82 @@ MonoBehaviour:
   - {fileID: 7350432068926855263, guid: b393244e09931df4d966cce71bc35e44, type: 3}
   - {fileID: 3310600264517622499, guid: 70d96521c9ea3a545b01f5b1424f862e, type: 3}
   - {fileID: 3966230418439256930, guid: 056877ecbe9d1a049a3c11fad28e9574, type: 3}
+--- !u!1 &1499467236
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1499467237}
+  - component: {fileID: 1499467239}
+  - component: {fileID: 1499467238}
+  m_Layer: 0
+  m_Name: CutsceneQuest10
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1499467237
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499467236}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.819745, y: 19.205797, z: 0.16162726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1499467238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499467236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e7e904af9f74534da27361892338dc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  director: {fileID: 1499467239}
+  dialogueManager: {fileID: 150920843}
+  uiToDisableDuringCutscene:
+  - {fileID: 1970771571}
+  - {fileID: 1747943726}
+  - {fileID: 1171179073}
+  - {fileID: 1506571770}
+  - {fileID: 1310528683}
+--- !u!320 &1499467239
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499467236}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 877a01af42d7075479094a19dd7f120c, type: 2}
+  m_InitialState: 0
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: 5137982451537693368, guid: 877a01af42d7075479094a19dd7f120c, type: 2}
+    value: {fileID: 282412561}
+  - key: {fileID: 9088713699818946578, guid: 877a01af42d7075479094a19dd7f120c, type: 2}
+    value: {fileID: 282412561}
+  - key: {fileID: 6592551115727861762, guid: 877a01af42d7075479094a19dd7f120c, type: 2}
+    value: {fileID: 150920844}
+  m_ExposedReferences:
+    m_References: []
 --- !u!1 &1501849100
 GameObject:
   m_ObjectHideFlags: 0
@@ -36961,6 +37281,7 @@ MonoBehaviour:
   - {fileID: 1506571770}
   - {fileID: 1310528683}
   arrowIndicator: {fileID: 290594666}
+  quest9PopupText: {fileID: 1497452186}
 --- !u!320 &1559297113
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -44877,6 +45198,98 @@ MonoBehaviour:
   bookButtonObject: {fileID: 1506571770}
   uiCamera: {fileID: 519420031}
   offset: {x: -380, y: -70}
+--- !u!1 &1885562270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1885562271}
+  - component: {fileID: 1885562272}
+  - component: {fileID: 1885562273}
+  m_Layer: 0
+  m_Name: 'TriggerZoneQuest10 '
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1885562271
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885562270}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -33.96, y: 22.91, z: 0.16162726}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1885562272
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885562270}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0.22464943, y: 1.6116257}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 4.379528, y: 3.3637161}
+  m_EdgeRadius: 0
+--- !u!114 &1885562273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885562270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a19f76c945b3d54eae62adcd16025e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cutsceneManager: {fileID: 1499467238}
 --- !u!1 &1886845650
 GameObject:
   m_ObjectHideFlags: 0
@@ -52454,3 +52867,8 @@ SceneRoots:
   - {fileID: 985798217}
   - {fileID: 1576748120}
   - {fileID: 1559297111}
+  - {fileID: 238930334}
+  - {fileID: 1499467237}
+  - {fileID: 1885562271}
+  - {fileID: 221366940}
+  - {fileID: 434608376}

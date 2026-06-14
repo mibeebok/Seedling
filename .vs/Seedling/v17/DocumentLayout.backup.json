@@ -3,23 +3,11 @@
   "WorkspaceRootPath": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\quests\\cluefurhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\quests\\cluefurhandler.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\cutscenes\\cutscenequest11.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequest11.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\cutscenes\\triggerzonequest9_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\triggerzonequest9_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequest9_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequest9_2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequest9_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequest9_1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\quests\\questmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|c:\\users\\shura\\onedrive\\\u0440\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u043D\u043E\u0432\u044B\u0439 \u0438\u0433\u0440\u0430\\seedling\\assets\\script\\quests\\questmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\quests\\questmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -31,24 +19,16 @@
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\quests\\questdatabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequestseventhpart2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequestseventhpart2.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequestseventhpart1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequestseventhpart1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\triggerzonequest5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\triggerzonequest5.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequestfifth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequestfifth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenequest10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenequest10.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\npc\\dialoguemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\npc\\npcinteractions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -57,14 +37,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\quests\\questcompleteui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\quests\\questcompleteui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\cutscenes\\cutscenemanagerhouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\cutscenes\\cutscenemanagerhouse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{CF65A08B-4735-B0C7-5DB0-5C24BC59444A}|Assembly-CSharp.csproj|solutionrelative:assets\\script\\core\\savesystem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -83,140 +55,92 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClueFurHandler.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\ClueFurHandler.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Quests\\ClueFurHandler.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\ClueFurHandler.cs",
-              "RelativeToolTip": "Assets\\Script\\Quests\\ClueFurHandler.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAADwvyYAAAA6AAAAAAAAAA==",
+              "Title": "CutsceneQuest11.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest11.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuest11.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest11.cs",
+              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuest11.cs",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAswFUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:44:48.67Z",
+              "WhenOpened": "2026-06-14T08:16:42.692Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "TriggerZoneQuest9_1.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\TriggerZoneQuest9_1.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\TriggerZoneQuest9_1.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\TriggerZoneQuest9_1.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\TriggerZoneQuest9_1.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "CutsceneQuest10.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest10.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuest10.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest10.cs",
+              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuest10.cs",
+              "ViewState": "AgIAAEMAAAAAAAAAAAAAAFIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:43:02.61Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CutsceneQuest9_2.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest9_2.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuest9_2.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest9_2.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuest9_2.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAswFsAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:40:48.226Z"
+              "WhenOpened": "2026-06-13T21:23:07.138Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "CutsceneQuest9_1.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest9_1.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuest9_1.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuest9_1.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuest9_1.cs",
-              "ViewState": "AgIAADoAAAAAAAAAAAAAwFMAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:39:18.734Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "CutsceneQuestSeventhPart2.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart2.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart2.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart2.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart2.cs",
-              "ViewState": "AgIAAEUAAAAAAAAAAAAAAFQAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:20:41.922Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
               "Title": "QuestDatabase.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\QuestDatabase.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Quests\\QuestDatabase.cs",
               "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\QuestDatabase.cs",
               "RelativeToolTip": "Assets\\Script\\Quests\\QuestDatabase.cs",
-              "ViewState": "AgIAAKoAAAAAAAAAAAAUwLUAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAANEAAAAAAAAAAAAqwO4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-29T16:32:24.472Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "DialogueDatabase.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueDatabase.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueDatabase.cs",
               "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueDatabase.cs",
               "RelativeToolTip": "Assets\\Script\\NPC\\DialogueDatabase.cs",
-              "ViewState": "AgIAANACAAAAAAAAAAAUwOACAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAHwEAAAAAAAAAAAUwIMEAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-05-26T13:12:43.274Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 1,
               "Title": "QuestManager.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\QuestManager.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Quests\\QuestManager.cs",
               "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\QuestManager.cs",
               "RelativeToolTip": "Assets\\Script\\Quests\\QuestManager.cs",
-              "ViewState": "AgIAAJIAAAAAAAAAAAAAALMAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAmwLQAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-29T16:15:43.098Z"
+              "WhenOpened": "2026-05-29T16:15:43.098Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CutsceneQuestSeventhPart1.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart1.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart1.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart1.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuestSeventhPart1.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAADwv2cAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 5,
+              "Title": "DialogueManager.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueManager.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
+              "RelativeToolTip": "Assets\\Script\\NPC\\DialogueManager.cs",
+              "ViewState": "AgIAAIQBAAAAAAAAAAAwwJIBAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T19:20:34.406Z"
+              "WhenOpened": "2026-05-05T17:06:44.067Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TriggerZoneQuest5.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\TriggerZoneQuest5.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\TriggerZoneQuest5.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\TriggerZoneQuest5.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\TriggerZoneQuest5.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "SaveSystem.cs",
+              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
+              "RelativeDocumentMoniker": "Assets\\Script\\Core\\SaveSystem.cs",
+              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
+              "RelativeToolTip": "Assets\\Script\\Core\\SaveSystem.cs",
+              "ViewState": "AgIAACYBAAAAAAAAAAAQwEABAAC+AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T18:25:05.883Z"
+              "WhenOpened": "2026-05-20T16:59:09.2Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "CutsceneQuestFifth.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestFifth.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneQuestFifth.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneQuestFifth.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneQuestFifth.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAAAuwGoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T18:23:11.937Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 7,
               "Title": "NPCInteractions.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\NPCInteractions.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\NPC\\NPCInteractions.cs",
@@ -228,19 +152,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "DialogueManager.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\NPC\\DialogueManager.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\NPC\\DialogueManager.cs",
-              "RelativeToolTip": "Assets\\Script\\NPC\\DialogueManager.cs",
-              "ViewState": "AgIAAIUBAAAAAAAAAAAwwK8BAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-05T17:06:44.067Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 8,
               "Title": "QuestCompleteUI.cs",
               "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Quests\\QuestCompleteUI.cs",
               "RelativeDocumentMoniker": "Assets\\Script\\Quests\\QuestCompleteUI.cs",
@@ -249,30 +161,6 @@
               "ViewState": "AgIAABgAAAAAAAAAAAAIwCcAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-06-09T19:31:05.228Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "CutsceneManagerHouse.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneManagerHouse.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Cutscenes\\CutsceneManagerHouse.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Cutscenes\\CutsceneManagerHouse.cs",
-              "RelativeToolTip": "Assets\\Script\\Cutscenes\\CutsceneManagerHouse.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAArAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-06-13T12:55:04.256Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SaveSystem.cs",
-              "DocumentMoniker": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
-              "RelativeDocumentMoniker": "Assets\\Script\\Core\\SaveSystem.cs",
-              "ToolTip": "C:\\Users\\Shura\\OneDrive\\\u0420\u0430\u0431\u043E\u0447\u0438\u0439 \u0441\u0442\u043E\u043B\\\u041D\u041E\u0412\u042B\u0419 \u0418\u0413\u0420\u0410\\Seedling\\Assets\\Script\\Core\\SaveSystem.cs",
-              "RelativeToolTip": "Assets\\Script\\Core\\SaveSystem.cs",
-              "ViewState": "AgIAAGQBAAAAAAAAAAAowIEBAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-20T16:59:09.2Z"
             }
           ]
         }

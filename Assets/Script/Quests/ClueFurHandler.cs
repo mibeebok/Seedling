@@ -30,13 +30,7 @@ public class ClueFurHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
         if (popupText != null)
         {
-            popupText.text = "Вы подняли клочок волчьей шерсти";
             popupText.gameObject.SetActive(true);
-            StartCoroutine(HidePopupAfterSeconds(2f));
-        }
-        else
-        {
-            Debug.Log("Вы подняли клочок волчьей шерсти");
         }
 
         QuestManager.Instance.CompleteTask("Разобраться, в чём дело");
@@ -49,12 +43,5 @@ public class ClueFurHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (clueSpriteRenderer != null)
             clueSpriteRenderer.gameObject.SetActive(false);
         gameObject.SetActive(false);
-    }
-
-    private IEnumerator HidePopupAfterSeconds(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        if (popupText != null)
-            popupText.gameObject.SetActive(false);
     }
 }

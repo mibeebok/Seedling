@@ -1,18 +1,17 @@
 using UnityEngine;
 using UnityEngine.Playables;
 
-public class CutsceneQuest9_2 : MonoBehaviour
+public class CutsceneQuest11 : MonoBehaviour
 {
     public static bool IsPlaying { get; private set; } = false;
     public PlayableDirector director;
     public DialogueManager dialogueManager;
     public GameObject[] uiToDisableDuringCutscene;
-    public GameObject arrowIndicator;
-    public TextMesh quest9PopupText;
 
     private InventoryController inventoryController;
     private MattockController mattock;
     private WateringCanController wateringCan;
+
     void Start()
     {
         inventoryController = FindFirstObjectByType<InventoryController>();
@@ -27,12 +26,8 @@ public class CutsceneQuest9_2 : MonoBehaviour
             director.stopped += OnCutsceneEnd;
         }
     }
-
     public void StartCutscene()
     {
-        if (arrowIndicator != null)
-            arrowIndicator.SetActive(false);
-
         GameState.IsCutscenePlaying = true;
         SetAllTextEActive(false);
         ToggleUI(false);
@@ -65,17 +60,9 @@ public class CutsceneQuest9_2 : MonoBehaviour
         if (tiolli != null)
             tiolli.transform.position = new Vector3(6.91f, 2.6f, 0f);
 
-        if (quest9PopupText != null)
-            quest9PopupText.gameObject.SetActive(false);
-
-        QuestManager.Instance.CompleteTask("Поговорить с Тиоли");
-
-        EcologyController eco = FindFirstObjectByType<EcologyController>();
-        if (eco != null)
-            eco.ReduceEco(5f);
-        else
-            Debug.LogWarning("EcologyController не найден!");
+        QuestManager.Instance.CompleteTask("Попытаться вытянуть правду из Финника");
     }
+
     private void ToggleUI(bool active)
     {
         foreach (var obj in uiToDisableDuringCutscene)
@@ -100,7 +87,6 @@ public class CutsceneQuest9_2 : MonoBehaviour
     {
         Time.timeScale = 0f;
     }
-
     private void ResumeTimeLine(string npcName)
     {
         Time.timeScale = 1f;
@@ -113,9 +99,10 @@ public class CutsceneQuest9_2 : MonoBehaviour
         if (wateringCan != null) wateringCan.enabled = !block;
         if (Player.Instance != null) Player.Instance.SetMovementBlocked(block);
     }
+
     public void PauseAndStartDialogue()
     {
         PauseForDialogue();
-        dialogueManager.StartDialogueByKey("DialogueQuest9.2", "Гриша");
+        dialogueManager.StartDialogueByKey("DialogueQuest11", "Финник");
     }
 }

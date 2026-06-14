@@ -15,6 +15,8 @@ public class QuestManager : MonoBehaviour
     private Coroutine carrotCoroutine;
 
     public GameObject quest7ProgressText;
+    public GameObject triggerZoneQ11;
+    public GameObject triggerZoneQ10;
     public GameObject triggerZoneQ9_1;
     public GameObject triggerZoneQ8;
     public GameObject triggerZoneQ5;
@@ -25,7 +27,10 @@ public class QuestManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        {
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
             Destroy(gameObject);
     }
@@ -179,6 +184,22 @@ public class QuestManager : MonoBehaviour
             Quest ninthQuest = QuestDatabase.NinthQuest();
             AddQuest(ninthQuest);
             if (triggerZoneQ9_1 != null) triggerZoneQ9_1.SetActive(true);
+            hasNext = true;
+        }
+        if (quest.questName == "Квест 9. Завелась крыса?")
+        {
+            Quest tenthQuest = QuestDatabase.TenthQuest();
+            AddQuest(tenthQuest);
+            if (triggerZoneQ10 != null) triggerZoneQ10.SetActive(true);
+            hasNext = true;
+        }
+
+        if (quest.questName == "Квест 10. Навестим угрюмого")
+        {
+            Quest eleventhQuest = QuestDatabase.EleventhQuest();
+            AddQuest(eleventhQuest);
+            SetNPCQuestDialogue("Тиоли", "TioliDialogueQuest11");
+            if (triggerZoneQ11 != null) triggerZoneQ11.SetActive(true);
             hasNext = true;
         }
 
@@ -392,4 +413,19 @@ public class QuestManager : MonoBehaviour
     }
     public void SetClueFound() => clueFound = true;
     public bool IsClueFound() => clueFound;
+
+    public int TeamWolf { get; private set; } = 0;
+    public int TeamFox { get; private set; } = 0;
+
+    public void AddTeamWolf(int amount)
+    {
+        TeamWolf += amount;
+        SaveSystem.SaveGame();
+    }
+
+    public void AddTeamFox(int amount)
+    {
+        TeamFox += amount;
+        SaveSystem.SaveGame();
+    }
 }

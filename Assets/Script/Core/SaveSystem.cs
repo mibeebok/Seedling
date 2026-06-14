@@ -149,6 +149,10 @@ public static class SaveSystem
             });
         }
 
+        // сохраняем баллы для концовки
+        saveFile.teamWolf = QuestManager.Instance.TeamWolf;
+        saveFile.teamFox = QuestManager.Instance.TeamFox;
+
         // 5 Записываем в файл
         File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
         Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
@@ -311,6 +315,13 @@ public static class SaveSystem
             QuestManager.Instance.LoadQuestsFromSave(saveFile.activeQuests, saveFile.completedQuests);
         }
 
+        // для концовок
+        if (QuestManager.Instance != null)
+        {
+            typeof(QuestManager).GetField("TeamWolf", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(QuestManager.Instance, saveFile.teamWolf);
+            typeof(QuestManager).GetField("TeamFox", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(QuestManager.Instance, saveFile.teamFox);
+        }
+
         // Восстанавливаем диалоговые ключи NPC
         if (saveFile.npcDialogueKey != null)
         {
@@ -410,6 +421,8 @@ public static class SaveSystem
         public List<QuestSaveData> activeQuests;
         public List<QuestSaveData> completedQuests;
         public List<NPCDialogueSaveData> npcDialogueKey;
+        public int teamWolf;
+        public int teamFox;
     }
     [System.Serializable]
     public class CropSaveData

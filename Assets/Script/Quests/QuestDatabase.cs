@@ -199,4 +199,42 @@ public static class QuestDatabase
 
         return quest;
     }
+    public static Quest TenthQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 10. Навестим угрюмого";
+        quest.description = "У меня чувство, что кто-то водит нас за нос. Кто-то явно хочет перевернуть всю ситуацию в свою пользу. Финник или Ихвильнихт? Кто прав, а кто нет? Надеюсь, я смогу сделать правильный выбор.";
+        quest.completionNotes = "«История всё запутаннее и запутаннее. Кажется, что вот-вот, и мы уже достигнем истины. Самое главное не ошибиться и принять правильное решение. Вероятно, будущее деревни Росток сейчас легло полностью на мои плечи. Мда, не желал я такой ответственности, когда переезжал. Спокойная жизнь, природа, чистый воздух… Да-да, и где оно всё сейчас?».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Поговорить с Ихвильнихтом", isCompleted = false }
+    };
+        quest.rewardMoney = 20;
+        quest.rewardCropType = CropType.Rastberry;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>(); 
+        return quest;
+    }
+    public static Quest EleventhQuest()
+    {
+        Quest quest = new Quest();
+        quest.questName = "Квест 11. Что скрывает лис?";
+        quest.description = "Разговорить лиса и получить от него что-то правдивое – задача практически невозможная. Но я постараюсь изо всех сил. Кто-то ведь должен это закончить, верно?";
+        quest.completionNotes = "«В голове столько разных мыслей, но полной картины я пока не могу слепить. Нужен кто-то более мудрый и… нейтральный. Терентий идеально подходит под это описание.».";
+        quest.tasks = new List<QuestTask>
+    {
+        new QuestTask { description = "Поговорить с Тиоли", isCompleted = false },
+        new QuestTask { description = "Попытаться вытянуть правду из Финника", isCompleted = false }
+    };
+        quest.rewardMoney = 10;
+        quest.rewardCropType = CropType.Beetroot;
+        quest.rewardSeedCount = 1;
+        quest.npcDialogueChanges = new List<NPCDialogueChange>
+        {
+            new NPCDialogueChange { npcName = "Тиоли", newDialogueKey = "TioliNeutral"}
+        };
+
+        return quest;
+    }
+
 }
