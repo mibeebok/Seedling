@@ -46,6 +46,14 @@ public class CropsManager : MonoBehaviour
             OnNewDay();
         }
     }
+    public void clearAllCrops()
+    {
+        foreach (var crop in allCrops.Values)
+        {
+            if (crop != null) Object.Destroy(crop.gameObject);
+        }
+        allCrops.Clear();
+    }
 
     private void OnDestroy()
     {
@@ -159,6 +167,12 @@ public class CropsManager : MonoBehaviour
         {            
             if (!allCrops.TryGetValue(pos, out CropBehaviour crop)) 
             {
+                continue;
+            }
+
+            if (crop == null)
+            {
+                allCrops.Remove(pos);
                 continue;
             }
             

@@ -5,6 +5,7 @@ using UnityEngine;
 public static class SaveSystem
 {
     private static string SavePath => Path.Combine(Application.persistentDataPath, "farm_save.json");
+    private static string BackupSavePath => Path.Combine(Application.persistentDataPath, "farm_save_backup.json");
 
     private static Vector2? pendingPlayerPos = null;
     private static Vector2? pendingGoatPos = null;
@@ -19,6 +20,12 @@ public static class SaveSystem
 
     public static void SaveGame()
     {
+        if (File.Exists(SavePath))
+        {
+            if(File.Exists(BackupSavePath)) File.Delete(BackupSavePath);
+            File.Move(SavePath, BackupSavePath);
+        }
+
         var saveFile = new SaveFile();
         Debug.Log($"[SaveGame] CropsManager.Instance exists: {CropsManager.Instance != null}, allCrops count: {CropsManager.Instance?.allCrops.Count ?? 0}");
 
@@ -37,6 +44,8 @@ public static class SaveSystem
                 }
             }
         }
+        // save count of days
+        saveFile.daysPassed = HouseController.DaysPassed;
 
         // Сохраняем растения
         saveFile.crops = new List<CropSaveData>();
@@ -127,8 +136,6 @@ public static class SaveSystem
         // Сохраняем интро катсцену
         saveFile.introCutscenePlayed = CutsceneManager.IntroCutscenePlayed;
 
-        string json = JsonUtility.ToJson(saveFile, true);
-        Debug.Log($"[SaveGame] JSON length: {json.Length}");
 
         // Сохраняем квесты
         if (QuestManager.Instance != null)
@@ -154,8 +161,8 @@ public static class SaveSystem
         saveFile.teamFox = QuestManager.Instance.TeamFox;
 
         // 5 Записываем в файл
-        File.WriteAllText(SavePath, JsonUtility.ToJson(saveFile, true));
-        Debug.Log($"[SaveSystem] Игра сохранена. Путь: {SavePath}");
+        string json = JsonUtility.ToJson(saveFile, true);
+        File.WriteAllText(SavePath, json);
     }
 
 
@@ -182,6 +189,8 @@ public static class SaveSystem
             tile?.GetComponent<SoilTile>()?.LoadFromSaveData(data);
             restoredTiles++;
         }
+        //load count of days
+        HouseController.DaysPassed = saveFile.daysPassed;
 
         // Загружаем растения
         if (saveFile.crops != null && CropsManager.Instance != null)
@@ -344,6 +353,195 @@ public static class SaveSystem
         CutsceneManager.NotifyGameLoaded();
     }
 
+     public static void LoadBackupGame()
+    {
+        if (!File.Exists(BackupSavePath))
+        {
+            if (MoneyDisplay.Instance != null)
+                MoneyDisplay.Instance.SetMoney(0);
+            else
+                Debug.LogWarning("MoneyDisplay.Instance не найден, начальные деньги не установлены");
+            CutsceneManager.NotifyGameLoaded();
+            return;
+        }
+
+        string json = File.ReadAllText(BackupSavePath);
+        var saveFile = JsonUtility.FromJson<SaveFile>(json);
+
+        if (CropsManager.Instance != null)
+        {
+            CropsManager.Instance.clearAllCrops();
+        }
+        foreach (var data in saveFile.tiles)
+        {
+            var gridPos = FarmGrid.Instance.WorldToGridPosition(data.position);
+            var tile = FarmGrid.Instance.GetTileAt(gridPos);
+            tile?.GetComponent<SoilTile>()?.LoadFromSaveData(data);
+        }
+
+        HouseController.DaysPassed = saveFile.daysPassed;
+
+        // Загружаем растения
+        if (saveFile.crops != null && CropsManager.Instance != null)
+        {
+            foreach (var data in saveFile.crops)
+            {
+                Vector2Int pos = new Vector2Int(data.gridX, data.gridY);
+                
+                CropType cropType;
+                if (!System.Enum.TryParse(data.cropType, out cropType))
+                {
+                    Debug.LogError($"Неизвестный тип растения: {data.cropType}");
+                    continue;
+                }
+                
+                Crop cropData = CropsManager.Instance.GetCropData(cropType);
+                if (cropData == null) continue;
+                
+                CropBehaviour prefab = CropsManager.Instance.GetCropPrefab(cropType);
+                if (prefab == null) continue;
+                
+                Vector3 worldPos = FarmGrid.Instance.GridToWorldPosition(pos);
+                CropBehaviour newCrop = Object.Instantiate(prefab, worldPos, Quaternion.identity);
+                newCrop.cropData = cropData;
+                
+                newCrop.isRotten = data.isRotten;
+                
+                System.Reflection.FieldInfo stageField = typeof(CropBehaviour).GetField("currentStage", 
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+                if (stageField != null)
+                {
+                    stageField.SetValue(newCrop, data.currentStage);
+                }
+                
+                newCrop.UpdateVisual();
+                
+                CropsManager.Instance.allCrops[pos] = newCrop;
+                
+                GameObject tileObj = FarmGrid.Instance.GetTileAt(pos);
+                if (tileObj != null)
+                {
+                    SoilTile soil = tileObj.GetComponent<SoilTile>();
+                    if (soil != null)
+                    {
+                        soil.MarkPlanted();
+                    }
+                }
+            }
+        }
+
+        // Загружаем игрока
+        if (saveFile.player != null)
+        {
+            if (Player.Instance != null)
+            {
+                Player.Instance.transform.position = saveFile.player.position;
+            }
+            else
+            {
+                pendingPlayerPos = saveFile.player.position;
+            }
+        }
+
+        // Загружаем козу
+        if (saveFile.goat != null)
+        {
+            var goat = Object.FindFirstObjectByType<GoatBehavior>();
+            if (goat != null)
+            {
+                goat.transform.position = saveFile.goat.position;
+            }
+            else
+            {
+                pendingGoatPos = saveFile.goat.position;
+            }
+        }
+
+        // Загружаем инвентарь
+        if (saveFile.inventory != null && saveFile.inventory.items != null && 
+            InventoryController.Instance != null && InventoryController.Instance.mainInventory != null)
+        {
+            var inv = InventoryController.Instance.mainInventory;
+            
+            for (int i = 2; i < inv.items.Count; i++)
+            {
+                inv.items[i].id = 0;
+                inv.items[i].count = 0;
+            }
+            
+            int slotIndex = 2;
+            foreach (var itemData in saveFile.inventory.items)
+            {
+                if (slotIndex >= inv.items.Count) break;
+                
+                if (string.IsNullOrEmpty(itemData.itemName))
+                {
+                    Debug.LogWarning("Пропущен предмет с пустым именем");
+                    continue;
+                }
+                
+                Item item = DataBase.Instance.GetItemByName(itemData.itemName, itemData.isSeed);
+                if (item != null)
+                {
+                    inv.items[slotIndex].id = item.id;
+                    inv.items[slotIndex].count = itemData.count;
+                    slotIndex++;
+                }
+            }
+            
+            inv.UpdateInventory();
+            InventoryController.Instance.UpdateHotbarVisuals(); // Обновляем хотбар
+        }
+
+        // Загружаем деньги
+            if (MoneyDisplay.Instance != null)
+                MoneyDisplay.Instance.SetMoney(saveFile.money);
+            else
+                Debug.LogWarning("MoneyDisplay.Instance не найден, деньги не восстановлены");
+        
+        
+        //загружаем экологию
+        var ecoController = Object.FindFirstObjectByType<EcologyController>();
+        if (ecoController != null)
+            ecoController.CurrentEco = saveFile.ecology;
+
+        // Загружаем квесты
+        if (saveFile.activeQuests != null)
+        {
+            QuestManager.Instance.LoadQuestsFromSave(saveFile.activeQuests, saveFile.completedQuests);
+        }
+
+        // для концовок
+        if (QuestManager.Instance != null)
+        {
+            typeof(QuestManager).GetField("TeamWolf", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(QuestManager.Instance, saveFile.teamWolf);
+            typeof(QuestManager).GetField("TeamFox", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)?.SetValue(QuestManager.Instance, saveFile.teamFox);
+        }
+
+        // Восстанавливаем диалоговые ключи NPC
+        if (saveFile.npcDialogueKey != null)
+        {
+            var allNPCs = Object.FindObjectsByType<NPCInteraction>(FindObjectsSortMode.None);
+            foreach (var npcData in saveFile.npcDialogueKey)
+            {
+                foreach (var npc in allNPCs)
+                {
+                    if (npc.npcName == npcData.npcName)
+                    {
+                        npc.dialogueKey = npcData.dialogueKey;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Загружаем флаг интро катсцены
+        CutsceneManager.IntroCutscenePlayed = saveFile.introCutscenePlayed;
+        CutsceneManager.NotifyGameLoaded();
+
+        SaveGame();
+    }
+
     // Применяем отложенные позиции, если объекты появились позже
     public static void ApplyPendingPositions()
     {
@@ -423,6 +621,7 @@ public static class SaveSystem
         public List<NPCDialogueSaveData> npcDialogueKey;
         public int teamWolf;
         public int teamFox;
+         public int daysPassed;
     }
     [System.Serializable]
     public class CropSaveData

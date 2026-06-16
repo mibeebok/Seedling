@@ -48,6 +48,12 @@ public class MenuController : MonoBehaviour
                 Debug.LogError("Компонент Button не найден на buttonContinue!");
             }
         }
+
+        if (buttonSave != null)
+        {
+            Button btn = buttonSave.GetComponent<Button>();
+            if (btn != null) btn.onClick.AddListener(SaveButton);
+        }
     }
 
 
@@ -68,6 +74,11 @@ public class MenuController : MonoBehaviour
             Debug.LogWarning("Контроллер паузы не найден, использую Time.timeScale");
             Time.timeScale = 1f;
         }
+    }
+
+    public void SaveButton()
+    {
+        SaveSystem.SaveGame();
     }
 
 }

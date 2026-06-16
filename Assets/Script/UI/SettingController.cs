@@ -29,6 +29,10 @@ public class SettingController : MonoBehaviour
     [Tooltip("AudioSource фоновой музыки в главном меню (если есть). В игре можно оставить пустым")]
     public AudioSource menuMusicSource;
 
+    [Header("Бэкап")]
+    public GameObject panelBackup;
+    public GameObject buttonLoadBackup;
+
     Resolution[] rsl;
     List<string> resolutions;
 
@@ -80,6 +84,12 @@ public class SettingController : MonoBehaviour
             }
             dropdown.value = maxResIndex;
             Resolution(maxResIndex);
+        }
+
+        if (buttonLoadBackup != null)
+        {
+            Button btn = buttonLoadBackup.GetComponent<Button>();
+            if (btn != null) btn.onClick.AddListener(LoadBackupButton);
         }
     }
 
@@ -151,5 +161,15 @@ public class SettingController : MonoBehaviour
             musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
         } 
         if (settingsPanel != null) settingsPanel.SetActive(true);
+    }
+
+    public void LoadBackupButton()
+    {
+        SaveSystem.LoadBackupGame();
+        if (panelBackup!=null)
+        {
+            panelBackup.SetActive(false);
+            settingsPanel.SetActive(true);
+        }
     }
 }

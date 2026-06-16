@@ -39,6 +39,7 @@ public class CropBehaviour : MonoBehaviour
 
         spriteRenderer.sortingLayerName = "Default";
         spriteRenderer.sortingOrder = 0;
+
     }
 
     private void Update()
@@ -96,6 +97,17 @@ public class CropBehaviour : MonoBehaviour
             CollectHarvest();
         }
     }
+    private string GetCropName(CropType type)
+    {
+        switch (type)
+        {
+            case CropType.Potato: return "Картофель";
+            case CropType.Carrot: return "Морковь";
+            case CropType.Beetroot: return "Свёкла";
+            case CropType.Rastberry: return "Малина";
+            default: return "Новый вид!";
+        }
+    }
     private void OnMouseEnter()
     {
         if (CropInfoUI.Instance != null && cropData != null)
@@ -114,8 +126,9 @@ public class CropBehaviour : MonoBehaviour
             {
                 statusText = "Еще растет...";
             }
+            string fullText =$"Это {GetCropName(cropData.cropType)}\n{statusText}";
             
-            CropInfoUI.Instance.ShowInfo(transform.position, statusText);
+            CropInfoUI.Instance.ShowInfo(transform.position, fullText);
         }
     }
     private void OnMouseExit()

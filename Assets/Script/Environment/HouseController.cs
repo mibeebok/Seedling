@@ -25,11 +25,7 @@ public class HouseController : MonoBehaviour
     private SleepController sleepController;
     public static event Action OnNewDay;
 
-    public static int DaysPassed
-    {
-        get => PlayerPrefs.GetInt(DaysPassedKey, 0);
-        private set => PlayerPrefs.SetInt(DaysPassedKey, value);
-    }
+    public static int DaysPassed { get; set; } = 0;
 
     private void Start()
     {
