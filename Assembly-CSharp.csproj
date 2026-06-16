@@ -73,6 +73,7 @@
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest14_1.cs" />
     <Compile Include="Assets\Script\Farming\Plants\Carrot.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+    <Compile Include="Assets\Script\UI\ArrowPulse.cs" />
     <Compile Include="Assets\Script\Cutscenes\CutsceneStarter14_2.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQuest15.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

@@ -6,7 +6,7 @@ public class TutorialPanelController : MonoBehaviour
     public GameObject bookButtonObject;
     public Camera uiCamera;
 
-    public Vector2 offset = new Vector2(-380, -70);
+    public Vector2 offset = new Vector2(0, 100);
 
     void Start()
     {
@@ -18,7 +18,7 @@ public class TutorialPanelController : MonoBehaviour
         if (transform.parent != null && !transform.parent.gameObject.activeSelf)
             transform.parent.gameObject.SetActive(true);
         gameObject.SetActive(true);
-        PositionRelativeToBookButton();
+        //PositionRelativeToBookButton();
     }
 
     private void PositionRelativeToBookButton()
