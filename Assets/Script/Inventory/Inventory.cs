@@ -100,6 +100,9 @@ public class Inventory : MonoBehaviour
             Button tempButton = newItem.GetComponent<Button>();
             tempButton.onClick.AddListener(SelectObject);
 
+            // === ЕДИНСТВЕННОЕ ИЗМЕНЕНИЕ - добавляем обработку наведения ===
+            AddHoverEvents(newItem, i);
+
             Image itemImage = newItem.GetComponent<Image>();
             Text countText = newItem.GetComponentInChildren<Text>();
 
@@ -124,7 +127,7 @@ public class Inventory : MonoBehaviour
                 itemImage.sprite = data.items[0].img;
                 itemImage.enabled = true;
                 itemImage.color = Color.white;
-                itemImage.preserveAspect = false; // Обычные предметы пусть масштабируются
+                itemImage.preserveAspect = false;
                 if (countText != null) countText.text = "";
                 tempButton.interactable = true;
             }
@@ -132,6 +135,48 @@ public class Inventory : MonoBehaviour
             items.Add(ii);
         }
     }
+
+    // === НОВЫЕ МЕТОДЫ ДЛЯ ТУЛТИПОВ ===
+    private void AddHoverEvents(GameObject itemObject, int slotIndex)
+    {
+        EventTrigger trigger = itemObject.GetComponent<EventTrigger>();
+        if (trigger == null)
+            trigger = itemObject.AddComponent<EventTrigger>();
+
+        trigger.triggers.Clear();
+
+        // Событие входа курсора
+        EventTrigger.Entry entryEnter = new EventTrigger.Entry();
+        entryEnter.eventID = EventTriggerType.PointerEnter;
+        int capturedIndex = slotIndex;
+        entryEnter.callback.AddListener((data) => { OnInventorySlotEnter(capturedIndex); });
+        trigger.triggers.Add(entryEnter);
+
+        // Событие выхода курсора
+        EventTrigger.Entry entryExit = new EventTrigger.Entry();
+        entryExit.eventID = EventTriggerType.PointerExit;
+        entryExit.callback.AddListener((data) => { OnInventorySlotExit(); });
+        trigger.triggers.Add(entryExit);
+    }
+
+    private void OnInventorySlotEnter(int slotIndex)
+    {
+        if (slotIndex >= items.Count) return;
+        
+        Item item = data.GetItemById(items[slotIndex].id);
+        
+        if (item != null && item.id != 0)
+        {
+            string displayName = !string.IsNullOrEmpty(item.russianName) ? item.russianName : item.name;
+            UiTooltip.Instance?.Show(displayName);
+        }
+    }
+
+    private void OnInventorySlotExit()
+    {
+        UiTooltip.Instance?.Hide();
+    }
+    // === КОНЕЦ НОВЫХ МЕТОДОВ ===
 
     public void UpdateInventory()
     {
@@ -165,7 +210,7 @@ public class Inventory : MonoBehaviour
         
         int slotIndex = int.Parse(selected.name);
         
-        if (slotIndex < TOOL_SLOTS) return; // Инструменты не трогаем
+        if (slotIndex < TOOL_SLOTS) return;
         
         if (currentID == -1)
         {

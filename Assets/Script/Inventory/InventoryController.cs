@@ -27,6 +27,8 @@ public class InventoryController : MonoBehaviour
     private Vector3 lastPlayerPosition;
     private GameObject currentDragItem;
     private int dragOriginSlot = -1;
+
+    private int lastHoveredHotbarSlot =-1;
     
     private PauseButtonPosition pauseButton;
     private float inventoryOpenTime;
@@ -63,6 +65,7 @@ public class InventoryController : MonoBehaviour
         HandlePlayerMovement();
         HandleInput();
         HandleDragAndDrop();
+        HandleHotbarHover();
     }
 
     // ======================== PUBLIC API ========================
@@ -432,5 +435,73 @@ public class InventoryController : MonoBehaviour
 
         if (selectedItem.IsSeed() && CropsManager.Instance.TryPlantSeed(selectedItem, worldPosition))
             RemoveItem(selectedItem, 1);
+    }
+
+    private void HandleHotbarHover()
+    {
+        // Проверяем только когда полный инвентарь закрыт
+        if (isInventoryOpen)
+        {
+            HideHotbarTooltip();
+            return;
+        }
+        
+        RaycastHit2D hit = GetRaycastHitAtMouse();
+        bool foundSlot = false;
+        
+        if (hit.collider != null)
+        {
+            for (int i = 0; i < hotbarSize; i++)
+            {
+                if (slotRenderers[i] != null && hit.collider.gameObject == slotRenderers[i].gameObject)
+                {
+                    if (lastHoveredHotbarSlot != i)
+                    {
+                        lastHoveredHotbarSlot = i;
+                        ShowHotbarSlotTooltip(i);
+                    }
+                    foundSlot = true;
+                    break;
+                }
+            }
+        }
+        
+        if (!foundSlot && lastHoveredHotbarSlot != -1)
+        {
+            HideHotbarTooltip();
+            lastHoveredHotbarSlot = -1;
+        }
+    }
+
+    private void ShowHotbarSlotTooltip(int slotIndex)
+    {
+        if (mainInventory == null || slotIndex >= mainInventory.items.Count) return;
+        
+        int itemId = mainInventory.items[slotIndex].id;
+        
+        // ОТЛАДКА
+        Item item = database.GetItemById(itemId);
+        Debug.Log($"Slot: {slotIndex}, ItemId: {itemId}");
+        Debug.Log($"Item name: {item?.name}, RussianName: '{item?.russianName}'");
+        
+        if (itemId != 0)
+        {
+            string displayName = database.GetItemDisplayName(itemId);
+            Debug.Log($"DisplayName: '{displayName}'");
+            WorldSpaceTooltip.Instance?.Show(displayName);
+        }
+        else
+        {
+            WorldSpaceTooltip.Instance?.Hide();
+        }
+    }
+
+    private void HideHotbarTooltip()
+    {
+        if (lastHoveredHotbarSlot != -1)
+        {
+            lastHoveredHotbarSlot = -1;
+            WorldSpaceTooltip.Instance?.Hide();
+        }
     }
 }
