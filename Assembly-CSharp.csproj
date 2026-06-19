@@ -136,6 +136,7 @@
     <Compile Include="Assets\Script\Animals\GoatEscape.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Script\Quests\ClueFurHandler.cs" />
+    <Compile Include="Assets\Script\Inventory\WorldSpaceTooltip.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropInfoUI.cs" />
     <Compile Include="Assets\Script\Cutscenes\TriggerZoneQ14_2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Assets\Script\Quests\EvidenceViewer.cs" />
     <Compile Include="Assets\Script\UI\OpenSetting.cs" />
     <Compile Include="Assets\Script\Farming\Plants\CropBehaviour.cs" />
+    <Compile Include="Assets\Script\Inventory\UiTooltip.cs" />
     <Compile Include="Assets\Script\Farming\WateringCanController.cs" />
     <Compile Include="Assets\Script\UI\ShopMoneyDisplay.cs" />
     <Compile Include="Assets\Script\Inventory\InventoryController.cs" />

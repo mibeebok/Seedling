@@ -11,6 +11,7 @@ public class Item
 {
     public int id;
     public string name;
+    public string russianName;
     public Sprite img;
     public int maxStack = 32;
     public ItemType type;
@@ -67,6 +68,14 @@ public class DataBase : MonoBehaviour
         return items.Find(item =>
             item.cropType == type &&
             item.type == (isSeed ? ItemType.Seed : ItemType.Vegetable));
+    }
+    public string GetItemDisplayName(int id)
+    {
+        Item item = GetItemById(id);
+        if (item == null) return "";
+        
+        // Если есть русское название - показываем его, иначе английское
+        return !string.IsNullOrEmpty(item.russianName) ? item.russianName : item.name;
     }
     public Item GetItemByName(string itemName, bool isSeed)
     {
