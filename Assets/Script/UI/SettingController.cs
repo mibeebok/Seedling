@@ -14,19 +14,13 @@ public class SettingController : MonoBehaviour
     public AudioMixer audioMixer;
 
     [Header("Элементы интерфейса")]
-    [Tooltip("Выпадающий список разрешений экрана")]
     public Dropdown dropdown;
-    [Tooltip("Слайдер громкости музыки")]
     public Slider musicSlider;
-    [Tooltip("Слайдер громкости звуковых эффектов (SFX)")]
     public Slider sfxSlider;
-    [Tooltip("Панель настроек (будет скрываться при закрытии)")]
     public GameObject settingsPanel;
-    [Tooltip("Блокировка под панелью (если используется). Если нет – панель просто скроется")]
     public BlockUnderPanel blockUnderPanel;
 
     [Header("Источники музыки")]
-    [Tooltip("AudioSource фоновой музыки в главном меню (если есть). В игре можно оставить пустым")]
     public AudioSource menuMusicSource;
 
     [Header("Бэкап")]
@@ -35,6 +29,9 @@ public class SettingController : MonoBehaviour
 
     Resolution[] rsl;
     List<string> resolutions;
+
+    // Флаг для безопасной установки слайдера (если SetValueWithoutNotify недоступен)
+    // private bool ignoreSliderChange = false;
 
     public void Awake()
     {
@@ -50,36 +47,61 @@ public class SettingController : MonoBehaviour
 
     void Start()
     {
-        //музыка
+        // ------------------ МУЗЫКА ------------------
         if (musicSlider != null)
         {
-            float savedVolume = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
-            musicSlider.value = savedVolume;
-            ApplyMusicVolume(savedVolume);
+            // Определяем текущий источник музыки (какой есть на сцене)
+            AudioSource currentMusic = menuMusicSource;
+            if (currentMusic == null)
+            {
+                FarmGrid farmGrid = FindObjectOfType<FarmGrid>();
+                if (farmGrid != null)
+                    currentMusic = farmGrid.GetComponent<AudioSource>();
+            }
+
+            // Реальная громкость источника (если источника нет, берём 1)
+            float currentVolume = currentMusic != null ? currentMusic.volume : 1f;
+
+            // Устанавливаем слайдер без вызова события
+            #if UNITY_2019_4_OR_NEWER
+                musicSlider.SetValueWithoutNotify(currentVolume);
+            #else
+                // Ручная блокировка события для старых версий Unity
+                musicSlider.onValueChanged.RemoveAllListeners();
+                musicSlider.value = currentVolume;
+            #endif
+
+            // Добавляем обработчик изменения слайдера
             musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
         }
 
-        // SFX
+        // ------------------ SFX ------------------
         if (sfxSlider != null)
         {
             float savedSFXVolume = PlayerPrefs.GetFloat("SFXVolume", 0.5f);
-            sfxSlider.value = savedSFXVolume;
+            #if UNITY_2019_4_OR_NEWER
+                sfxSlider.SetValueWithoutNotify(savedSFXVolume);
+            #else
+                sfxSlider.onValueChanged.RemoveAllListeners();
+                sfxSlider.value = savedSFXVolume;
+            #endif
+            // Применяем SFX громкость из сохранения (логично для микшера)
             ApplySFXVolume(savedSFXVolume);
             sfxSlider.onValueChanged.AddListener(ApplySFXVolume);
         }
 
-        //resolution
+        // ------------------ РАЗРЕШЕНИЕ ------------------
         if (dropdown != null && rsl != null && rsl.Length > 0)
         {
             int maxResIndex = 0;
             int maxArea = 0;
-            for (int i=0; i<rsl.Length; i++)
+            for (int i = 0; i < rsl.Length; i++)
             {
                 int area = rsl[i].width * rsl[i].height;
                 if (area > maxArea)
                 {
                     maxArea = area;
-                    maxResIndex =i;
+                    maxResIndex = i;
                 }
             }
             dropdown.value = maxResIndex;
@@ -93,6 +115,7 @@ public class SettingController : MonoBehaviour
         }
     }
 
+    /// <summary>Применяет громкость музыки к активному источнику.</summary>
     public void ApplyMusicVolume(float volume)
     {
         if (menuMusicSource != null)
@@ -106,6 +129,7 @@ public class SettingController : MonoBehaviour
                 musicSource.volume = volume;
         }
 
+        // Сохраняем для восстановления при следующем запуске (если нужно)
         PlayerPrefs.SetFloat("MusicVolume", volume);
         PlayerPrefs.Save();
     }
@@ -121,6 +145,36 @@ public class SettingController : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    /// <summary>Открывает панель настроек и синхронизирует слайдер музыки с актуальной громкостью.</summary>
+    public void OpenSetting()
+    {
+        if (musicSlider != null)
+        {
+            // Снова определяем текущий источник музыки
+            AudioSource currentMusic = menuMusicSource;
+            if (currentMusic == null)
+            {
+                FarmGrid farmGrid = FindObjectOfType<FarmGrid>();
+                if (farmGrid != null)
+                    currentMusic = farmGrid.GetComponent<AudioSource>();
+            }
+
+            float currentVolume = currentMusic != null ? currentMusic.volume : 1f;
+
+            // Обновляем слайдер без вызова обработчиков
+            #if UNITY_2019_4_OR_NEWER
+                musicSlider.SetValueWithoutNotify(currentVolume);
+            #else
+                musicSlider.onValueChanged.RemoveAllListeners();
+                musicSlider.value = currentVolume;
+                musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
+            #endif
+        }
+
+        if (settingsPanel != null) settingsPanel.SetActive(true);
+    }
+
+    // Остальные методы без изменений
     public void CloseSettings()
     {
         if (blockUnderPanel != null)
@@ -150,23 +204,10 @@ public class SettingController : MonoBehaviour
         Screen.SetResolution(rsl[r].width, rsl[r].height, isFullScreen);
     }
 
-    public void OpenSetting()
-    {
-        float savedMusic = PlayerPrefs.GetFloat("MusicVolume", 0.3f);
-
-        if (musicSlider != null)
-        {
-            musicSlider.onValueChanged.RemoveListener(ApplyMusicVolume);
-            musicSlider.value = savedMusic;
-            musicSlider.onValueChanged.AddListener(ApplyMusicVolume);
-        } 
-        if (settingsPanel != null) settingsPanel.SetActive(true);
-    }
-
     public void LoadBackupButton()
     {
         SaveSystem.LoadBackupGame();
-        if (panelBackup!=null)
+        if (panelBackup != null)
         {
             panelBackup.SetActive(false);
             settingsPanel.SetActive(true);
