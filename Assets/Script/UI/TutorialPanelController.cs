@@ -6,7 +6,7 @@ public class TutorialPanelController : MonoBehaviour
     public GameObject bookButtonObject;
     public Camera uiCamera;
 
-    public Vector2 offset = new Vector2(0, 100);
+    public Vector2 offset = new Vector2(0, 130);
 
     void Start()
     {
